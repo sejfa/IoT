@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
-from svi_gui import list_gui
+from gui import list_gui
 
 
 class HostaPage(tk.Frame):

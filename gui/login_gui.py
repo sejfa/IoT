@@ -3,8 +3,8 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
-import svi_gui
-from svi_gui import list_gui, basil_gui, hosta_gui
+
+from gui import list_gui, basil_gui, hosta_gui
 
 
 class LoginMenu(tk.Frame):
@@ -23,7 +23,7 @@ class LoginMenu(tk.Frame):
 
         username_var = tk.StringVar()
         username_Label = tk.Label(self, text="Username",
-                                  fg=svi_gui.label_color)
+                                  fg='#808080')
         username_Label.place(x=310, y=180)
         username_entry = ttk.Entry(
             self, textvariable=username_var, width=25)
@@ -31,7 +31,7 @@ class LoginMenu(tk.Frame):
 
         password_var = tk.StringVar()
         password_Label = tk.Label(self, text="Password",
-                                  fg=svi_gui.label_color)
+                                  fg='#808080')
         password_Label.place(x=310, y=230)
         password_entry = ttk.Entry(
             self, textvariable=password_var, width=25, show="*")

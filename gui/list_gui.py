@@ -1,22 +1,10 @@
-from svi_gui import hosta_gui, basil_gui
+from gui import hosta_gui, basil_gui
 from PIL import Image, ImageTk
 from tkinter import ttk
 import tkinter as tk
 
 from svi_crudovi.crud import get_random_humidity
 from baza_podataka.main import session
-
-
-#import sys
-#from os.path import dirname, abspath
-#d = dirname(dirname(abspath(__file__)))
-# sys.path.append(d)
-
-
-#from baza_podataka import database
-#from baza_podataka.main import session
-
-#from..svi_crudovi import crudd
 
 
 class SecondPage(tk.Frame):
@@ -65,6 +53,6 @@ class SecondPage(tk.Frame):
         button_frame2.place(x=225, y=130)
 
         random_hum = get_random_humidity(session)
-        humidity_label = ttk.Label(label_frame1, text=random_hum, foreground='#4D4D4D', font=(
-            'Times New Roman', '7', 'bold italic'))
-        humidity_label.place(x=180, y=120)
+        humidity_label = ttk.Label(label_frame1, text=random_hum, foreground='#4D4D4D', background='#F2F2F2', font=(
+            'Times New Roman', '8', 'bold italic'))
+        humidity_label.place(x=114, y=90)
