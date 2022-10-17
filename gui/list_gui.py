@@ -52,7 +52,13 @@ class SecondPage(tk.Frame):
                                    command=lambda: controller.show_frame(hosta_gui.HostaPage))
         button_frame2.place(x=225, y=130)
 
+        def refresh_sensors():
+            sensors = get_random_humidity(session)
+            humidity_label.configure(text=sensors)
+            humidity_label.after(4000, refresh_sensors)
+
         random_hum = get_random_humidity(session)
         humidity_label = ttk.Label(label_frame1, text=random_hum, foreground='#4D4D4D', background='#F2F2F2', font=(
             'Times New Roman', '8', 'bold italic'))
         humidity_label.place(x=114, y=90)
+        refresh_sensors()

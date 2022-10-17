@@ -1,5 +1,6 @@
 import random
 from baza_podataka.database import Humidity, Ph, Salinity, Temperature, Brightness
+from baza_podataka.main import session
 
 
 def get_humidity(session):
