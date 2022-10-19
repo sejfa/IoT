@@ -11,7 +11,7 @@ class LoginMenu(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("pl.jpg")
+        load = Image.open("media/pl.jpg")
         photo = ImageTk.PhotoImage(load)
         label = tk.Label(self, image=photo)
         label.image = photo

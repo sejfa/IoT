@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 from tkinter import ttk
 import tkinter as tk
 
-from svi_crudovi.crud import get_random_humidity
+from svi_crudovi.crud import get_all_sensors
 from baza_podataka.main import session
 
 
@@ -11,7 +11,7 @@ class SecondPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("ansp.jpg")
+        load = Image.open("media/ansp.jpg")
         photo = ImageTk.PhotoImage(load)
         label_backg = tk.Label(self, image=photo)
         label_backg.image = photo
@@ -25,13 +25,13 @@ class SecondPage(tk.Frame):
                                      )
         label_frame2.place(x=420, y=100, width=330, height=160,)
 
-        load1 = Image.open("basil-herb.jpg")
+        load1 = Image.open("media/basil-herb.jpg")
         photo1 = ImageTk.PhotoImage(load1)
         label_basil1 = tk.Label(label_frame1, image=photo1)
         label_basil1.image = photo1
         label_basil1.place(x=0, y=0)
 
-        load2 = Image.open("hosta.jpg")
+        load2 = Image.open("media/hosta.jpg")
         photo2 = ImageTk.PhotoImage(load2)
         label_hosta = tk.Label(label_frame2, image=photo2)
         label_hosta.image = photo2
@@ -53,12 +53,12 @@ class SecondPage(tk.Frame):
         button_frame2.place(x=225, y=130)
 
         def refresh_sensors():
-            sensors = get_random_humidity(session)
+            sensors = get_all_sensors(session)
             humidity_label.configure(text=sensors)
             humidity_label.after(4000, refresh_sensors)
 
-        random_hum = get_random_humidity(session)
+        random_hum = get_all_sensors(session)
         humidity_label = ttk.Label(label_frame1, text=random_hum, foreground='#4D4D4D', background='#F2F2F2', font=(
             'Times New Roman', '8', 'bold italic'))
-        humidity_label.place(x=114, y=90)
+        humidity_label.place(x=116, y=95)
         refresh_sensors()

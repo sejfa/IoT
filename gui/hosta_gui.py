@@ -9,7 +9,7 @@ class HostaPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("ansp.jpg")
+        load = Image.open("media/ansp.jpg")
         photo = ImageTk.PhotoImage(load)
         label_backg = tk.Label(self, image=photo)
         label_backg.image = photo

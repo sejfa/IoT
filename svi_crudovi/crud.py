@@ -56,3 +56,12 @@ def get_random_brightness(session):
 
     random_brightness = random.choice(brightness)
     return random_brightness
+
+
+def get_all_sensors(session):
+    a = [get_random_temp(session),
+         get_random_ph(session),
+         get_random_salinity(session),
+         get_random_brightness(session)]
+
+    return random.choice(a)
