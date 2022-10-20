@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from turtle import width
 from PIL import Image, ImageTk
 
 
@@ -58,6 +59,7 @@ class Application(tk.Tk):
 
         window.grid_rowconfigure(0, minsize=500)
         window.grid_columnconfigure(0, minsize=800)
+        self.resizable(width=False, height=False)
 
         self.frames = {}
         for i in (LoginMenu, list_gui.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage):

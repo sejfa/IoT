@@ -1,6 +1,32 @@
 import random
 from baza_podataka.database import Humidity, Ph, Salinity, Temperature, Brightness
 from baza_podataka.main import session
+from PIL import Image
+
+
+def get_background():
+    background = '#F2F2F2'
+    return background
+
+
+def get_foreground():
+    foreground = '#4D4D4D'
+    return foreground
+
+
+def get_label_font():
+    font_style = 'Times New Roman', '15', 'bold italic'
+    return font_style
+
+
+def get_status_font():
+    font_style = 'Times New Roman', '8', 'bold italic'
+    return font_style
+
+
+def get_image(image_name):
+    root_folder_path = 'media'
+    return Image.open(f"{root_folder_path}/{image_name}")
 
 
 def get_humidity(session):
@@ -59,9 +85,7 @@ def get_random_brightness(session):
 
 
 def get_all_sensors(session):
-    a = [get_random_temp(session),
-         get_random_ph(session),
-         get_random_salinity(session),
-         get_random_brightness(session)]
-
-    return random.choice(a)
+    a = get_random_temp(session)
+    b = get_random_ph(session)
+    c = get_random_salinity(session)
+    d = get_random_brightness(session)

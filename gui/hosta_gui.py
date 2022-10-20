@@ -3,13 +3,14 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 from gui import list_gui
+from svi_crudovi.crud import get_image
 
 
 class HostaPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("media/ansp.jpg")
+        load = get_image('ansp.jpg')
         photo = ImageTk.PhotoImage(load)
         label_backg = tk.Label(self, image=photo)
         label_backg.image = photo
