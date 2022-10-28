@@ -10,12 +10,8 @@ class HostaPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = get_image('ansp.jpg')
-        photo = ImageTk.PhotoImage(load)
-        label_backg = tk.Label(self, image=photo)
-        label_backg.image = photo
-        label_backg.place(x=0, y=0)
+        get_image('ansp.jpg', self)
 
         button_back = ttk.Button(
-            self, text="Nazad", width=15, command=lambda: controller.show_frame(list_gui.SecondPage))
+            self, text="Back", width=15, command=lambda: controller.show_frame(list_gui.SecondPage))
         button_back.place(x=40, y=450)
