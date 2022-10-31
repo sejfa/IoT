@@ -4,7 +4,6 @@ from tkinter import ttk
 import tkinter as tk
 from svi_crudovi.crud import get_background, get_image, create_button, create_label
 from baza_podataka.main import session
-import tkinter.font as font
 
 
 class SecondPage(tk.Frame):
