@@ -55,6 +55,14 @@ def get_fg():
     return fg
 
 
+def create_frame(root, height, width):
+    """"Function that creates Frame with arbitrary dimensions
+    """
+    from tkinter import ttk
+    main_frame = ttk.Frame(root, height=height, width=width, relief='ridge')
+    main_frame.place(x=300, y=100)
+
+
 def get_label_font():
     font_style = 'Times New Roman', '15', 'bold italic'
     return font_style
@@ -94,6 +102,7 @@ def create_label(root, text, x, y):
     return label
 
 
+""""
 def get_humidity(session):
     return session.query(Humidity).all()
 
@@ -147,3 +156,4 @@ def get_random_brightness(session):
 
     random_brightness = random.choice(brightness)
     return random_brightness
+"""
