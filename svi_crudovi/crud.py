@@ -1,4 +1,5 @@
 import random
+from tkinter import Toplevel
 from baza_podataka.database import Humidity, Ph, Salinity, Temperature, Brightness
 from baza_podataka.main import session
 from PIL import Image
@@ -37,7 +38,7 @@ def login(root, text, a, b, c, d):
 def get_background():
     """Function that defines background in LableFrame widget.
     """
-    background = '#F2F2F2'
+    background = 'white'
     return background
 
 
@@ -58,8 +59,9 @@ def get_fg():
 def create_frame(root, height, width):
     """"Function that creates Frame with arbitrary dimensions
     """
-    from tkinter import ttk
-    main_frame = ttk.Frame(root, height=height, width=width, relief='ridge')
+    import tkinter as ttk
+    main_frame = ttk.Frame(root, height=height, width=width,
+                           background="white", relief='solid')
     main_frame.place(x=300, y=100)
 
 
@@ -69,7 +71,7 @@ def get_label_font():
 
 
 def get_status_font():
-    font_style = 'Times New Roman', '8', 'bold italic'
+    font_style = 'arial', '8'
     return font_style
 
 
@@ -96,10 +98,66 @@ def create_button(root, text, controller, page, width, x, y):
 
 def create_label(root, text, x, y):
     from tkinter import ttk
-    label = ttk.Label(root, text=text,
+    label = ttk.Label(root, text=text, background='white',
                       foreground=get_foreground(), font=get_label_font())
     label.place(x=x, y=y)
     return label
+
+
+def create_smaller_label(root, text, x, y):
+    from tkinter import ttk
+    label = ttk.Label(root, text=text, background='white',
+                      foreground=get_foreground(), font=get_status_font())
+    label.place(x=x, y=y)
+    return label
+
+
+def forgot_password():
+    import tkinter as tk
+    from tkinter import ttk
+    from tkinter import messagebox
+
+    new_window = Toplevel(background='white')
+    new_window.title("Reset password")
+    new_window.geometry("210x260")
+
+    create_label(new_window, "Reset password", 40, 20)
+
+    username_var = tk.StringVar()
+    create_smaller_label(new_window, "Username", 25, 60)
+    username_entry = ttk.Entry(
+        new_window, textvariable=username_var, width=25)
+    username_entry.place(x=25, y=80)
+
+    password_var = tk.StringVar()
+    create_smaller_label(new_window, "Password", 25, 110)
+    password_entry = ttk.Entry(
+        new_window, textvariable=password_var, width=25, show="*")
+    password_entry.place(x=25, y=130)
+
+    confirm_var = tk.StringVar()
+    create_smaller_label(new_window, "Confirm password", 25, 160)
+    confirm_entry = ttk.Entry(
+        new_window, textvariable=confirm_var, width=25, show="*")
+    confirm_entry.place(x=25, y=180)
+
+    def submit():
+        if username_entry.get() == '' or password_entry.get() == '' or confirm_entry.get() == '':
+            messagebox.showerror("Error", "All field are required !")
+
+        elif password_entry.get() != confirm_entry.get():
+            messagebox.showerror(
+                "Error", "Passwords doesn't match, please try again!")
+
+        else:
+            messagebox.showinfo("Success", "Successfully changed password!")
+            new_window.destroy()
+
+    submit_button = ttk.Button(
+        new_window, text="Submit", width=12, command=submit)
+    submit_button.place(x=60, y=220)
+
+    return new_window
 
 
 """"

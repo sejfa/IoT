@@ -3,8 +3,9 @@ from tkinter import ttk
 import datetime as dt
 import sqlite3
 from tkinter import messagebox
-from svi_crudovi.crud import get_image, get_foreground, get_label_font, get_fg, create_frame, create_button
+from svi_crudovi.crud import create_smaller_label, get_image, get_foreground, create_frame, create_label
 from gui import login_gui
+#from sensors_db import *
 
 
 class SigninMenu(tk.Frame):
@@ -15,45 +16,37 @@ class SigninMenu(tk.Frame):
 
         create_frame(self, 330, 200)
 
-        heading_label = tk.Label(self, text="Py Flora",
-                                 foreground=get_foreground(), font=get_label_font())
-        heading_label.place(x=360, y=110)
+        create_label(self, "Py Flora", 360, 110)
 
         name_var = tk.StringVar()
-        name_Label = tk.Label(self, text="Name",
-                              fg=get_fg())
-        name_Label.place(x=320, y=140)
+        create_smaller_label(self, "Name", 320, 140)
+
         name_entry = ttk.Entry(
             self, textvariable=name_var, width=25)
         name_entry.place(x=320, y=160)
 
         surname_var = tk.StringVar()
-        surname_Label = tk.Label(self, text="Surname",
-                                 fg=get_fg())
-        surname_Label.place(x=320, y=190)
+        create_smaller_label(self, "Surname", 320, 190)
+
         surname_entry = ttk.Entry(
             self, textvariable=surname_var, width=25)
         surname_entry.place(x=320, y=210)
 
         username_var = tk.StringVar()
-        username_Label = tk.Label(self, text="Username",
-                                  fg=get_fg())
-        username_Label.place(x=320, y=240)
+        create_smaller_label(self, "Username", 320, 240)
+
         username_entry = ttk.Entry(
             self, textvariable=username_var, width=25)
         username_entry.place(x=320, y=260)
 
         password_var = tk.StringVar()
-        password_Label = tk.Label(self, text="Password",
-                                  fg=get_fg())
-        password_Label.place(x=320, y=290)
+        create_smaller_label(self, "Password", 320, 290)
+
         password_entry = ttk.Entry(
             self, textvariable=password_var, width=25, show="*")
         password_entry.place(x=320, y=310)
 
-        already_acc = tk.Label(self, text="Already have an account?", foreground=get_foreground(), font=(
-            'times', '8'))
-        already_acc.place(x=320, y=380)
+        create_smaller_label(self, "Already have an account?", 320, 380)
 
         def insert_user_data():
 
@@ -79,5 +72,5 @@ class SigninMenu(tk.Frame):
         sign_up_button.place(x=360, y=345)
 
         login_button = tk.Button(
-            self, text="Log in", font=('times', 8, 'bold underline'), bg='#E5E5E5', fg=get_foreground(), bd=0, activebackground='#E5E5E5', activeforeground='blue', command=lambda: controller.show_frame(login_gui.LoginMenu))
+            self, text="Log in", font=('times', 8, 'bold underline'), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground='#4D4D4D', command=lambda: controller.show_frame(login_gui.LoginMenu))
         login_button.place(x=320, y=400)

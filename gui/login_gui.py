@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from svi_crudovi.crud import get_image, get_foreground, get_label_font, get_fg, create_frame
+from svi_crudovi.crud import create_label, create_smaller_label, get_image, get_foreground, get_fg, create_frame, forgot_password
 from gui import list_gui, basil_gui, hosta_gui, signin_gui
 
 
@@ -10,32 +10,26 @@ class LoginMenu(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         get_image('pl.jpg', self)
-
-        create_frame(self, 250, 200)
-
-        heading_label = tk.Label(self, text="Py Flora",
-                                 foreground=get_foreground(), font=get_label_font())
-        heading_label.place(x=360, y=110)
+        create_frame(self, 300, 200)
+        create_label(self, "Py Flora", 360, 110)
 
         username_var = tk.StringVar()
-        username_Label = tk.Label(self, text="Username",
-                                  fg=get_fg())
-        username_Label.place(x=320, y=140)
+        create_smaller_label(self, "Username", 320, 150)
         username_entry = ttk.Entry(
             self, textvariable=username_var, width=25)
-        username_entry.place(x=320, y=160)
+        username_entry.place(x=320, y=170)
 
         password_var = tk.StringVar()
-        password_Label = tk.Label(self, text="Password",
-                                  fg=get_fg())
-        password_Label.place(x=320, y=190)
+        create_smaller_label(self, "Password", 320, 200)
         password_entry = ttk.Entry(
             self, textvariable=password_var, width=25, show="*")
-        password_entry.place(x=320, y=210)
+        password_entry.place(x=320, y=220)
 
-        no_account = tk.Label(self, text="Don't have an account?", foreground=get_foreground(), font=(
-            'times', '8'))
-        no_account.place(x=320, y=280)
+        forgot_password_button = tk.Button(
+            self, text="Forgot password?", font=('times', 8), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground="#4D4D4D", command=forgot_password)
+        forgot_password_button.place(x=395, y=245)
+
+        create_smaller_label(self, "Don't have an account?", 320, 330)
 
         def log_in():
             if username_entry.get() == "bruce" and password_entry.get() == '1234':
@@ -51,11 +45,11 @@ class LoginMenu(tk.Frame):
 
         log_in_button = ttk.Button(
             self, text="Log in", width=10, command=log_in)
-        log_in_button.place(x=360, y=245)
+        log_in_button.place(x=360, y=280)
 
         signup_button = tk.Button(
-            self, text="Sign up", font=('times', 8, 'bold underline'), bg='#E5E5E5', fg=get_foreground(), bd=0, activebackground='#E5E5E5', activeforeground='blue', command=lambda: controller.show_frame(signin_gui.SigninMenu))
-        signup_button.place(x=320, y=300)
+            self, text="Sign up", font=('times', 8, 'bold underline'), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground='#4D4D4D', command=lambda: controller.show_frame(signin_gui.SigninMenu))
+        signup_button.place(x=320, y=350)
 
 
 class Application(tk.Tk):
