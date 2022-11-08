@@ -38,13 +38,5 @@ class SecondPage(tk.Frame):
                       hosta_gui.HostaPage, 15, 225, 130,)
         create_button(mint_frame, "Open", controller,
                       hosta_gui.HostaPage, 15, 225, 130,)
-
-        """add_button = tk.Button(self, text="Add pot\n +", width=46, height=10, bg='#EEEE76', fg='#ffffff',
-                               command=lambda: controller.show_frame(hosta_gui.HostaPage))
-        add_button.place(x=420, y=290)
-        myFont = font.Font(family='Times New Roman',
-                           size=10, weight='bold')
-        add_button['font'] = myFont"""
-
         create_button(self, "Next", controller,
                       basil_gui.BasilPage, 15, 660, 450)

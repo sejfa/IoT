@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from svi_crudovi.crud import create_label, create_smaller_label, get_image, get_foreground, get_fg, create_frame, forgot_password
+from svi_crudovi.crud import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
 from gui import list_gui, basil_gui, hosta_gui, signin_gui
+import sqlite3
 
 
 class LoginMenu(tk.Frame):
@@ -31,6 +32,26 @@ class LoginMenu(tk.Frame):
 
         create_smaller_label(self, "Don't have an account?", 320, 330)
 
+        def clear_user_data():
+            username_entry.delete(0, 25)
+            password_entry.delete(0, 25)
+
+        def use_userdata():
+            conn = sqlite3.connect('Sensors.db')
+            c = conn.cursor()
+
+            c.execute("SELECT Username,Password FROM UserData WHERE (Username=? AND Password=?)",
+                      (username_entry.get(), password_entry.get()))
+            result = c.fetchone()
+            if result:
+                controller.show_frame(list_gui.SecondPage)
+                messagebox.showinfo("Success", "Successfully logged in!")
+            else:
+                messagebox.showerror(
+                    "Error", "Incorrect Username or password!")
+                controller.show_frame(LoginMenu)
+                clear_user_data()
+
         def log_in():
             if username_entry.get() == "bruce" and password_entry.get() == '1234':
                 controller.show_frame(list_gui.SecondPage)
@@ -38,10 +59,9 @@ class LoginMenu(tk.Frame):
 
             elif username_entry.get() == '' or password_entry.get() == '':
                 messagebox.showerror("Error", "All fields are required !")
-
+                clear_user_data()
             else:
-                messagebox.showerror(
-                    "Error", "Invalid username or password, please try again!")
+                use_userdata()
 
         log_in_button = ttk.Button(
             self, text="Log in", width=10, command=log_in)

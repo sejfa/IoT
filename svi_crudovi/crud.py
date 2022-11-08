@@ -1,7 +1,4 @@
-import random
 from tkinter import Toplevel
-from baza_podataka.database import Humidity, Ph, Salinity, Temperature, Brightness
-from baza_podataka.main import session
 from PIL import Image
 import datetime as dt
 
@@ -116,10 +113,11 @@ def forgot_password():
     import tkinter as tk
     from tkinter import ttk
     from tkinter import messagebox
+    import sqlite3
 
     new_window = Toplevel(background='white')
     new_window.title("Reset password")
-    new_window.geometry("210x260")
+    new_window.geometry("210x260+300+200")
 
     create_label(new_window, "Reset password", 40, 20)
 
@@ -129,11 +127,11 @@ def forgot_password():
         new_window, textvariable=username_var, width=25)
     username_entry.place(x=25, y=80)
 
-    password_var = tk.StringVar()
-    create_smaller_label(new_window, "Password", 25, 110)
-    password_entry = ttk.Entry(
-        new_window, textvariable=password_var, width=25, show="*")
-    password_entry.place(x=25, y=130)
+    new_password_var = tk.StringVar()
+    create_smaller_label(new_window, "New password", 25, 110)
+    new_password_entry = ttk.Entry(
+        new_window, textvariable=new_password_var, width=25, show="*")
+    new_password_entry.place(x=25, y=130)
 
     confirm_var = tk.StringVar()
     create_smaller_label(new_window, "Confirm password", 25, 160)
@@ -141,77 +139,47 @@ def forgot_password():
         new_window, textvariable=confirm_var, width=25, show="*")
     confirm_entry.place(x=25, y=180)
 
-    def submit():
-        if username_entry.get() == '' or password_entry.get() == '' or confirm_entry.get() == '':
-            messagebox.showerror("Error", "All field are required !")
+    def clear_data():
+        username_entry.delete(0, 25)
+        new_password_entry.delete(0, 25)
+        confirm_entry.delete(0, 25)
 
-        elif password_entry.get() != confirm_entry.get():
+    def insert_new_password():
+
+        conn = sqlite3.connect('Sensors.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM UserData WHERE Username=?",
+                  username_entry.get())
+
+        result = c.fetchone()
+        if result:
+            c.execute("UPDATE UserData set Password=? WHERE Username=? ",
+                      (new_password_entry.get(), username_entry.get()))
+        else:
+            messagebox.showerror("Error", "Incorrect Username")
+            forgot_password()
+            clear_data()
+
+        conn.commit()
+        conn.close()
+
+    def submit():
+
+        if username_entry.get() == '' or new_password_entry.get() == '' or confirm_entry.get() == '':
+            messagebox.showerror("Error", "All field are required !")
+            forgot_password()
+            clear_data()
+
+        elif new_password_entry.get() != confirm_entry.get():
             messagebox.showerror(
                 "Error", "Passwords doesn't match, please try again!")
-
+            forgot_password()
+            clear_data()
         else:
-            messagebox.showinfo("Success", "Successfully changed password!")
-            new_window.destroy()
+            insert_new_password()
+            messagebox.showinfo(
+                "Success", "Successfully changed password, You can now login with new password!")
 
     submit_button = ttk.Button(
         new_window, text="Submit", width=12, command=submit)
     submit_button.place(x=60, y=220)
-
-    return new_window
-
-
-""""
-def get_humidity(session):
-    return session.query(Humidity).all()
-
-
-def get_random_humidity(session):
-    humidity = get_humidity(session)
-
-    random_humidity = random.choice(humidity)
-    return random_humidity
-
-
-def get_ph(session):
-    return session.query(Ph).all()
-
-
-def get_random_ph(session):
-    ph = get_ph(session)
-
-    random_ph = random.choice(ph)
-    return random_ph
-
-
-def get_salinity(session):
-    return session.query(Salinity).all()
-
-
-def get_random_salinity(session):
-    salinity = get_ph(session)
-
-    random_salinity = random.choice(salinity)
-    return random_salinity
-
-
-def get_temp(session):
-    return session.query(Temperature).all()
-
-
-def get_random_temp(session):
-    temp = get_temp(session)
-
-    random_temp = random.choice(temp)
-    return random_temp
-
-
-def get_brightness(session):
-    return session.query(Brightness).all()
-
-
-def get_random_brightness(session):
-    brightness = get_brightness(session)
-
-    random_brightness = random.choice(brightness)
-    return random_brightness
-"""

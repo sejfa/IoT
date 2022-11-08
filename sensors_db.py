@@ -33,7 +33,7 @@ def insert_humidity_data():
     else:
         action = "No action needed"
 
-    c.execute("INSERT INTO Humidity (Date, Lines, Value, Action) VALUES (?,?,?,?)",
+    c.execute("INSERT INTO Humidity (Date, Lines, Value, Action) VALUES(?,?,?,?)",
               (date, lines, value, action))
     conn.commit()
 
