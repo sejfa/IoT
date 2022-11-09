@@ -41,7 +41,7 @@ class LoginMenu(tk.Frame):
             c = conn.cursor()
 
             c.execute("SELECT Username,Password FROM UserData WHERE (Username=? AND Password=?)",
-                      (username_entry.get(), password_entry.get()))
+                      [username_entry.get(), password_entry.get()])
             result = c.fetchone()
             if result:
                 controller.show_frame(list_gui.SecondPage)

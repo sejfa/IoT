@@ -63,7 +63,7 @@ class SigninMenu(tk.Frame):
             c = conn.cursor()
 
             c.execute("SELECT Username,Password FROM UserData WHERE (Username=? OR Password=?)",
-                      (username_entry.get(), password_entry.get()))
+                      [username_entry.get(), password_entry.get()])
             result = c.fetchone()
             if result:
                 messagebox.showerror(

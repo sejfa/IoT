@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from gui import list_gui
-from svi_crudovi.crud import get_image, create_button
+from svi_crudovi.crud import get_image, create_label, get_background, create_button
 
 
 class BasilPage(tk.Frame):
@@ -10,7 +10,11 @@ class BasilPage(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         get_image('ansp.jpg', self)
+        basil_info = tk.LabelFrame(self, background=get_background(),
+                                   )
+        basil_info.place(x=50, y=100, width=250, height=210,)
 
-        button_back = ttk.Button(
-            self, text="Back", width=15, command=lambda: controller.show_frame(list_gui.SecondPage))
-        button_back.place(x=40, y=450)
+        create_label(basil_info, "Sensors info", 50, 10)
+
+        create_button(self, "Back", controller,
+                      list_gui.SecondPage, 15, 40, 450)

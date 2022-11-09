@@ -95,7 +95,7 @@ def create_button(root, text, controller, page, width, x, y):
 
 def create_label(root, text, x, y):
     from tkinter import ttk
-    label = ttk.Label(root, text=text, background='white',
+    label = ttk.Label(root, text=text, background="white",
                       foreground=get_foreground(), font=get_label_font())
     label.place(x=x, y=y)
     return label
@@ -110,12 +110,13 @@ def create_smaller_label(root, text, x, y):
 
 
 def forgot_password():
+
     import tkinter as tk
     from tkinter import ttk
     from tkinter import messagebox
     import sqlite3
 
-    new_window = Toplevel(background='white')
+    new_window = Toplevel(background="white")
     new_window.title("Reset password")
     new_window.geometry("210x260+300+200")
 
@@ -144,20 +145,23 @@ def forgot_password():
         new_password_entry.delete(0, 25)
         confirm_entry.delete(0, 25)
 
-    def insert_new_password():
+    def change_password():
 
         conn = sqlite3.connect('Sensors.db')
         c = conn.cursor()
         c.execute("SELECT * FROM UserData WHERE Username=?",
-                  username_entry.get())
+                  [username_entry.get()])
 
         result = c.fetchone()
         if result:
             c.execute("UPDATE UserData set Password=? WHERE Username=? ",
-                      (new_password_entry.get(), username_entry.get()))
+                      [new_password_entry.get(), username_entry.get()])
+            messagebox.showinfo(
+                "Success", "Successfully changed password, You can now login with new password!")
+
         else:
-            messagebox.showerror("Error", "Incorrect Username")
-            forgot_password()
+            messagebox.showerror(
+                "Error", "Incorrect Username", parent=new_window)
             clear_data()
 
         conn.commit()
@@ -166,20 +170,20 @@ def forgot_password():
     def submit():
 
         if username_entry.get() == '' or new_password_entry.get() == '' or confirm_entry.get() == '':
-            messagebox.showerror("Error", "All field are required !")
-            forgot_password()
+            messagebox.showerror(
+                "Error", "All field are required !", parent=new_window)
             clear_data()
 
         elif new_password_entry.get() != confirm_entry.get():
             messagebox.showerror(
-                "Error", "Passwords doesn't match, please try again!")
-            forgot_password()
+                "Error", "Passwords doesn't match, please try again!", parent=new_window)
             clear_data()
-        else:
-            insert_new_password()
-            messagebox.showinfo(
-                "Success", "Successfully changed password, You can now login with new password!")
+
+        elif new_password_entry.get() == confirm_entry.get():
+            change_password()
 
     submit_button = ttk.Button(
         new_window, text="Submit", width=12, command=submit)
     submit_button.place(x=60, y=220)
+
+    #
