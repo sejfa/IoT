@@ -10,7 +10,7 @@ class LoginMenu(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        get_image('pl.jpg', self)
+        get_image('indoor_trees.jpg', self)
         create_frame(self, 300, 200)
         create_label(self, "Py Flora", 360, 110)
 

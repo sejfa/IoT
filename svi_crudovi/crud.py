@@ -186,4 +186,67 @@ def forgot_password():
         new_window, text="Submit", width=12, command=submit)
     submit_button.place(x=60, y=220)
 
-    #
+
+def get_hum():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value, Action FROM Humidity")
+    fetch = c.fetchall()
+    for row in fetch:
+        return f"{row[0]}  {row[1]}%\t\t {row[2]}"
+    conn.commit()
+    conn.close()
+
+
+def get_temp():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value FROM Temperature")
+    fetch = c.fetchall()
+    for row in fetch:
+        return f"{row[0]}  {row[1]}°C"
+    conn.commit()
+    conn.close()
+
+
+def get_bright():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value, Action FROM Brightness")
+    fetch = c.fetchall()
+    for row in fetch:
+        return f"{row[0]}  {row[1]}\t\t {row[2]}"
+    conn.commit()
+    conn.close()
+
+
+def get_ph():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value FROM pH")
+    fetch = c.fetchall()
+    for row in fetch:
+        return f"{row[0]}  {row[1]}"
+    conn.commit()
+    conn.close()
+
+
+def get_sal():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value FROM Salinity")
+    fetch = c.fetchall()
+    for row in fetch:
+        return f"{row[0]}  {row[1]}"
+    conn.commit()
+    conn.close()
