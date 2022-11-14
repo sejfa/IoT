@@ -194,10 +194,20 @@ def get_hum():
 
     c.execute("SELECT Lines, Value, Action FROM Humidity")
     fetch = c.fetchall()
+    conn.close()
     for row in fetch:
         return f"{row[0]}  {row[1]}%\t\t {row[2]}"
-    conn.commit()
+
+
+def get_optimal_hum():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value, Action FROM Humidity WHERE Value = 40")
+    fetch = c.fetchone()
     conn.close()
+    return f"{fetch[0]}  {fetch[1]}%\t\t {fetch[2]}"
 
 
 def get_temp():
@@ -205,12 +215,22 @@ def get_temp():
     conn = sqlite3.connect('Sensors.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value FROM Temperature")
+    c.execute("SELECT Lines, Value, Action FROM Temperature")
     fetch = c.fetchall()
-    for row in fetch:
-        return f"{row[0]}  {row[1]}°C"
-    conn.commit()
     conn.close()
+    for row in fetch:
+        return f"{row[0]}  {row[1]}°C\t {row[2]}"
+
+
+def get_optimal_temp():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value, Action FROM Temperature WHERE Value = 22")
+    fetch = c.fetchone()
+    conn.close()
+    return f"{fetch[0]}  {fetch[1]}°C\t {fetch[2]}"
 
 
 def get_bright():
@@ -220,10 +240,20 @@ def get_bright():
 
     c.execute("SELECT Lines, Value, Action FROM Brightness")
     fetch = c.fetchall()
+    conn.close()
     for row in fetch:
         return f"{row[0]}  {row[1]}\t\t {row[2]}"
-    conn.commit()
+
+
+def get_optimal_bright():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value, Action FROM Brightness WHERE Value = 7")
+    fetch = c.fetchone()
     conn.close()
+    return f"{fetch[0]}  {fetch[1]}\t {fetch[2]}"
 
 
 def get_ph():
@@ -233,10 +263,20 @@ def get_ph():
 
     c.execute("SELECT Lines, Value FROM pH")
     fetch = c.fetchall()
+    conn.close()
     for row in fetch:
         return f"{row[0]}  {row[1]}"
-    conn.commit()
+
+
+def get_optmal_ph():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value FROM pH Where Value = 7")
+    fetch = c.fetchone()
     conn.close()
+    return f"{fetch[0]}  {fetch[1]}"
 
 
 def get_sal():
@@ -246,7 +286,17 @@ def get_sal():
 
     c.execute("SELECT Lines, Value FROM Salinity")
     fetch = c.fetchall()
+    conn.close()
     for row in fetch:
         return f"{row[0]}  {row[1]}"
-    conn.commit()
+
+
+def get_optimal_sal():
+    import sqlite3
+    conn = sqlite3.connect('Sensors.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value FROM Salinity WHERE Value = 7")
+    fetch = c.fetchone()
     conn.close()
+    return f"{fetch[0]}  {fetch[1]}"

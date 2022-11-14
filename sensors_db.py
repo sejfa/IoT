@@ -1,7 +1,6 @@
 import sqlite3
-import random
 import datetime as dt
-
+from random import randrange
 
 conn = sqlite3.connect('Sensors.db')
 c = conn.cursor()
@@ -11,7 +10,7 @@ def create_sensor_table():
     c.execute(
         'CREATE TABLE IF NOT EXISTS  Humidity (Date TEXT, Lines TEXT, Value INTEGER, Action TEXT)')
     c.execute(
-        'CREATE TABLE IF NOT EXISTS  Temperature (Date TEXT, Lines TEXT, Value INTEGER)')
+        'CREATE TABLE IF NOT EXISTS  Temperature (Date TEXT, Lines TEXT, Value INTEGER, Action TEXT)')
     c.execute(
         'CREATE TABLE IF NOT EXISTS  pH (Date TEXT, Lines TEXT, Value INTEGER)')
     c.execute(
@@ -25,33 +24,42 @@ def create_sensor_table():
 def insert_humidity_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current soil humidity is"
-    value = random.randrange(20, 61)
+
     action = ""
 
-    if value < 40:
-        action = "You need to water the plants"
-    else:
-        action = "No action needed"
+    for value in range(20, 61):
+        if value < 40:
+            action = "You need to water the plants"
+        else:
+            action = "No action needed"
 
-    c.execute("INSERT INTO Humidity (Date, Lines, Value, Action) VALUES(?,?,?,?)",
-              (date, lines, value, action))
+        c.execute("INSERT INTO Humidity (Date, Lines, Value, Action) VALUES(?,?,?,?)",
+                  (date, lines, value, action))
     conn.commit()
 
 
 def insert_temperature_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current room temperature is"
-    value = random.randrange(22, 27)
 
-    c.execute("INSERT INTO Temperature (Date, Lines, Value) VALUES (?,?,?)",
-              (date, lines, value))
+    action = ""
+
+    for value in range(22, 27):
+        if value > 22:
+            action = "Lower the room temperature"
+
+        else:
+            action = "No action needed"
+
+        c.execute("INSERT INTO Temperature (Date, Lines, Value, Action) VALUES (?,?,?,?)",
+                  (date, lines, value, action))
     conn.commit()
 
 
 def insert_ph_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current pH is"
-    value = random.randrange(6, 8)
+    value = randrange(6, 9)
 
     c.execute("INSERT INTO pH (Date, Lines, Value) VALUES (?,?,?)",
               (date, lines, value))
@@ -61,23 +69,24 @@ def insert_ph_data():
 def insert_brightness_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current brightness is"
-    value = random.randrange(1, 11)
+
     action = ""
 
-    if value <= 4:
-        action = "Increase the brightness"
-    else:
-        action = "No action needed"
+    for value in range(1, 11):
+        if value <= 5:
+            action = "Increase the brightness"
+        else:
+            action = "No action needed"
 
-    c.execute("INSERT INTO Brightness (Date, Lines, Value, Action) VALUES (?,?,?,?)",
-              (date, lines, value, action))
+        c.execute("INSERT INTO Brightness (Date, Lines, Value, Action) VALUES (?,?,?,?)",
+                  (date, lines, value, action))
     conn.commit()
 
 
 def insert_salinity_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current salinity is"
-    value = random.randrange(6, 8)
+    value = randrange(6, 13)
 
     c.execute("INSERT INTO Salinity (Date, Lines, Value) VALUES (?,?,?)",
               (date, lines, value))
@@ -86,21 +95,20 @@ def insert_salinity_data():
 
 create_sensor_table()
 
-for i in range(10):
-    insert_humidity_data()
 
-for i in range(10):
-    insert_temperature_data()
+insert_humidity_data()
 
-for i in range(10):
+
+insert_temperature_data()
+
+
+insert_brightness_data()
+
+for i in range(20):
     insert_ph_data()
 
-for i in range(10):
-    insert_brightness_data()
-
-for i in range(10):
+for i in range(20):
     insert_salinity_data()
-
 
 c.close()
 conn.close()
