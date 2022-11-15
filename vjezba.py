@@ -1,5 +1,5 @@
 
-import sqlite3
+"""import sqlite3
 conn = sqlite3.connect('Sensors.db')
 c = conn.cursor()
 
@@ -19,3 +19,4 @@ print(fetch1)
 print(type(fetch1))
 print(f"{fetch1[0]}  {fetch1[1]}°C\t {fetch1[2]}")
 conn.close()
+"""

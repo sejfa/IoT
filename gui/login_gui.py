@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from svi_crudovi.crud import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
+from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
 from gui import list_gui, basil_gui, hosta_gui, signin_gui
 import sqlite3
 

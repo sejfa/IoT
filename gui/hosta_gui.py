@@ -1,9 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import messagebox
-from PIL import Image, ImageTk
 from gui import list_gui
-from svi_crudovi.crud import get_image
+from utils.util import get_image
 
 
 class HostaPage(tk.Frame):
@@ -14,4 +12,4 @@ class HostaPage(tk.Frame):
 
         button_back = ttk.Button(
             self, text="Back", width=15, command=lambda: controller.show_frame(list_gui.SecondPage))
-        button_back.place(x=40, y=450)
+        button_back.place(x=20, y=450)

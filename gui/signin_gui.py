@@ -3,7 +3,7 @@ from tkinter import ttk
 import datetime as dt
 import sqlite3
 from tkinter import messagebox
-from svi_crudovi.crud import create_smaller_label, get_image, get_foreground, create_frame, create_label
+from utils.util import create_smaller_label, get_image, get_foreground, create_frame, create_label
 from gui import login_gui
 from sensors_db import *
 
