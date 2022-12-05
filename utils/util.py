@@ -1,5 +1,6 @@
 import datetime as dt
 from tkinter import Toplevel
+import customtkinter
 
 
 def formatted_date():
@@ -55,14 +56,25 @@ def get_fg():
 def create_frame(root, height, width):
     """"Function that creates Frame with arbitrary dimensions
     """
-    import tkinter as ttk
-    main_frame = ttk.Frame(root, height=height, width=width,
-                           background="white", relief='solid')
-    main_frame.place(x=300, y=100)
+    import customtkinter
+
+    frame = customtkinter.CTkFrame(master=root,
+                                   width=width,
+                                   height=height,
+                                   corner_radius=25,
+                                   fg_color="white",
+
+                                   )
+    frame.place(x=300, y=100)
+
+
+def get_header_font():
+    font_style = 'Universe', '18', 'bold'
+    return font_style
 
 
 def get_label_font():
-    font_style = 'Times New Roman', '15', 'bold italic'
+    font_style = 'Times New Roman', '14', 'bold italic'
     return font_style
 
 
@@ -84,12 +96,28 @@ def get_image(image_name, root):
     label_basil1.place(x=0, y=0)
 
 
-def create_button(root, text, controller, page, width, x, y):
-    from tkinter import ttk
-    button = ttk.Button(root, text=text, width=width,
-                        command=lambda: controller.show_frame(page))
+def create_button(root, text, controller, page, x, y):
+    import customtkinter
+
+    button = customtkinter.CTkButton(master=root,
+                                     width=100,
+                                     height=15,
+                                     border_width=0,
+                                     corner_radius=12,
+                                     bg_color="white",
+                                     text=text,
+                                     command=lambda: controller.show_frame(page))
     button.place(x=x, y=y)
+
     return button
+
+
+def create_header(root, text, x, y):
+    from tkinter import ttk
+    header = ttk.Label(root, text=text, background="white",
+                       foreground=get_foreground(), font=get_header_font())
+    header.place(x=x, y=y)
+    return header
 
 
 def create_label(root, text, x, y):

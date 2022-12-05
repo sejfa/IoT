@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from gui import list_gui
 from utils.util import get_image, create_label, create_smaller_label, get_background, create_button
-from svi_crudovi.crud import get_optimal_hum, get_optimal_temp, get_optmal_ph, get_optimal_sal, get_optimal_bright, get_hum, get_temp, get_bright, get_ph, get_sal
+from cruds.crud import get_optimal_hum, get_optimal_temp, get_optmal_ph, get_optimal_sal, get_optimal_bright, get_hum, get_temp, get_bright, get_ph, get_sal
 
 
 class BasilPage(tk.Frame):
@@ -18,7 +18,7 @@ class BasilPage(tk.Frame):
 
         pic_frame = ttk.Frame(self)
         pic_frame.place(x=550, y=10, width=210, height=210)
-        get_image('basil-modified.jpg', pic_frame)
+        get_image('basil4.jpg', pic_frame)
 
         h = get_hum()
         hum = create_smaller_label(basil_info, h, 15, 45)
@@ -58,7 +58,7 @@ class BasilPage(tk.Frame):
             self, text="Sync", width=15, command=sync_button)
         sync_button.place(x=125, y=230)
         create_button(self, "Back", controller,
-                      list_gui.SecondPage, 15, 20, 450)
+                      list_gui.SecondPage, 20, 450)
 
         sync_button = ttk.Button(
             self, text="Show graphical info", width=25, command=None)

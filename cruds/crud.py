@@ -1,11 +1,8 @@
-from tkinter import Toplevel
-from PIL import Image
-import datetime as dt
 
-
+# Fetching sensors data
 def get_hum():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value, Action FROM Humidity")
@@ -17,7 +14,7 @@ def get_hum():
 
 def get_optimal_hum():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value, Action FROM Humidity WHERE Value = 40")
@@ -28,7 +25,7 @@ def get_optimal_hum():
 
 def get_temp():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value, Action FROM Temperature")
@@ -40,7 +37,7 @@ def get_temp():
 
 def get_optimal_temp():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value, Action FROM Temperature WHERE Value = 22")
@@ -51,7 +48,7 @@ def get_optimal_temp():
 
 def get_bright():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value, Action FROM Brightness")
@@ -63,7 +60,7 @@ def get_bright():
 
 def get_optimal_bright():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value, Action FROM Brightness WHERE Value = 7")
@@ -74,7 +71,7 @@ def get_optimal_bright():
 
 def get_ph():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value FROM pH")
@@ -86,7 +83,7 @@ def get_ph():
 
 def get_optmal_ph():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value FROM pH Where Value = 7")
@@ -97,7 +94,7 @@ def get_optmal_ph():
 
 def get_sal():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value FROM Salinity")
@@ -109,10 +106,13 @@ def get_sal():
 
 def get_optimal_sal():
     import sqlite3
-    conn = sqlite3.connect('Sensors.db')
+    conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
     c.execute("SELECT Lines, Value FROM Salinity WHERE Value = 7")
     fetch = c.fetchone()
     conn.close()
     return f"{fetch[0]}  {fetch[1]}"
+
+
+# Fetching plant data

@@ -1,7 +1,7 @@
 from gui import hosta_gui, basil_gui
 from tkinter import ttk
 import tkinter as tk
-from utils.util import get_image, create_button, create_label
+from utils.util import get_image, create_button, create_label, create_header, get_foreground
 
 
 class SecondPage(tk.Frame):
@@ -10,29 +10,30 @@ class SecondPage(tk.Frame):
 
         basil_frame = ttk.Frame(self
                                 )
-        basil_frame.place(x=50, y=100, width=330, height=160)
+        basil_frame.place(x=50, y=80, width=330, height=160)
 
         hosta_frame = ttk.Frame(self
                                 )
-        hosta_frame.place(x=420, y=100, width=330, height=160,)
+        hosta_frame.place(x=420, y=80, width=330, height=160,)
 
         mint_frame = ttk.Frame(self
                                )
-        mint_frame.place(x=50, y=290, width=330, height=160,)
+        mint_frame.place(x=50, y=275, width=330, height=160,)
 
-        get_image('bs.jpg', basil_frame)
+        get_image('basil5.jpg', basil_frame)
         get_image('hosta1.jpg', hosta_frame)
         get_image('mint1.jpg', mint_frame)
 
-        create_label(self, "Basil pot", x=180, y=70)
-        create_label(self, "Hosta pot", x=180, y=10)
-        create_label(self, "Mint pot", x=180, y=10)
+        create_header(self, "List of vessels", x=300, y=5)
+        create_label(self, "Basil", x=50, y=55)
+        create_label(self, "Hosta", x=420, y=55)
+        create_label(self, "Mint", x=50, y=250)
 
-        create_button(basil_frame, "Open", controller,
-                      basil_gui.BasilPage, 15, 225, 130)
-        create_button(hosta_frame, "Open", controller,
-                      hosta_gui.HostaPage, 15, 225, 130,)
-        create_button(mint_frame, "Open", controller,
-                      hosta_gui.HostaPage, 15, 225, 130,)
+        create_button(self, "Open", controller,
+                      basil_gui.BasilPage, 280, 250)
+        create_button(self, "Open", controller,
+                      hosta_gui.HostaPage, 650, 250,)
+        create_button(self, "Open", controller,
+                      hosta_gui.HostaPage, 280, 445,)
         create_button(self, "Next", controller,
-                      basil_gui.BasilPage, 15, 660, 450)
+                      basil_gui.BasilPage, 660, 450)

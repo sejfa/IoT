@@ -6,6 +6,7 @@ from tkinter import messagebox
 from utils.util import create_smaller_label, get_image, get_foreground, create_frame, create_label
 from gui import login_gui
 from sensors_db import *
+import customtkinter
 
 
 class SigninMenu(tk.Frame):
@@ -21,29 +22,29 @@ class SigninMenu(tk.Frame):
         name_var = tk.StringVar()
         create_smaller_label(self, "Name", 320, 140)
 
-        name_entry = ttk.Entry(
-            self, textvariable=name_var, width=25)
+        name_entry = customtkinter.CTkEntry(
+            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=name_var)
         name_entry.place(x=320, y=160)
 
         surname_var = tk.StringVar()
         create_smaller_label(self, "Surname", 320, 190)
 
-        surname_entry = ttk.Entry(
-            self, textvariable=surname_var, width=25)
+        surname_entry = customtkinter.CTkEntry(
+            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=surname_var)
         surname_entry.place(x=320, y=210)
 
         username_var = tk.StringVar()
         create_smaller_label(self, "Username", 320, 240)
 
-        username_entry = ttk.Entry(
-            self, textvariable=username_var, width=25)
+        username_entry = customtkinter.CTkEntry(
+            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=username_var)
         username_entry.place(x=320, y=260)
 
         password_var = tk.StringVar()
         create_smaller_label(self, "Password", 320, 290)
 
-        password_entry = ttk.Entry(
-            self, textvariable=password_var, width=25, show="*")
+        password_entry = customtkinter.CTkEntry(
+            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=password_var, show="*")
         password_entry.place(x=320, y=310)
 
         create_smaller_label(self, "Already have an account?", 320, 380)
@@ -90,9 +91,17 @@ class SigninMenu(tk.Frame):
             else:
                 check_if_exist()
 
-        sign_up_button = ttk.Button(
-            self, text="Sign up", width=10, command=sign_up)
-        sign_up_button.place(x=360, y=345)
+        signup_button = customtkinter.CTkButton(master=self,
+                                                fg_color="green3",
+                                                hover_color="green4",
+                                                width=100,
+                                                height=15,
+                                                border_width=0,
+                                                corner_radius=13,
+                                                text="Sign up",
+                                                bg_color="white",
+                                                command=sign_up)
+        signup_button.place(x=345, y=350)
 
         login_button = tk.Button(
             self, text="Log in", font=('times', 8, 'bold underline'), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground='#4D4D4D', command=lambda: controller.show_frame(login_gui.LoginMenu))
