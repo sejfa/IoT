@@ -51,7 +51,6 @@ def insert_plant_data():
             data_tuple = (empId, name, empPhoto)
             c.execute(insert_query, data_tuple)
             conn.commit()
-            print("Image and file inserted successfully as a BLOB into a table")
 
         except sqlite3.Error as error:
             print("Failed to insert blob data into sqlite table", error)
@@ -155,7 +154,7 @@ def insert_salinity_data():
 
 
 create_sensor_table()
-# insert_plant_data()
+insert_plant_data()
 # insert_humidity_data()
 # insert_temperature_data()
 # insert_brightness_data()

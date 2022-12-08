@@ -1,6 +1,76 @@
 import datetime as dt
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
 from tkinter import Toplevel
+from PIL import Image, ImageTk
 import customtkinter
+import sqlite3
+
+
+def add_plant():
+
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+    c.execute("SELECT Plant FROM RecordsOfPlants")
+    result = c.fetchall()
+    new_list = [i for i, in result]
+    return new_list
+
+
+def create_frame(root, height, width, x, y):
+    """"Function that creates Frame with arbitrary dimensions
+    """
+
+    frame = customtkinter.CTkFrame(master=root,
+                                   width=width,
+                                   height=height,
+                                   corner_radius=9,
+                                   fg_color="white",
+                                   border_color="light grey",
+                                   border_width=4
+
+                                   )
+    frame.place(x=x, y=y)
+
+
+def create_button(root, text, controller, page, x, y):
+
+    button = customtkinter.CTkButton(master=root,
+                                     width=100,
+                                     height=15,
+                                     border_width=0,
+                                     corner_radius=12,
+                                     bg_color="white",
+                                     text=text,
+                                     command=lambda: controller.show_frame(page))
+    button.place(x=x, y=y)
+
+    return button
+
+
+def create_header(root, text, x, y):
+
+    header = ttk.Label(root, text=text, background="white",
+                       foreground=get_foreground(), font=get_header_font())
+    header.place(x=x, y=y)
+    return header
+
+
+def create_label(root, text, x, y):
+
+    label = ttk.Label(root, text=text, background="white",
+                      foreground=get_foreground(), font=get_label_font())
+    label.place(x=x, y=y)
+    return label
+
+
+def create_smaller_label(root, text, x, y):
+
+    label = ttk.Label(root, text=text, background='white',
+                      foreground=get_foreground(), font=get_status_font())
+    label.place(x=x, y=y)
+    return label
 
 
 def formatted_date():
@@ -17,19 +87,6 @@ def formatted_time():
     now_time = dt.datetime.now()
 
     return now_time.strftime("%H:%M:%S")
-
-
-def login(root, text, a, b, c, d):
-    import tkinter as tk
-    from tkinter import ttk
-
-    name_var = tk.StringVar()
-    name_Label = tk.Label(root, text=text,
-                          fg=get_fg())
-    name_Label.place(x=a, y=b)
-    name_entry = ttk.Entry(
-        root, textvariable=name_var, width=25)
-    name_entry.place(x=c, y=d)
 
 
 def get_background():
@@ -53,23 +110,8 @@ def get_fg():
     return fg
 
 
-def create_frame(root, height, width):
-    """"Function that creates Frame with arbitrary dimensions
-    """
-    import customtkinter
-
-    frame = customtkinter.CTkFrame(master=root,
-                                   width=width,
-                                   height=height,
-                                   corner_radius=25,
-                                   fg_color="white",
-
-                                   )
-    frame.place(x=300, y=100)
-
-
 def get_header_font():
-    font_style = 'Universe', '18', 'bold'
+    font_style = 'Times New Roman', '18', 'bold italic'
     return font_style
 
 
@@ -79,13 +121,11 @@ def get_label_font():
 
 
 def get_status_font():
-    font_style = 'arial', '8'
+    font_style = 'arial', '8', 'bold'
     return font_style
 
 
 def get_image(image_name, root):
-    import tkinter as tk
-    from PIL import Image, ImageTk
 
     root_folder_path = 'media'
     load = Image.open(f"{root_folder_path}/{image_name}")
@@ -96,52 +136,18 @@ def get_image(image_name, root):
     label_basil1.place(x=0, y=0)
 
 
-def create_button(root, text, controller, page, x, y):
-    import customtkinter
+def login(root, text, a, b, c, d):
 
-    button = customtkinter.CTkButton(master=root,
-                                     width=100,
-                                     height=15,
-                                     border_width=0,
-                                     corner_radius=12,
-                                     bg_color="white",
-                                     text=text,
-                                     command=lambda: controller.show_frame(page))
-    button.place(x=x, y=y)
-
-    return button
-
-
-def create_header(root, text, x, y):
-    from tkinter import ttk
-    header = ttk.Label(root, text=text, background="white",
-                       foreground=get_foreground(), font=get_header_font())
-    header.place(x=x, y=y)
-    return header
-
-
-def create_label(root, text, x, y):
-    from tkinter import ttk
-    label = ttk.Label(root, text=text, background="white",
-                      foreground=get_foreground(), font=get_label_font())
-    label.place(x=x, y=y)
-    return label
-
-
-def create_smaller_label(root, text, x, y):
-    from tkinter import ttk
-    label = ttk.Label(root, text=text, background='white',
-                      foreground=get_foreground(), font=get_status_font())
-    label.place(x=x, y=y)
-    return label
+    name_var = tk.StringVar()
+    name_Label = tk.Label(root, text=text,
+                          fg=get_fg())
+    name_Label.place(x=a, y=b)
+    name_entry = ttk.Entry(
+        root, textvariable=name_var, width=25)
+    name_entry.place(x=c, y=d)
 
 
 def forgot_password():
-
-    import tkinter as tk
-    from tkinter import ttk
-    from tkinter import messagebox
-    import sqlite3
 
     new_window = Toplevel(background="white")
     new_window.title("Reset password")
@@ -174,7 +180,7 @@ def forgot_password():
 
     def change_password():
 
-        conn = sqlite3.connect('Sensors.db')
+        conn = sqlite3.connect('Pyflora.db')
         c = conn.cursor()
         c.execute("SELECT * FROM UserData WHERE Username=?",
                   [username_entry.get()])

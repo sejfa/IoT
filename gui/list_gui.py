@@ -1,4 +1,4 @@
-from gui import hosta_gui, basil_gui
+from gui import hosta_gui, basil_gui, add_plant_gui
 from tkinter import ttk
 import tkinter as tk
 from utils.util import get_image, create_button, create_label, create_header, get_foreground
@@ -36,4 +36,4 @@ class SecondPage(tk.Frame):
         create_button(self, "Open", controller,
                       hosta_gui.HostaPage, 280, 445,)
         create_button(self, "Next", controller,
-                      basil_gui.BasilPage, 660, 450)
+                      add_plant_gui.AddPlant, 660, 450)

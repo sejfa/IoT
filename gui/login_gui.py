@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
-from gui import list_gui, basil_gui, hosta_gui, signin_gui
+from gui import list_gui, basil_gui, hosta_gui, signin_gui, add_plant_gui
 import sqlite3
 import customtkinter
 
@@ -12,7 +12,7 @@ class LoginMenu(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         get_image('indoor_trees.jpg', self)
-        create_frame(self, 300, 200)
+        create_frame(self, 300, 200, 300, 100)
         create_label(self, "Py Flora", 360, 110)
 
         username_var = tk.StringVar()
@@ -44,7 +44,7 @@ class LoginMenu(tk.Frame):
             password_entry.delete(0, 25)
 
         def use_userdata():
-            conn = sqlite3.connect('Sensors.db')
+            conn = sqlite3.connect('PyFlora.db')
             c = conn.cursor()
 
             c.execute("SELECT Username,Password FROM UserData WHERE (Username=? AND Password=?)",
@@ -69,6 +69,7 @@ class LoginMenu(tk.Frame):
                 clear_user_data()
             else:
                 use_userdata()
+                clear_user_data()
 
         signup_button = tk.Button(
             self, text="Sign up", font=('times', 8, 'bold underline'), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground='#4D4D4D', command=lambda: controller.show_frame(signin_gui.SigninMenu))
@@ -96,7 +97,7 @@ class Application(tk.Tk):
         self.resizable(width=False, height=False)
 
         self.frames = {}
-        for i in (LoginMenu, signin_gui.SigninMenu, list_gui.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage):
+        for i in (LoginMenu, signin_gui.SigninMenu, list_gui.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, add_plant_gui.AddPlant):
             frame = i(window, self)
             self.frames[i] = frame
             frame.grid(row=0, column=0, sticky="nsew")
