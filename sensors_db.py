@@ -154,7 +154,7 @@ def insert_salinity_data():
 
 
 create_sensor_table()
-insert_plant_data()
+#insert_plant_data()
 # insert_humidity_data()
 # insert_temperature_data()
 # insert_brightness_data()

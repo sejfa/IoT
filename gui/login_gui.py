@@ -1,8 +1,9 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import FLAT, ttk
 from tkinter import messagebox
 from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
 from gui import list_gui, basil_gui, hosta_gui, signin_gui, add_plant_gui
+
 import sqlite3
 import customtkinter
 
@@ -18,20 +19,21 @@ class LoginMenu(tk.Frame):
         username_var = tk.StringVar()
         create_smaller_label(self, "Username", 320, 150)
 
-        username_entry = customtkinter.CTkEntry(
-            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=username_var)
+        username_entry = tk.Entry(
+            master=self, width=25, fg="black", bg="white", border=0, textvariable=username_var)
         username_entry.place(x=320, y=170)
-
-        """username_entry = ttk.Entry(
-            self, textvariable=username_var, width=25)
-        username_entry.place(x=320, y=170)
-        """
+        username_line = tk.Canvas(self, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
+        username_line.place(x=320, y=190)
+        
         password_var = tk.StringVar()
         create_smaller_label(self, "Password", 320, 200)
 
-        password_entry = customtkinter.CTkEntry(
-            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=password_var, show="*")
+        password_entry = tk.Entry(
+            master=self, width=25,fg="black", bg="white", border=0, textvariable=password_var, show="*")
         password_entry.place(x=320, y=220)
+        password_line = tk.Canvas(self, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
+        password_line.place(x=320, y=240)
+
 
         forgot_password_button = tk.Button(
             self, text="Forgot password?", font=('times', 8), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground="#4D4D4D", command=forgot_password)
