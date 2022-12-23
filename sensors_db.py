@@ -63,18 +63,18 @@ def insert_plant_data():
         3, "Hosta", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\hosta.jpg")
     insertdata(
         4, "Lilies", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lilie.jpg")
-    insertdata(5, "Lavender",
-               "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lavender.jpg")
+    insertdata(
+        5, "Lavender","C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lavender.jpg")
     insertdata(
         6, "Lemon", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lemon.jpg")
     insertdata(
         7, "Mint", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\mint.jpg")
     insertdata(
-        8, "Rose", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\mint.jpg")
-    insertdata(9, "Rosemary",
-               "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\mint.jpg")
-    insertdata(10, "Origano",
-               "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\mint.jpg")
+        8, "Rose", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\Rose.jpg")
+    insertdata(
+        9, "Rosemary","C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\Rosemary.jpg")
+    insertdata(
+        10, "Origano","C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\oregano.jpg")
 
 
 def insert_humidity_data():
@@ -154,7 +154,7 @@ def insert_salinity_data():
 
 
 create_sensor_table()
-#insert_plant_data()
+insert_plant_data()
 # insert_humidity_data()
 # insert_temperature_data()
 # insert_brightness_data()

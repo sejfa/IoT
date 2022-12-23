@@ -51,7 +51,7 @@ def create_button(root, text, controller, page, x, y):
 
 def create_header(root, text, x, y):
 
-    header = ttk.Label(root, text=text, background="white",
+    header = ttk.Label(root, text=text, background="#f6f6f6",
                        foreground=get_foreground(), font=get_header_font())
     header.place(x=x, y=y)
     return header
@@ -71,6 +71,14 @@ def create_smaller_label(root, text, x, y):
                       foreground=get_foreground(), font=get_status_font())
     label.place(x=x, y=y)
     return label
+
+def small_label(root, text, x, y):
+
+    label = ttk.Label(root, text=text, background='#f6f6f6',
+                      foreground=get_foreground(), font=get_status_font())
+    label.place(x=x, y=y)
+    return label
+
 
 
 def formatted_date():

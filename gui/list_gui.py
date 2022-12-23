@@ -10,12 +10,13 @@ class SecondPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, background="white")
 
-        get_image('bc.jpg',self)
+        get_image('gp.jpg',self)
 
         def add_plant_menu():
             f1.destroy()
             controller.show_frame(add_plant_gui.AddPlant)
             toggle_win()
+            f1.destroy()
 
 
         def toggle_win():

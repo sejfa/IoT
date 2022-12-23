@@ -21,25 +21,25 @@ class LoginMenu(tk.Frame):
 
         username_entry = tk.Entry(
             master=self, width=25, fg="black", bg="white", border=0, textvariable=username_var)
-        username_entry.place(x=320, y=170)
+        username_entry.place(x=320, y=175)
         username_line = tk.Canvas(self, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
-        username_line.place(x=320, y=190)
+        username_line.place(x=320, y=195)
         
         password_var = tk.StringVar()
         create_smaller_label(self, "Password", 320, 200)
 
         password_entry = tk.Entry(
             master=self, width=25,fg="black", bg="white", border=0, textvariable=password_var, show="*")
-        password_entry.place(x=320, y=220)
+        password_entry.place(x=320, y=230)
         password_line = tk.Canvas(self, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
-        password_line.place(x=320, y=240)
+        password_line.place(x=320, y=245)
 
 
         forgot_password_button = tk.Button(
             self, text="Forgot password?", font=('times', 8), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground="#4D4D4D", command=forgot_password)
-        forgot_password_button.place(x=395, y=245)
+        forgot_password_button.place(x=395, y=250)
 
-        create_smaller_label(self, "Don't have an account?", 320, 330)
+        create_smaller_label(self, "Don't have an account?", 320, 340)
 
         def clear_user_data():
             username_entry.delete(0, 25)
@@ -64,7 +64,7 @@ class LoginMenu(tk.Frame):
         def log_in():
             if username_entry.get() == "bruce" and password_entry.get() == '1234':
                 controller.show_frame(list_gui.SecondPage)
-                messagebox.showinfo("Success", "Successfully logged in!")
+                
 
             elif username_entry.get() == '' or password_entry.get() == '':
                 messagebox.showerror("Error", "All fields are required !")
@@ -75,7 +75,7 @@ class LoginMenu(tk.Frame):
 
         signup_button = tk.Button(
             self, text="Sign up", font=('times', 8, 'bold underline'), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground='#4D4D4D', command=lambda: controller.show_frame(signin_gui.SigninMenu))
-        signup_button.place(x=320, y=350)
+        signup_button.place(x=320, y=360)
 
         login_button = customtkinter.CTkButton(master=self,
                                                width=100,
