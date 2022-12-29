@@ -36,8 +36,8 @@ class LoginMenu(tk.Frame):
 
 
         forgot_password_button = tk.Button(
-            self, text="Forgot password?", font=('times', 8), bg='white', fg=get_foreground(), bd=0, activebackground='white', activeforeground="#4D4D4D", command=forgot_password)
-        forgot_password_button.place(x=395, y=250)
+            self, text="Forgot password?", font=('times', 8), bg='white', fg='black', bd=0, activebackground='white', activeforeground="#4D4D4D", command=forgot_password)
+        forgot_password_button.place(x=395, y=255)
 
         create_smaller_label(self, "Don't have an account?", 320, 340)
 

@@ -8,6 +8,8 @@ import customtkinter
 import sqlite3
 
 
+
+
 def add_plant():
 
     conn = sqlite3.connect('PyFlora.db')
@@ -16,6 +18,11 @@ def add_plant():
     result = c.fetchall()
     new_list = [i for i, in result]
     return new_list
+
+
+
+def clear(name):
+    name.delete(0,25)
 
 
 def create_frame(root, height, width, x, y):
@@ -206,7 +213,7 @@ def forgot_password():
             clear_data()
 
         conn.commit()
-        conn.close()
+        
 
     def submit():
 

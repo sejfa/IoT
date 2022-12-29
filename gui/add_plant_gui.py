@@ -1,13 +1,18 @@
+from email.errors import MessageError
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
-from turtle import bgcolor
 #from gui import list_gui
-from utils.util import get_image, small_label, create_header
+from utils.util import get_image, small_label, create_header, clear
 import customtkinter
-from PIL import Image
+from PIL import Image, ImageTk
 from gui import list_gui
 import sqlite3
 import os
+
+
+
+
+
 
 class AddPlant(tk.Frame):
     def __init__(self, parent, controller):
@@ -17,8 +22,9 @@ class AddPlant(tk.Frame):
 
         """frame = customtkinter.CTkFrame(
             master=self, width=400, height=250, border_width=4, fg_color="white", border_color="grey")
-        frame.place(x=150, y=30)
-"""
+        frame.place(x=150, y=30)"""
+
+
         create_header(self, "Records of Plants", 110, 60)
 
         tabview = customtkinter.CTkTabview(
@@ -32,85 +38,132 @@ class AddPlant(tk.Frame):
     
 
         #fetching column Plant
-        conn = sqlite3.connect('PyFlora.db')
+        """conn = sqlite3.connect('PyFlora.db')
         c = conn.cursor()
         c.execute("SELECT Plant FROM RecordsOfPlants")
         result = c.fetchall()
-        new_list = [i for i, in result]
+        new_list = [i for i, in result]"""
         
-        #importing Images from directory
-
+        
+        ################################   tab1 Add plant  #######################################
+        
         def openFile():
-            global filepath
-            filepath = filedialog.askopenfilenames(initialdir="C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
+            global filepath, file_label
+            filepath = filedialog.askopenfilename(initialdir="C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
+            
+            
+            base_filename = os.path.basename(filepath)
+            file_label = ttk.Label(tab1, text=base_filename, background="#f6f6f6")
+            file_label.place(x=95, y=90)   
 
-            """if filepath is not None:
-                # this gets the full path of your selected file
-                filename = filepath.name
-                # this is only selecting the name with file extension
-                filename = os.path.basename(filename)
-                # then create a new label with the filename
-                file_label = ttk.Label(tab1, text=filename, background="#f6f6f6")
-                file_label.place(x=105, y=90) """  
-
-
-
-       
 
         small_label(tab1, "Add plant", 10, 35)
         small_label(tab1, "Add Image", 10, 90)
         
-        # tab1 Add plant
-        options = tk.StringVar()
-        drop = customtkinter.CTkOptionMenu(
-            tab1, values=new_list, variable=options, corner_radius=8,button_color="#a8a8a8", button_hover_color="#9e9e9e",fg_color="#f6f6f6",text_color="black")
-        drop.place(x=100, y=30)
-
-
-
-
-        # tab2 Update plant
-        
-
+        add_entry_var = tk.StringVar()
+        add_entry = customtkinter.CTkEntry(
+            tab1, textvariable=add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
+        add_entry.place(x=135, y=30)
 
         
-        def convert_image_into_binary(filename):
-            with open(filename, 'rb') as file:
-                photo_image = file.read()
-            return photo_image
+        def insert_data():
+            global filepath, data
+            read_file = open(filepath,'rb')
+            read_file = read_file.read()
+            
 
-        def insert_plant_and_image():
-            conn = sqlite3.connect('PyFlora.db')
-            c = conn.cursor()
+            try:
+                conn = sqlite3.connect('PyFlora.db')
+                c = conn.cursor()
+                data = (add_entry.get(),read_file)
 
-            for image in filepath:
-                insert_photo = convert_image_into_binary(image)
+                c.execute("SELECT Plant FROM RecordsOfPlants WHERE (Plant=?)",
+                        [add_entry.get()])
                 
-                c.execute("INSERT INTO RecordsOfPlants (Plant, Photo) VALUES (?,:image)",
-                        ([options.get()],{'image':insert_photo}))
-            conn.commit()
-            messagebox.showinfo("Success", "Plant is successfully added!")
+                result = c.fetchone()
+                
+                if result:
+                    messagebox.showerror(
+                        "Error", "Plant is already in database!")
+                    clear(add_entry)
+                
+                elif add_entry.get() == '':
+                    messagebox.showerror("Error","All fields are required!")
+                else:
+                    c.execute("INSERT INTO RecordsOfPlants (Plant, Photo) VALUES (?,?)",
+                        (data))
+                    conn.commit()
+                    messagebox.showinfo("Success", "Plant is successfully added!")
+                    clear(add_entry)
 
+            except sqlite3.Error as error:
+                    print("Failed to add data", error)
+
+
+
+        ################################   tab2 Update plant  #####################################
+        
+        small_label(tab2, "Update plant", 10, 35)
+        small_label(tab2, "Change Image", 10, 90)
+
+        plant_var = tk.StringVar()
+        update_plant_entry = customtkinter.CTkEntry(tab2, textvariable=plant_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
+        update_plant_entry.place(x=135, y=30)
+
+        update_var = tk.StringVar()
+        update_image_entry = customtkinter.CTkEntry(tab2, textvariable=update_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
+        update_image_entry.place()
+
+        conn = sqlite3.connect('Pyflora.db')
+        c = conn.cursor()
+
+        def insert_updated_data():
+            global data
+            
+            c.execute("SELECT * FROM RecordsOfPlants WHERE Plant=?",
+                [update_plant_entry.get()])
+
+            result = c.fetchone()
+            
+            if result:
+                c.execute("UPDATE RecordsOfPlants set Plant=? WHERE Plant_id=?",
+                    [update_plant_entry.get()])
+                
+                conn.commit()
+
+            
+        
+        def check_if_plant_exists():
+            
+            c.execute("SELECT Plant FROM RecordsOfPlants WHERE (Plant=?)",
+                    [update_plant_entry.get()])
+
+            result = c.fetchone()
+            
+            if result:
+                insert_updated_data()
+                messagebox.showinfo("Success", "Successfully updated plant!")
+                clear(update_plant_entry)
+            else:
+                messagebox.showerror(
+                    "Error", "The entered plant is not in database")
+                clear(update_plant_entry)
 
 
         def update_data():
-            conn = sqlite3.connect('PyFlora.db')
-            c = conn.cursor()
+            
+            try:
+                if update_plant_entry.get() == '':
+                    messagebox.showerror("Error", "All fields are required !")
+            
+                else:
+                    check_if_plant_exists()
 
-            c.execute("SELECT * FROM RecordsOfPlants WHERE Plant=?",
-                  [options.get()])
-
-            result = c.fetchone()
-            if result:
-                c.execute("UPDATE RecordsOfPlants set Plant=? WHERE Username=? ",
-                        [new_password_entry.get(), username_entry.get()])
-                messagebox.showinfo(
-                    "Success", "Successfully changed password, You can now login with new password!")
-
-             
-            conn.commit()
+            except sqlite3.Error as error:
+                print("Failed to update data", error)
 
 
+    
         def delete_data():
             pass
         
@@ -119,23 +172,27 @@ class AddPlant(tk.Frame):
 
         
         open_button = customtkinter.CTkButton(
-            master=tab1, width=90, text="Choose File", height=10, compound="left", command=openFile)
+            master=tab1, width=90, text="Choose Image", height=10, compound="left", command=lambda:openFile())
 
-            
+        change_button = customtkinter.CTkButton(master=tab2, width=90, text="Choose Image", height=10, compound="left", command=lambda:openFile())
+        
+        save_image = customtkinter.CTkImage(Image.open(
+            "media\icons8-save-100.png").resize((20, 20), Image.ANTIALIAS))
+
         save_button = customtkinter.CTkButton(
-            master=tab1, width=90, text="Save", fg_color="#e2e2e2", hover_color="#cfcfcf", text_color="black",  height=10, compound="left", command=insert_plant_and_image)
+            master=tab1, width=90, image=save_image, text="Save",compound="left", command=insert_data)
 
-        home = customtkinter.CTkImage(Image.open(
+        home_image = customtkinter.CTkImage(Image.open(
             "media\icons8-home-256.png").resize((20, 20), Image.ANTIALIAS))
 
         home_button = customtkinter.CTkButton(
-            master=self, text="", image=home, width=80, height=10, command=lambda: controller.show_frame(list_gui.SecondPage))
+            master=self, text="", image=home_image, width=80, height=10, command=lambda: controller.show_frame(list_gui.SecondPage))
 
-        update = customtkinter.CTkImage(Image.open(
+        update_image = customtkinter.CTkImage(Image.open(
             "media\icons8-update-100.png").resize((20, 20), Image.ANTIALIAS))
 
         update_button = customtkinter.CTkButton(
-            master=tab2, text="Update", image=update, width=100, height=10, command=lambda: controller.show_frame(list_gui.SecondPage))
+            master=tab2, text="Update", image=update_image, width=100, height=10, command=update_data)
 
         delete = customtkinter.CTkImage(Image.open(
             "media\del.png").resize((20, 20), Image.ANTIALIAS))
@@ -144,8 +201,9 @@ class AddPlant(tk.Frame):
             master=tab3, text="Delete", fg_color="red2", hover_color="red3", image=delete, width=100, height=10, command=lambda: controller.show_frame(list_gui.SecondPage))
 
 
-        open_button.place(x=130, y=90)
-        update_button.place(x=20, y=50)
+        open_button.place(x=185, y=90)
+        change_button.place(x=185,y=90)
+        update_button.place(x=110, y=170)
         delete_button.place(x=100, y=100)
         home_button.place(x=300, y=400)
         save_button.place(x=120, y=170)

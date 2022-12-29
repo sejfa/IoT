@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk,FLAT
 import datetime as dt
 import sqlite3
 from tkinter import messagebox
@@ -22,30 +22,42 @@ class SigninMenu(tk.Frame):
         name_var = tk.StringVar()
         create_smaller_label(self, "Name", 70, 110)
 
-        name_entry = customtkinter.CTkEntry(
-            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=name_var)
-        name_entry.place(x=70, y=130)
+        name_entry = tk.Entry(
+            master=self, width=25, fg="black", bg="white", border=0, textvariable=name_var)
+        name_entry.place(x=70, y=135)
+        
+        name_line = tk.Canvas(self, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
+        name_line.place(x=70, y=150)
 
         surname_var = tk.StringVar()
         create_smaller_label(self, "Surname", 70, 160)
 
-        surname_entry = customtkinter.CTkEntry(
-            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=surname_var)
-        surname_entry.place(x=70, y=180)
+        surname_entry = tk.Entry(
+            master=self, width=25,fg="black", bg="white", border=0, textvariable=surname_var)
+        surname_entry.place(x=70, y=185)
+        
+        surname_line = tk.Canvas(self, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
+        surname_line.place(x=70, y=205)
 
         username_var = tk.StringVar()
         create_smaller_label(self, "Username", 70, 210)
 
-        username_entry = customtkinter.CTkEntry(
-            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=username_var)
-        username_entry.place(x=70, y=230)
+        username_entry = tk.Entry(
+            master=self, width=25,fg="black", bg="white", border=0, textvariable=username_var)
+        username_entry.place(x=70, y=235)
+        
+        username_line = tk.Canvas(self, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
+        username_line.place(x=70, y=255)
 
         password_var = tk.StringVar()
         create_smaller_label(self, "Password", 70, 260)
 
-        password_entry = customtkinter.CTkEntry(
-            master=self, width=155, height=25, bg_color="white", border_width=2, corner_radius=10, textvariable=password_var, show="*")
-        password_entry.place(x=70, y=280)
+        password_entry = tk.Entry(
+            master=self, width=25,fg="black", bg="white", border=0, textvariable=password_var, show="*")
+        password_entry.place(x=70, y=285)
+
+        password_line = tk.Canvas(self, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
+        password_line.place(x=70, y=305)
 
         create_smaller_label(self, "Already have an account?", 70, 350)
 
