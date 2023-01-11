@@ -85,6 +85,7 @@ class AddPlant(tk.Frame):
                 
                 elif add_entry.get() == '':
                     messagebox.showerror("Error","All fields are required!")
+                
                 else:
                     c.execute("INSERT INTO RecordsOfPlants (Plant, Photo) VALUES (?,?)",
                         (data))
@@ -104,7 +105,7 @@ class AddPlant(tk.Frame):
 
 
 
-
+        
         ################################   tab2 Update plant  #####################################
         def changeFile():
             global filepath2, file_label
@@ -127,6 +128,7 @@ class AddPlant(tk.Frame):
         result = c.fetchall()
         new_list = [item for i in result for item in i]
         
+
         dropmenu_var = tk.StringVar()
         dropmenu = ttk.OptionMenu(tab2, dropmenu_var, *new_list)
         dropmenu.place(x=220 ,y=80)    
@@ -140,8 +142,7 @@ class AddPlant(tk.Frame):
         update_image_entry.place()
 
     
-        conn = sqlite3.connect('Pyflora.db')
-        c = conn.cursor()
+
 
         def insert_updated_data():
             
@@ -206,10 +207,38 @@ class AddPlant(tk.Frame):
     
 
 
+        ################################   tab3 Delete plant  #####################################
         
         
+        small_label(tab3, "Select plant", 10, 35)
+
+        del_plant_var = tk.StringVar()
+        delete_plant_entry = customtkinter.CTkEntry(tab3, textvariable=del_plant_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
+        delete_plant_entry.place(x=135, y=30)        
+
+
         def delete_data():
-            pass
+            
+            try:
+                conn = sqlite3.connect('PyFlora.db')
+                c = conn.cursor()
+                c.execute("SELECT * FROM RecordsOfPlants WHERE Plant=?",
+                    [del_plant_var.get().capitalize()])
+
+                result = c.fetchone()
+                
+                if result:
+                    answer = messagebox.askyesno("Confirmation","Are you sure you want to delete selected plant?")
+                    if answer:
+                         c.execute("DELETE FROM RecordsOfPlants WHERE Plant=?",
+                        [del_plant_var.get().capitalize()])
+                    conn.commit()
+                else:
+                    messagebox.showerror("Error","The entered plant is not in database!")
+                    clear(delete_plant_entry)
+
+            except sqlite3.Error as error:
+                    print("Failed to update data", error)
         
 
 
@@ -217,7 +246,7 @@ class AddPlant(tk.Frame):
             "media\del.png").resize((20, 20), Image.ANTIALIAS))
 
         delete_button = customtkinter.CTkButton(
-            master=tab3, text="Delete", fg_color="red2", hover_color="red3", image=delete, width=100, height=10, command=lambda: controller.show_frame(list_gui.SecondPage))
+            master=tab3, text="Delete", fg_color="red2", hover_color="red3", image=delete, width=100, height=10, command=delete_data)
 
         
 

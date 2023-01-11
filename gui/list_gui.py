@@ -53,8 +53,8 @@ class SecondPage(tk.Frame):
 
             #bttn(0,80,'A C E R','#e8eded','white',None)
             #bttn(0,117,'D E L L','#e6e6e6','white',None)
-            bttn(0,154,'H O M E','#e6e6e6','white',None)
-            bttn(0,191,'A D D  P L A N T','#e6e6e6','white',add_plant_menu)
+            bttn(0,154,'P O T S','#e6e6e6','white',None)
+            bttn(0,191,'P L A N T S','#e6e6e6','white',add_plant_menu)
             bttn(0,228,'A B O U T','#e6e6e6','white',None)
             #bttn(0,265,'A C E R','#e6e6e6','white',None)
 
