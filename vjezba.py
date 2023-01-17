@@ -1,43 +1,44 @@
 import tkinter as tk
 
-class CustomText(tk.Text):
-    def __init__(self, *args, **kwargs):
-        """A text widget that supports a <<TextChanged>> event"""
-        tk.Text.__init__(self, *args, **kwargs)
+class App():
+    def __init__(self, parent):
+        self.parent = parent
+        self.options = ['one', 'two', 'three']
 
-        self.tk.eval('''
-            proc widget_proxy {widget widget_command args} {
+        self.om_variable = tk.StringVar(self.parent)
+        self.om_variable.set(self.options[0])
+        self.om_variable.trace('w', self.option_select)
 
-                # call the real tk widget command with the real args
-                set result [uplevel [linsert $args 0 $widget_command]]
+        self.om = tk.OptionMenu(self.parent, self.om_variable, *self.options)
+        self.om.grid(column=0, row=0)
 
-                # if the contents changed, generate an event we can bind to
-                if {([lindex $args 0] in {insert replace delete})} {
-                    event generate $widget <<TextModified>> -when tail
-                }
-                # return the result from the real widget command
-                return $result
-            }
+        self.label = tk.Label(self.parent, text='Enter new option')
+        self.entry = tk.Entry(self.parent)
+        self.button = tk.Button(self.parent, text='Add option to list', command=self.add_option)
 
-        ''')
+        self.label.grid(column=1, row=0)
+        self.entry.grid(column=1, row=1)
+        self.button.grid(column=1, row=2)
 
-        # this replaces the underlying widget with the proxy
-        self.tk.eval('''
-            rename {widget} _{widget}
-            interp alias {{}} ::{widget} {{}} widget_proxy {widget} _{widget}
-        '''.format(widget=str(self)))
+        self.update_button = tk.Button(self.parent, text='Update option menu', command=self.update_option_menu)
+        self.update_button.grid(column=0, row=2)
 
-def update_char_count(event):
-    count = event.widget.count("1.0", "end-1c")
-    # count is a tuple; the character count is the first element
-    count = 0 if not count else count[0]
-    label.configure(text=f"Characters: {count}")
+    def update_option_menu(self):
+        menu = self.om["menu"]
+        menu.delete(0, "end")
+        for string in self.options:
+            menu.add_command(label=string, 
+                             command=lambda value=string: self.om_variable.set(value))
+
+    def add_option(self):
+         self.options.append(self.entry.get())
+         self.entry.delete(0, 'end')
+         print (self.options)
+
+    def option_select(self, *args):
+        print (self.om_variable.get())
+
 
 root = tk.Tk()
-text = CustomText(root)
-label = tk.Label(root, anchor="w")
-label.pack(side="bottom", fill="x")
-text.pack(fill="both", expand=True)
-
-text.bind("<<TextModified>>", update_char_count)
+App(root)
 root.mainloop()

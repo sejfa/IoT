@@ -10,6 +10,7 @@ class SecondPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, background="white")
 
+
         get_image('gp.jpg',self)
 
         def add_plant_menu():
