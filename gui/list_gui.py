@@ -31,11 +31,11 @@ class SecondPage(tk.Frame):
             
                 def on_entera(e):
                     myButton1['background'] = bcolor #ffcc66
-                    myButton1['foreground']= '#262626'  #000d33
+                    myButton1['foreground'] = '#262626'  #000d33
 
                 def on_leavea(e):
                     myButton1['background'] = fcolor
-                    myButton1['foreground']= '#262626'
+                    myButton1['foreground'] = '#262626'
 
                 myButton1 = Button(f1,text=text,
                             width=42,

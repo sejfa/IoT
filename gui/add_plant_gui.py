@@ -1,3 +1,4 @@
+from multiprocessing import Value
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 #from gui import list_gui
@@ -16,6 +17,7 @@ class AddPlant(tk.Frame):
         
         get_image("add_plant.jpg", self)
         create_header(self, "Records of Plants", 110, 60)
+    
         
         self.tabview = customtkinter.CTkTabview(self, fg_color="#f6f6f6", border_color="#f6f6f6", bg_color="#f6f6f6", height=300, width=320)
         self.tabview.place(x=50, y=100)
@@ -37,17 +39,14 @@ class AddPlant(tk.Frame):
         
         self.add_entry_var = tk.StringVar()
         self.add_entry = customtkinter.CTkEntry(self.tab1, textvariable=self.add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
-        self.add_entry.place(x=135, y=30)
+        self.add_entry.place(x=145, y=30)
 
         self.conn = sqlite3.connect('PyFlora.db')
-        self.c = self.conn.cursor()
-            
-            
+        self.c = self.conn.cursor() 
         self.c.execute("SELECT Plant FROM RecordsOfPlants")
         self.result = self.c.fetchall()
         self.new_list = [item for i in self.result for item in i]
-
-
+                        
         self.open_button = customtkinter.CTkButton(
             master=self.tab1, width=90, text="Choose Image", height=10, compound="left", command=self.openFile)
         
@@ -59,8 +58,7 @@ class AddPlant(tk.Frame):
 
         self.dropmenu_var = tk.StringVar()
         self.dropmenu = ttk.OptionMenu(self.tab2, self.dropmenu_var, *self.new_list)
-        self.dropmenu.place(x=200 ,y=30)
-            
+        self.dropmenu.place(x=210 ,y=30)
         self.update_var = tk.StringVar()
         self.update_image_entry = customtkinter.CTkEntry(self.tab2, textvariable=self.update_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
         self.update_image_entry.place()
@@ -74,7 +72,7 @@ class AddPlant(tk.Frame):
 
         self.del_plant_var = tk.StringVar()
         self.delete_plant_menu = ttk.OptionMenu(self.tab3, self.del_plant_var, *self.new_list)
-        self.delete_plant_menu.place(x=200 ,y=30) 
+        self.delete_plant_menu.place(x=210 ,y=30) 
 
         self.delete = customtkinter.CTkImage(Image.open(
             "media\del.png").resize((20, 20), Image.ANTIALIAS))
@@ -90,21 +88,42 @@ class AddPlant(tk.Frame):
             master=self, text="", image=self.home_image, width=80, height=10, command=lambda: controller.show_frame(list_gui.SecondPage))
 
         
-        self.open_button.place(x=185, y=90)
-        self.change_button.place(x=185,y=90)
+        self.open_button.place(x=195, y=90)
+        self.change_button.place(x=195,y=90)
         self.save_button.place(x=100, y=170)
         self.update_button.place(x=100, y=170)
         self.delete_button.place(x=100, y=100)
         self.home_button.place(x=300, y=400)
 
+    
+    def updated_list(self):
+        self.new_list.append(self.add_entry.get().capitalize())
+        self.add_entry.delete(0, 'end')
+        menu = self.dropmenu["menu"]
+        menu.delete(0, "end")
+        for plant in self.new_list:
+            menu.add_command(label=plant, 
+                command=lambda value=plant: self.dropmenu_var.set(value))
+    
+        menu = self.delete_plant_menu["menu"]
+        menu.delete(0, "end")
+        for del_plant in self.new_list:
+            menu.add_command(label=del_plant, 
+                command=lambda value=del_plant: self.del_plant_var.set(value))
+
+
+    def delete_selected_item(self):
+        selected = self.delete_plant_menu['menu'].index(self.del_plant_var.get())
+        self.delete_plant_menu['menu'].delete(selected)
+        self.del_plant_var.set(self.delete_plant_menu['menu'].entrycget(0,"label"))
+        
 
     def openFile(self):
         self.filepath = filedialog.askopenfilename(initialdir="C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
         self.base_filename = os.path.basename(self.filepath)
         self.file_label = ttk.Label(self.tab1, text=self.base_filename, background="#f6f6f6")
-        self.file_label.place(x=95, y=90)
+        self.file_label.place(x=105, y=90)
 
-        
         
     def insert_data(self):
         self.read_file = open(self.filepath,'rb')
@@ -118,24 +137,22 @@ class AddPlant(tk.Frame):
             if self.result:
                 messagebox.showerror("Error", "Plant is already in the database!")
                 clear(self.add_entry)
+           
             elif self.add_entry.get() == '':
                 messagebox.showerror("Error", "All fields are required!")
+           
             else:
                 self.c.execute("INSERT INTO RecordsOfPlants (Plant, Photo) VALUES (?,?)",
                         (self.add_entry.get().capitalize(), self.read_file))
+                self.updated_list()
                 self.conn.commit()
                 messagebox.showinfo("Success", "Plant is successfully added!")
                 clear(self.add_entry)
-                
+                self.file_label.destroy()
+
         except sqlite3.Error as error:
             print("Failed to add data", error)
-        finally:
-            self.conn.close()
-
-
-    
-        self.conn = sqlite3.connect('PyFlora.db')
-        self.c = self.conn.cursor()
+        
 
 
     def changeFile(self):
@@ -143,7 +160,7 @@ class AddPlant(tk.Frame):
         self.filepath = filedialog.askopenfilename(initialdir="C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
         base_filename = os.path.basename(self.filepath)
         self.file_label = ttk.Label(self.tab2, text=base_filename, background="#f6f6f6")
-        self.file_label.place(x=95, y=90)
+        self.file_label.place(x=115, y=90)
 
 
     
@@ -151,7 +168,7 @@ class AddPlant(tk.Frame):
 
         self.read_file2 = open(self.filepath,'rb')
         self.read_file2 = self.read_file2.read()
-            
+        
         try:
             self.conn = sqlite3.connect('PyFlora.db')
             self.c = self.conn.cursor()
@@ -163,13 +180,12 @@ class AddPlant(tk.Frame):
             if self.result:
                 self.c.execute("UPDATE RecordsOfPlants set Photo=? WHERE Plant=?",
                     [self.read_file2, self.dropmenu_var.get()])
-                
-                self.conn.commit()
+
+            self.conn.commit()
         
         except sqlite3.Error as error:
                 print("Failed to update data", error)
-        finally:
-            self.conn.close()
+        
 
 
     def check_if_plant_exists(self):
@@ -195,7 +211,7 @@ class AddPlant(tk.Frame):
         
             else:
                 self.check_if_plant_exists()
-
+                self.file_label.destroy()
         except sqlite3.Error as error:
             print("Failed to update data", error)
 
@@ -205,16 +221,20 @@ class AddPlant(tk.Frame):
         try:
             self.conn = sqlite3.connect('PyFlora.db')
             self.c = self.conn.cursor()
+            
             self.c.execute("SELECT * FROM RecordsOfPlants WHERE Plant=?",
             [self.del_plant_var.get()])
-
             self.result = self.c.fetchone()
             
             if self.result:
                 self.answer = messagebox.askyesno("Confirmation","Are you sure you want to delete selected plant?")
                 if self.answer:
-                        self.c.execute("DELETE FROM RecordsOfPlants WHERE Plant=?",
+                    self.c.execute("DELETE FROM RecordsOfPlants WHERE Plant=?",
                     [self.del_plant_var.get()])
+                    self.delete_selected_item()
+                    selected = self.dropmenu['menu'].index(self.dropmenu_var.get())
+                    self.dropmenu['menu'].delete(selected)
+                    self.dropmenu_var.set(self.dropmenu['menu'].entrycget(0,"label"))    
                 self.conn.commit()
                 messagebox.showinfo("Success", "Successfully deleted plant!")
             else:
