@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import FLAT, ttk
 from tkinter import messagebox
 from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
-from gui import list_gui, basil_gui, hosta_gui, signin_gui, add_plant_gui
+from gui import basil_gui, hosta_gui, main_menu, signin_gui, add_plant_gui
 
 import sqlite3
 import customtkinter
@@ -64,7 +64,7 @@ class LoginMenu(tk.Frame):
                   [self._username_entry.get(), self._password_entry.get()])
         result = c.fetchone()
         if result:
-            self._controller.show_frame(list_gui.SecondPage)
+            self._controller.show_frame(main_menu.SecondPage)
         else:
             messagebox.showerror("Error", "Incorrect Username or password!")
             self._controller.show_frame(LoginMenu)
@@ -72,7 +72,7 @@ class LoginMenu(tk.Frame):
 
     def _log_in(self):
         if self._username_entry.get() == "bruce" and self._password_entry.get() == '1234':
-            self._controller.show_frame(list_gui.SecondPage)
+            self._controller.show_frame(main_menu.SecondPage)
         elif self._username_entry.get() == '' or self._password_entry.get() == '':
             messagebox.showerror("Error", "All fields are required !")
             self._clear_user_data()

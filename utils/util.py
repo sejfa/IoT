@@ -1,12 +1,10 @@
-import datetime as dt
-import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import Toplevel
-from PIL import Image, ImageTk
-import customtkinter
 import sqlite3
-
+import customtkinter
+import tkinter as tk
+from tkinter import *
+import datetime as dt
+from PIL import Image, ImageTk
+from tkinter import ttk, Toplevel, messagebox
 
 
 
@@ -24,6 +22,9 @@ def add_plant():
 def clear(name):
     name.delete(0,25)
 
+def clear_user_data(self):
+        self.username_entry.delete(0, 25)
+        self.password_entry.delete(0, 25)
 
 def create_frame(root, height, width, x, y):
     """"Function that creates Frame with arbitrary dimensions
@@ -54,6 +55,33 @@ def create_button(root, text, controller, page, x, y):
     button.place(x=x, y=y)
 
     return button
+
+
+def bttn(self,x,y,text,bcolor,fcolor,cmd):
+
+    def on_entera(e):
+        myButton1['background'] = bcolor #ffcc66
+        myButton1['foreground'] = '#262626'  #000d33
+
+    def on_leavea(e):
+        myButton1['background'] = fcolor
+        myButton1['foreground'] = '#262626'
+
+    myButton1 = Button(self,text=text,
+                width=35,
+                height=2,
+                fg='#262626',
+                border=0,
+                bg=fcolor,
+                activeforeground='#262626',
+                activebackground=bcolor,            
+                    command=cmd)
+                
+    myButton1.bind("<Enter>", on_entera)
+    myButton1.bind("<Leave>", on_leavea)
+
+    myButton1.place(x=x,y=y)
+
 
 
 def create_header(root, text, x, y):

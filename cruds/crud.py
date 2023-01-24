@@ -1,7 +1,9 @@
+import sqlite3
+
 
 # Fetching sensors data
 def get_hum():
-    import sqlite3
+    
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -13,7 +15,7 @@ def get_hum():
 
 
 def get_optimal_hum():
-    import sqlite3
+    
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -24,7 +26,7 @@ def get_optimal_hum():
 
 
 def get_temp():
-    import sqlite3
+    
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -36,7 +38,7 @@ def get_temp():
 
 
 def get_optimal_temp():
-    import sqlite3
+    
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -47,7 +49,7 @@ def get_optimal_temp():
 
 
 def get_bright():
-    import sqlite3
+    
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -59,7 +61,7 @@ def get_bright():
 
 
 def get_optimal_bright():
-    import sqlite3
+
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -70,7 +72,7 @@ def get_optimal_bright():
 
 
 def get_ph():
-    import sqlite3
+    
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -82,7 +84,6 @@ def get_ph():
 
 
 def get_optmal_ph():
-    import sqlite3
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -93,7 +94,6 @@ def get_optmal_ph():
 
 
 def get_sal():
-    import sqlite3
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -105,7 +105,7 @@ def get_sal():
 
 
 def get_optimal_sal():
-    import sqlite3
+    
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
@@ -113,6 +113,3 @@ def get_optimal_sal():
     fetch = c.fetchone()
     conn.close()
     return f"{fetch[0]}  {fetch[1]}"
-
-
-# Fetching plant data

@@ -1,25 +1,55 @@
-from gui import hosta_gui, basil_gui, add_plant_gui
 import tkinter as tk
-from utils.util import get_image, create_button, create_label, create_header, get_foreground
+import customtkinter
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
+from gui import hosta_gui, basil_gui, add_plant_gui
+from utils.util import get_image, create_button, create_label, create_header, get_foreground
 
 
 class SecondPage(tk.Frame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, background="white")
-
-
+        tk.Frame.__init__(self, parent)
+        
         get_image('gp.jpg',self)
+        
+        #self.f1=customtkinter.CTkFrame(self,width=500,height=220,bg_color='white',border_color='light grey')
+        #self.f1.place(x=190,y=170)
 
         def add_plant_menu():
-            f1.destroy()
             controller.show_frame(add_plant_gui.AddPlant)
-            toggle_win()
-            f1.destroy()
+            
 
+                #buttons
+        def bttn(self,x,y,text,bcolor,fcolor,cmd):
+        
+            def on_entera(e):
+                myButton1['background'] = bcolor #ffcc66
+                myButton1['foreground'] = '#262626'  #000d33
 
+            def on_leavea(e):
+                myButton1['background'] = fcolor
+                myButton1['foreground'] = '#262626'
+
+            myButton1 = Button(self,text=text,
+                        width=35,
+                        height=2,
+                        fg='#262626',
+                        border=0,
+                        bg=fcolor,
+                        activeforeground='#262626',
+                        activebackground=bcolor,            
+                            command=cmd)
+                        
+            myButton1.bind("<Enter>", on_entera)
+            myButton1.bind("<Leave>", on_leavea)
+
+            myButton1.place(x=x,y=y)
+
+        bttn(self,120,250,'    P O T    L I S T    ','#e6e6e6','white',None)
+        bttn(self,375,250,'  P L A N T    L I S T    ','#e6e6e6','white',add_plant_menu)
+        
+""""
         def toggle_win():
             global f1
             f1=Frame(self,width=300,height=500,bg='white')
@@ -53,7 +83,7 @@ class SecondPage(tk.Frame):
                 myButton1.place(x=x,y=y)
 
             #bttn(0,80,'A C E R','#e8eded','white',None)
-            #bttn(0,117,'D E L L','#e6e6e6','white',None)
+            bttn(0,117,'D E L L','#e6e6e6','white',None)
             bttn(0,154,'P O T S','#e6e6e6','white',None)
             bttn(0,191,'P L A N T S','#e6e6e6','white',add_plant_menu)
             bttn(0,228,'A B O U T','#e6e6e6','white',None)
@@ -99,9 +129,13 @@ class SecondPage(tk.Frame):
             border=0,
             bg='grey',
             activebackground='white').place(x=5,y=10)
+"""
 
 
         
+        
+
+
 
 
 

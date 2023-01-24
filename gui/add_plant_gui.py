@@ -1,13 +1,12 @@
-from multiprocessing import Value
-import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
-#from gui import list_gui
-from utils.util import get_image, small_label, create_header, clear
-import customtkinter
-from PIL import Image, ImageTk
-from gui import list_gui
-import sqlite3
 import os
+import sqlite3
+import tkinter as tk
+import customtkinter
+#from gui import list_gui
+from gui import main_menu
+from PIL import Image, ImageTk
+from tkinter import ttk, messagebox, filedialog
+from utils.util import get_image, small_label, create_header, clear
 
 
 
@@ -85,7 +84,7 @@ class AddPlant(tk.Frame):
             "media\icons8-home-256.png").resize((20, 20), Image.ANTIALIAS))
 
         self.home_button = customtkinter.CTkButton(
-            master=self, text="", image=self.home_image, width=80, height=10, command=lambda: controller.show_frame(list_gui.SecondPage))
+            master=self, text="", image=self.home_image, width=80, height=10, command=lambda: controller.show_frame(main_menu.SecondPage))
 
         
         self.open_button.place(x=195, y=90)
@@ -206,12 +205,14 @@ class AddPlant(tk.Frame):
     def update_data(self):
         
         try:
-            if not self.dropmenu_var.get():
+            if not self.dropmenu_var.get() == '':
                 messagebox.showerror("Error", "All fields are required !")
         
             else:
                 self.check_if_plant_exists()
                 self.file_label.destroy()
+                messagebox.showerror("Error", "All fields are required !")
+        
         except sqlite3.Error as error:
             print("Failed to update data", error)
 

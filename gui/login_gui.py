@@ -1,11 +1,11 @@
+import sqlite3
 import tkinter as tk
+import customtkinter
 from tkinter import FLAT, ttk
 from tkinter import messagebox
+from gui import basil_gui, hosta_gui, main_menu, signin_gui, add_plant_gui, plant_list
 from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
-from gui import list_gui, basil_gui, hosta_gui, signin_gui, add_plant_gui
 
-import sqlite3
-import customtkinter
 
 
 class LoginMenu(tk.Frame):
@@ -54,7 +54,6 @@ class LoginMenu(tk.Frame):
         self.username_entry.delete(0, 25)
         self.password_entry.delete(0, 25)
 
-    
     def use_userdata(self):
         conn = sqlite3.connect('PyFlora.db')
         c = conn.cursor()
@@ -63,7 +62,7 @@ class LoginMenu(tk.Frame):
                   [self.username_entry.get(), self.password_entry.get()])
         result = c.fetchone()
         if result:
-            self.controller.show_frame(list_gui.SecondPage)
+            self.controller.show_frame(main_menu.SecondPage)
         else:
             messagebox.showerror("Error", "Incorrect Username or password!")
             self.controller.show_frame(LoginMenu)
@@ -71,7 +70,7 @@ class LoginMenu(tk.Frame):
     
     def log_in(self):
         if self.username_entry.get() == "bruce" and self.password_entry.get() == '1234':
-            self.controller.show_frame(list_gui.SecondPage)
+            self.controller.show_frame(main_menu.SecondPage)
         elif self.username_entry.get() == '' or self.password_entry.get() == '':
             messagebox.showerror("Error", "All fields are required !")
             self.clear_user_data()
@@ -91,7 +90,7 @@ class Application(tk.Tk):
         self.resizable(width=False, height=False)
 
         self.frames = {}
-        for i in (LoginMenu, signin_gui.SigninMenu, list_gui.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, add_plant_gui.AddPlant):
+        for i in (LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, add_plant_gui.AddPlant, plant_list.PlantList):
             frame = i(window, self)
             self.frames[i] = frame
             frame.grid(row=0, column=0, sticky="nsew")
