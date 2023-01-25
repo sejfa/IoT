@@ -3,10 +3,10 @@ import sqlite3
 import tkinter as tk
 import customtkinter
 #from gui import list_gui
-from gui import main_menu
+from gui import plant_list
 from PIL import Image, ImageTk
 from tkinter import ttk, messagebox, filedialog
-from utils.util import get_image, small_label, create_header, clear
+from utils.util import get_image, small_label, create_header, clear, bttn
 
 
 
@@ -80,11 +80,13 @@ class AddPlant(tk.Frame):
             master=self.tab3, text="Delete", fg_color="red2", hover_color="red3", image=self.delete, width=100, height=10, command=self.delete_data)
 
 
-        self.home_image = customtkinter.CTkImage(Image.open(
-            "media\icons8-home-256.png").resize((20, 20), Image.ANTIALIAS))
+        #self.home_image = customtkinter.CTkImage(Image.open(
+        #   "media\icons8-home-256.png").resize((20, 20), Image.ANTIALIAS))
 
-        self.home_button = customtkinter.CTkButton(
-            master=self, text="", image=self.home_image, width=80, height=10, command=lambda: controller.show_frame(main_menu.SecondPage))
+        bttn(self, 300, 400, '  P L A N T   L I S T  ','#e6e6e6','white', lambda: controller.show_frame(plant_list.PlantList))
+        
+        #self.home_button = customtkinter.CTkButton(
+         #   master=self, text="", image=self.home_image, width=80, height=10, command=lambda: controller.show_frame(main_menu.SecondPage))
 
         
         self.open_button.place(x=195, y=90)
@@ -92,8 +94,9 @@ class AddPlant(tk.Frame):
         self.save_button.place(x=100, y=170)
         self.update_button.place(x=100, y=170)
         self.delete_button.place(x=100, y=100)
-        self.home_button.place(x=300, y=400)
+        #self.home_button.place(x=300, y=400)
 
+    
     
     def updated_list(self):
         self.new_list.append(self.add_entry.get().capitalize())
@@ -109,7 +112,13 @@ class AddPlant(tk.Frame):
         for del_plant in self.new_list:
             menu.add_command(label=del_plant, 
                 command=lambda value=del_plant: self.del_plant_var.set(value))
-
+        
+        menu = self.list["menu"]
+        menu.delete(0, "end")
+        for new_plant in self.new_list:
+            menu.add_command(label=new_plant,
+            command=lambda value=new_plant: self.list_var.set(value))
+        
 
     def delete_selected_item(self):
         selected = self.delete_plant_menu['menu'].index(self.del_plant_var.get())
@@ -205,13 +214,9 @@ class AddPlant(tk.Frame):
     def update_data(self):
         
         try:
-            if not self.dropmenu_var.get() == '':
-                messagebox.showerror("Error", "All fields are required !")
-        
-            else:
-                self.check_if_plant_exists()
-                self.file_label.destroy()
-                messagebox.showerror("Error", "All fields are required !")
+            self.check_if_plant_exists()
+            self.file_label.destroy()
+            messagebox.showerror("Error", "All fields are required !")
         
         except sqlite3.Error as error:
             print("Failed to update data", error)

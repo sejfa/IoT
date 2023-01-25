@@ -1,6 +1,7 @@
 import sqlite3
 
 
+
 # Fetching sensors data
 def get_hum():
     
@@ -46,6 +47,18 @@ def get_optimal_temp():
     fetch = c.fetchone()
     conn.close()
     return f"{fetch[0]}  {fetch[1]}°C\t {fetch[2]}"
+
+
+def get_plants():
+    
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+    c.execute("SELECT Plant FROM RecordsOfPlants")
+    result = c.fetchall()
+    plant_list = [item for i in result for item in i]
+    
+    return plant_list
+    
 
 
 def get_bright():

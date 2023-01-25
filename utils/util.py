@@ -33,7 +33,6 @@ def create_frame(root, height, width, x, y):
     frame = customtkinter.CTkFrame(master=root,
                                    width=width,
                                    height=height,
-                                   corner_radius=9,
                                    fg_color="white",
                                    border_color="light grey",
                                    border_width=4

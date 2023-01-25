@@ -3,7 +3,7 @@ import customtkinter
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
-from gui import hosta_gui, basil_gui, add_plant_gui
+from gui import hosta_gui, basil_gui, add_plant_gui, plant_list, pot_list
 from utils.util import get_image, create_button, create_label, create_header, get_foreground
 
 
@@ -16,10 +16,11 @@ class SecondPage(tk.Frame):
         #self.f1=customtkinter.CTkFrame(self,width=500,height=220,bg_color='white',border_color='light grey')
         #self.f1.place(x=190,y=170)
 
-        def add_plant_menu():
-            controller.show_frame(add_plant_gui.AddPlant)
-            
+        def add_plant_list():
+            controller.show_frame(plant_list.PlantList)
 
+        #def add_pot_list():    
+            #controller.show_frame(pot_list)
                 #buttons
         def bttn(self,x,y,text,bcolor,fcolor,cmd):
         
@@ -46,8 +47,8 @@ class SecondPage(tk.Frame):
 
             myButton1.place(x=x,y=y)
 
-        bttn(self,120,250,'    P O T    L I S T    ','#e6e6e6','white',None)
-        bttn(self,375,250,'  P L A N T    L I S T    ','#e6e6e6','white',add_plant_menu)
+        bttn(self,120,200,'    P O T    L I S T    ','#e6e6e6','white',None)
+        bttn(self,375,200,'  P L A N T    L I S T    ','#e6e6e6','white',add_plant_list)
         
 """"
         def toggle_win():

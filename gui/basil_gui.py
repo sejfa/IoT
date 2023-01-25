@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from gui import main_menu
+from gui import plant_list
 from tkinter import messagebox
 from utils.util import get_image, create_label, create_smaller_label, get_background, create_button
 from cruds.crud import get_optimal_hum, get_optimal_temp, get_optmal_ph, get_optimal_sal, get_optimal_bright, get_hum, get_temp, get_bright, get_ph, get_sal
@@ -58,7 +58,7 @@ class BasilPage(tk.Frame):
             self, text="Sync", width=15, command=sync_button)
         sync_button.place(x=125, y=230)
         create_button(self, "Back", controller,
-                      main_menu.SecondPage, 20, 450)
+                      plant_list.PlantList, 20, 450)
 
         sync_button = ttk.Button(
             self, text="Show graphical info", width=25, command=None)
