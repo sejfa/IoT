@@ -1,6 +1,6 @@
 import sqlite3
-
-
+import tkinter as tk
+from gui import basil_gui, hosta_gui
 
 # Fetching sensors data
 def get_hum():
@@ -55,10 +55,10 @@ def get_plants():
     c = conn.cursor()
     c.execute("SELECT Plant FROM RecordsOfPlants")
     result = c.fetchall()
-    plant_list = [item for i in result for item in i]
+    new_list = [item for i in result for item in i]
     
-    return plant_list
-    
+    return new_list
+
 
 
 def get_bright():

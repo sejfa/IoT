@@ -1,4 +1,37 @@
-import tkinter as tk
+from tkinter import *
+  
+root = Tk()
+
+listbox = Listbox(root, height=5)
+listbox.place(x=0, y=0, width=100, height=100)
+
+scrollbar = Scrollbar(root, orient="vertical", command=listbox.yview)
+scrollbar.place(x=100, y=0, width=20, height=100)
+
+listbox.configure(yscrollcommand=scrollbar.set)
+
+for i in range(50):
+    listbox.insert(END, f"Item {i}")
+
+def on_item_click(event):
+    index = listbox.curselection()[0]
+    print(f"You clicked on item {index}")
+
+
+
+listbox = Listbox(root)
+listbox.pack()
+
+for i in range(50):
+    listbox.insert(END, f"Item {i}")
+
+listbox.bind("<Double-Button-1>", on_item_click)
+
+
+
+root.mainloop()
+
+"""import tkinter as tk
 from tkinter import FLAT, ttk
 from tkinter import messagebox
 from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
@@ -188,4 +221,4 @@ class SecondPage(tk.Frame):
         photo = ImageTk.PhotoImage(load)
         label_basil1 = tk.Label(self.f1, image=photo)
         label_basil1.image = photo
-        label_basil1.place(x=5, y=10)
+        label_basil1.place(x=5, y=10)"""

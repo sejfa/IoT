@@ -194,26 +194,31 @@ def forgot_password():
     new_window = Toplevel(background="white")
     new_window.title("Reset password")
     new_window.geometry("210x260+300+200")
+    new_window.resizable(width=False, height=False)
 
     create_label(new_window, "Reset password", 40, 20)
+    create_smaller_label(new_window, "Username", 25, 60)
+    create_smaller_label(new_window, "New password", 25, 110)
+    create_smaller_label(new_window, "Confirm password", 25, 160)
 
     username_var = tk.StringVar()
-    create_smaller_label(new_window, "Username", 25, 60)
-    username_entry = ttk.Entry(
-        new_window, textvariable=username_var, width=25)
+    username_entry = tk.Entry(new_window, width=25, fg="black", bg="white", border=0, textvariable=username_var)
+    username_line = tk.Canvas(new_window, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
     username_entry.place(x=25, y=80)
+    username_line.place(x=25, y=100)
 
     new_password_var = tk.StringVar()
-    create_smaller_label(new_window, "New password", 25, 110)
-    new_password_entry = ttk.Entry(
-        new_window, textvariable=new_password_var, width=25, show="*")
+    new_password_entry = tk.Entry(new_window, width=25, fg="black", bg="white", border=0, textvariable=new_password_var, show="*")
+    new_password_line = tk.Canvas(new_window, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
     new_password_entry.place(x=25, y=130)
+    new_password_line.place(x=25, y=150)
 
     confirm_var = tk.StringVar()
-    create_smaller_label(new_window, "Confirm password", 25, 160)
-    confirm_entry = ttk.Entry(
-        new_window, textvariable=confirm_var, width=25, show="*")
+    confirm_entry = tk.Entry(new_window, width=25, fg="black", bg="white", border=0, textvariable=confirm_var, show="*")
+    confirm_line = tk.Canvas(new_window, width=155, highlightthickness=0, relief=FLAT, height=1, bg="black")
     confirm_entry.place(x=25, y=180)
+    confirm_line.place(x=25, y=200)
+
 
     def clear_data():
         username_entry.delete(0, 25)
@@ -257,6 +262,5 @@ def forgot_password():
         elif new_password_entry.get() == confirm_entry.get():
             change_password()
 
-    submit_button = ttk.Button(
-        new_window, text="Submit", width=12, command=submit)
-    submit_button.place(x=60, y=220)
+    submit_button = customtkinter.CTkButton(new_window, width=100, height=15, border_width=0, corner_radius=13, text="Submit", bg_color="white", command=submit)
+    submit_button.place(x=50, y=220)

@@ -1,4 +1,68 @@
-from gui import hosta_gui, basil_gui, add_plant_gui
+import tkinter as tk
+from tkinter import ttk, HORIZONTAL
+from tkinter.ttk import Progressbar
+from utils.util import get_image
+
+class LoadingScreen(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.master = self
+        self.master.overrideredirect(1)
+        self.a = '#249794'
+        width_of_window = 427
+        height_of_window = 250
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+        x_coordinate = (screen_width/2) - (width_of_window/2)
+        y_coordinate = (screen_height/2) - (height_of_window/2)
+        self.master.geometry("%dx%d+%d+%d" % (width_of_window, height_of_window, x_coordinate, y_coordinate))
+
+        s = ttk.Style()
+        s.theme_use('clam')
+        s.configure("red.Horizontal.TProgressbar", foreground='red', background='#4f4f4f')
+        self.progress = Progressbar(self.master, style="red.Horizontal.TProgressbar", orient=HORIZONTAL, length=500, mode='determinate')
+        self.progress.place(x=-10, y=235)
+        self._configure_loading_screen()
+
+    def _configure_loading_screen(self):
+        a = '#249794'
+        tk.Frame(self.master, width=427, height=241, bg='white').place(x=0, y=0) 
+        get_image('algebra.jpeg', self.master)
+        b1 = tk.Button(self.master, width=10, height=1, text='Get Started', command=self._bar, border=0, fg=a, bg='white')
+        b1.place(x=170, y=200)
+    
+    def _bar(self):
+        l4 = tk.Label(self.master, text='Loading...', fg='white', bg=self.a)
+        lst4 = ('Calibri (Body)', 10)
+        l4.config(font=lst4)
+        l4.place(x=18, y=210)
+
+        import time
+        r = 0
+        for i in range(100):
+            self.progress['value'] = r
+            self.master.update_idletasks()
+            time.sleep(0.02)
+            r = r + 1
+
+        self.master.destroy()
+        self._new_win()
+
+    def _new_win(self):
+        q = tk.Tk()
+        q.title('Main window')
+        q.geometry('427x250')
+        l1 = tk.Label(q, text='ADD TEXT HERE ', fg='grey', bg=None)
+        l = ('Calibri (Body)', 24, 'bold')
+        l1.config(font=l)
+        l1.place(x=80, y=100)
+        q.main
+
+if __name__ == '__main__':
+    loading_screen = LoadingScreen()
+    loading_screen.run()
+
+"""from gui import hosta_gui, basil_gui, add_plant_gui
 import tkinter as tk
 from utils.util import get_image, create_button, create_label, create_header, get_foreground
 from tkinter import *
@@ -100,9 +164,7 @@ class SecondPage(tk.Frame):
             activebackground='white').place(x=5,y=10)
 
 
-
-
-
+"""
 
 """import tkinter as tk
 my_w = tk.Tk()

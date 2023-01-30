@@ -113,11 +113,6 @@ class AddPlant(tk.Frame):
             menu.add_command(label=del_plant, 
                 command=lambda value=del_plant: self.del_plant_var.set(value))
         
-        menu = self.list["menu"]
-        menu.delete(0, "end")
-        for new_plant in self.new_list:
-            menu.add_command(label=new_plant,
-            command=lambda value=new_plant: self.list_var.set(value))
         
 
     def delete_selected_item(self):
@@ -125,6 +120,8 @@ class AddPlant(tk.Frame):
         self.delete_plant_menu['menu'].delete(selected)
         self.del_plant_var.set(self.delete_plant_menu['menu'].entrycget(0,"label"))
         
+        self.dropmenu['menu'].delete(selected)
+        self.dropmenu_var.set(self.dropmenu['menu'].entrycget(0,"label"))
 
     def openFile(self):
         self.filepath = filedialog.askopenfilename(initialdir="C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
@@ -238,9 +235,7 @@ class AddPlant(tk.Frame):
                     self.c.execute("DELETE FROM RecordsOfPlants WHERE Plant=?",
                     [self.del_plant_var.get()])
                     self.delete_selected_item()
-                    selected = self.dropmenu['menu'].index(self.dropmenu_var.get())
-                    self.dropmenu['menu'].delete(selected)
-                    self.dropmenu_var.set(self.dropmenu['menu'].entrycget(0,"label"))    
+                        
                 self.conn.commit()
                 messagebox.showinfo("Success", "Successfully deleted plant!")
             else:
