@@ -2,93 +2,71 @@ import os
 import sqlite3
 import tkinter as tk
 import customtkinter
-#from gui import list_gui
 from gui import plant_list
 from PIL import Image, ImageTk
 from tkinter import ttk, messagebox, filedialog
 from utils.util import get_image, small_label, create_header, clear, bttn
 
 
-
-class AddPlant(tk.Frame):
+class RecordOfPlants(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         
-        get_image("add_plant.jpg", self)
-        create_header(self, "Records of Plants", 110, 60)
-    
-        
+        self.controller = controller
+        self.create_widgets()
+        self.place_widgets()
+        self.bind_widgets()
+
+    def create_widgets(self):
+        self.background = get_image("add_plant.jpg", self)
+        self.header = create_header(self, "Records of Plants", 110, 60)
         self.tabview = customtkinter.CTkTabview(self, fg_color="#f6f6f6", border_color="#f6f6f6", bg_color="#f6f6f6", height=300, width=320)
-        self.tabview.place(x=50, y=100)
         self.tab1 = self.tabview.add("Add plant")
         self.tab2 = self.tabview.add("Update plant data")
         self.tab3 = self.tabview.add("Delete plant")
         self.tabview.set("Add plant")
         
-        # Tab 1: Add plant
         small_label(self.tab1, "Add plant", 10, 35)
         small_label(self.tab1, "Add Image", 10, 90)
-        
-        # Tab 2: Update plant
         small_label(self.tab2, "Update plant", 10, 35)
         small_label(self.tab2, "Change Image", 10, 90)
-
-        # Tab 3 : Delete plant
         small_label(self.tab3, "Select plant", 10, 35)
-        
-        self.add_entry_var = tk.StringVar()
-        self.add_entry = customtkinter.CTkEntry(self.tab1, textvariable=self.add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
-        self.add_entry.place(x=145, y=30)
 
         self.conn = sqlite3.connect('PyFlora.db')
         self.c = self.conn.cursor() 
         self.c.execute("SELECT Plant FROM RecordsOfPlants")
         self.result = self.c.fetchall()
         self.new_list = [item for i in self.result for item in i]
-                        
-        self.open_button = customtkinter.CTkButton(
-            master=self.tab1, width=90, text="Choose Image", height=10, compound="left", command=self.openFile)
         
-        self.save_image = customtkinter.CTkImage(Image.open(
-            "media\icons8-save-100.png").resize((20, 20), Image.ANTIALIAS))
-
-        self.save_button = customtkinter.CTkButton(
-            master=self.tab1, width=90, image=self.save_image, text="Save",compound="left", command=self.insert_data)
-
+        self.add_entry_var = tk.StringVar()
+        self.add_entry = customtkinter.CTkEntry(self.tab1, textvariable=self.add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
+        
+        self.open_button = customtkinter.CTkButton(master=self.tab1, width=90, text="Choose Image", height=10, compound="left")
+        self.save_image = customtkinter.CTkImage(Image.open("media\icons8-save-100.png").resize((20, 20), Image.ANTIALIAS))
+        self.save_button = customtkinter.CTkButton(master=self.tab1, width=90, image=self.save_image, text="Save",compound="left")
+        
         self.dropmenu_var = tk.StringVar()
         self.dropmenu = ttk.OptionMenu(self.tab2, self.dropmenu_var, *self.new_list)
-        self.dropmenu.place(x=210 ,y=30)
+        
         self.update_var = tk.StringVar()
         self.update_image_entry = customtkinter.CTkEntry(self.tab2, textvariable=self.update_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
-        self.update_image_entry.place()
-
-        self.change_button = customtkinter.CTkButton(master=self.tab2, width=90, text="Choose Image", height=10, compound="left", command=self.changeFile)     
-        self.update_image = customtkinter.CTkImage(Image.open(
-        "media\icons8-update-100.png").resize((20, 20), Image.ANTIALIAS))
-
-        self.update_button = customtkinter.CTkButton(
-        master=self.tab2, text="Update", image=self.update_image, width=100, height=10, command=self.update_data)
-
+        self.change_button = customtkinter.CTkButton(master=self.tab2, width=90, text="Choose Image", height=10, compound="left")     
+        self.update_image = customtkinter.CTkImage(Image.open("media\icons8-update-100.png").resize((20, 20), Image.ANTIALIAS))
+        self.update_button = customtkinter.CTkButton(master=self.tab2, text="Update", image=self.update_image, width=100, height=10)
+        
         self.del_plant_var = tk.StringVar()
         self.delete_plant_menu = ttk.OptionMenu(self.tab3, self.del_plant_var, *self.new_list)
-        self.delete_plant_menu.place(x=210 ,y=30) 
+        self.delete = customtkinter.CTkImage(Image.open("media\del.png").resize((20, 20), Image.ANTIALIAS))
+        self.delete_button = customtkinter.CTkButton(master=self.tab3, text="Delete", fg_color="red2", hover_color="red3", image=self.delete, width=100, height=10)
 
-        self.delete = customtkinter.CTkImage(Image.open(
-            "media\del.png").resize((20, 20), Image.ANTIALIAS))
-
-        self.delete_button = customtkinter.CTkButton(
-            master=self.tab3, text="Delete", fg_color="red2", hover_color="red3", image=self.delete, width=100, height=10, command=self.delete_data)
-
-
-        #self.home_image = customtkinter.CTkImage(Image.open(
-        #   "media\icons8-home-256.png").resize((20, 20), Image.ANTIALIAS))
-
-        bttn(self, 300, 400, '  P L A N T   L I S T  ','#e6e6e6','white', lambda: controller.show_frame(plant_list.PlantList))
+        bttn(self, 300, 400, '  P L A N T   L I S T  ','#e6e6e6','white', lambda: self.controller.show_frame(plant_list.PlantList))
         
-        #self.home_button = customtkinter.CTkButton(
-         #   master=self, text="", image=self.home_image, width=80, height=10, command=lambda: controller.show_frame(main_menu.SecondPage))
-
-        
+    def place_widgets(self):
+        self.tabview.place(x=50, y=100)
+        self.add_entry.place(x=145, y=30)
+        self.dropmenu.place(x=210 ,y=30)
+        self.update_image_entry.place()
+        self.delete_plant_menu.place(x=210 ,y=30)
         self.open_button.place(x=195, y=90)
         self.change_button.place(x=195,y=90)
         self.save_button.place(x=100, y=170)
@@ -96,7 +74,12 @@ class AddPlant(tk.Frame):
         self.delete_button.place(x=100, y=100)
         #self.home_button.place(x=300, y=400)
 
-    
+    def bind_widgets(self):
+        self.open_button.configure(command=self.openFile)
+        self.save_button.configure(command=self.insert_data)
+        self.change_button.configure(command=self.changeFile)
+        self.update_button.configure(command=self.update_data)
+        self.delete_button.configure(command=self.delete_data)
     
     def updated_list(self):
         self.new_list.append(self.add_entry.get().capitalize())
@@ -112,9 +95,7 @@ class AddPlant(tk.Frame):
         for del_plant in self.new_list:
             menu.add_command(label=del_plant, 
                 command=lambda value=del_plant: self.del_plant_var.set(value))
-        
-        
-
+            
     def delete_selected_item(self):
         selected = self.delete_plant_menu['menu'].index(self.del_plant_var.get())
         self.delete_plant_menu['menu'].delete(selected)
@@ -128,8 +109,7 @@ class AddPlant(tk.Frame):
         self.base_filename = os.path.basename(self.filepath)
         self.file_label = ttk.Label(self.tab1, text=self.base_filename, background="#f6f6f6")
         self.file_label.place(x=105, y=90)
-
-        
+    
     def insert_data(self):
         self.read_file = open(self.filepath,'rb')
         self.read_file = self.read_file.read()
@@ -159,15 +139,12 @@ class AddPlant(tk.Frame):
             print("Failed to add data", error)
         
 
-
     def changeFile(self):
         
         self.filepath = filedialog.askopenfilename(initialdir="C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
         base_filename = os.path.basename(self.filepath)
         self.file_label = ttk.Label(self.tab2, text=base_filename, background="#f6f6f6")
         self.file_label.place(x=115, y=90)
-
-
     
     def insert_updated_data(self):
 
@@ -190,7 +167,6 @@ class AddPlant(tk.Frame):
         
         except sqlite3.Error as error:
                 print("Failed to update data", error)
-        
 
 
     def check_if_plant_exists(self):
@@ -217,7 +193,6 @@ class AddPlant(tk.Frame):
         
         except sqlite3.Error as error:
             print("Failed to update data", error)
-
 
     def delete_data(self):
         

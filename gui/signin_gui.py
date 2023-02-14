@@ -1,12 +1,12 @@
-import tkinter as tk
-from tkinter import ttk,FLAT
-import datetime as dt
 import sqlite3
+import customtkinter
+import tkinter as tk
+import datetime as dt
+from sensors_db import *
+from gui import login_gui
+from tkinter import ttk, FLAT
 from tkinter import messagebox
 from utils.util import create_smaller_label, get_image, get_foreground, create_frame, create_label
-from gui import login_gui
-from sensors_db import *
-import customtkinter
 
 
 class SigninMenu(tk.Frame):
@@ -65,8 +65,6 @@ class SigninMenu(tk.Frame):
         self.signup_button.place(x=90, y=320)
         self.login_button.place(x=70, y=370)
 
-    
-
     def insert_user_data(self):
 
         date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y %H:%M:%S")
@@ -94,7 +92,6 @@ class SigninMenu(tk.Frame):
             self.controller.show_frame(login_gui.LoginMenu)
             messagebox.showinfo("Success", "Thanks for signing up!")
             self.clear()
-
 
     def signup(self):
         

@@ -3,7 +3,7 @@ import tkinter as tk
 import customtkinter
 from tkinter import FLAT, ttk
 from tkinter import messagebox
-from gui import basil_gui, hosta_gui, main_menu, signin_gui, add_plant_gui, plant_list
+from gui import basil_gui, hosta_gui, main_menu, recordofplant, signin_gui, plant_list
 from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
 
 
@@ -90,7 +90,7 @@ class Application(tk.Tk):
         self.resizable(width=False, height=False)
 
         self.frames = {}
-        for i in (LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, add_plant_gui.AddPlant, plant_list.PlantList):
+        for i in (LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, recordofplant.RecordOfPlants, plant_list.PlantList):
             frame = i(window, self)
             self.frames[i] = frame
             frame.grid(row=0, column=0, sticky="nsew")

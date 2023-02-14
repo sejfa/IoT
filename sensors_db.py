@@ -155,16 +155,16 @@ def insert_salinity_data():
 
 create_sensor_table()
 insert_plant_data()
-# insert_humidity_data()
-# insert_temperature_data()
-# insert_brightness_data()
+insert_humidity_data()
+insert_temperature_data()
+insert_brightness_data()
 
 
-# for i in range(20):
-# insert_ph_data()
+for i in range(20):
+    insert_ph_data()
 
-# for i in range(20):
-# insert_salinity_data()
+for i in range(20):
+    insert_salinity_data()
 
 c.close()
 conn.close()

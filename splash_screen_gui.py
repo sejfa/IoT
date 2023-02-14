@@ -1,10 +1,8 @@
 import tkinter as tk
 from tkinter.ttk import Progressbar
 from tkinter import ttk, HORIZONTAL
-from gui import login_gui
 from utils.util import get_image
 w=tk.Tk()
-
 
 width_of_window = 800
 height_of_window = 500
@@ -14,16 +12,13 @@ x_coordinate = (screen_width/2)-(width_of_window/2)
 y_coordinate = (screen_height/2)-(height_of_window/2)
 w.geometry("%dx%d+%d+%d" %(width_of_window,height_of_window,x_coordinate,y_coordinate))
 
-
 w.overrideredirect(1)
-
 
 s = ttk.Style()
 s.theme_use('clam')
 s.configure("red.Horizontal.TProgressbar", foreground='red', background='#4f4f4f')
 progress=Progressbar(w,style="red.Horizontal.TProgressbar",orient=HORIZONTAL,length=810,mode='determinate')
 
-#############progressbar          33333333333333333333333333333
 def new_win():
   # w.destroy()
     q=tk.Tk()
@@ -54,33 +49,54 @@ def bar():
     w.destroy()
     new_win()
         
-    
 progress.place(x=-10,y=485)
 
-
-
-
-#############
-# frame 333333333333333333333333
-#
-###########
-
-
-
-
-
-'''
-
-def rgb(r):
-    return "#%02x%02x%02x" % r
-#Frame(w,width=432,height=241,bg=rgb((100,100,100))).
-'''
 a='#f1f1f1'
 
 frame = tk.Frame(w,width=800,height=490,bg='#f1f1f1').place(x=0,y=0)  #249794
 get_image('w.png',frame)
 b1=tk.Button(w,width=10,height=1,text='Get Started',font= 10,command=bar,border=0,fg='#023020',bg=a, activebackground=a, activeforeground='#023020')
 b1.place(x=350,y=410)
+
+w.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ######## Label
@@ -102,7 +118,5 @@ l3.place(x=50,y=110)
 """
   
 
-
-w.mainloop()
 
 

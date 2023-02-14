@@ -70,7 +70,7 @@ def get_bright():
     fetch = c.fetchall()
     conn.close()
     for row in fetch:
-        return f"{row[0]}  {row[1]}\t\t {row[2]}"
+        return f"{row[0]}  {row[1]}\t\t\t {row[2]}"
 
 
 def get_optimal_bright():
@@ -81,7 +81,7 @@ def get_optimal_bright():
     c.execute("SELECT Lines, Value, Action FROM Brightness WHERE Value = 7")
     fetch = c.fetchone()
     conn.close()
-    return f"{fetch[0]}  {fetch[1]}\t\t {fetch[2]}"
+    return f"{fetch[0]}  {fetch[1]}\t\t\t {fetch[2]}"
 
 
 def get_ph():

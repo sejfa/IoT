@@ -3,7 +3,7 @@ import customtkinter
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
-from gui import hosta_gui, basil_gui, add_plant_gui, plant_list, pot_list
+from gui import hosta_gui, basil_gui, plant_list, pot_list, recordofplant
 from utils.util import get_image, create_button, create_label, create_header, get_foreground
 
 
