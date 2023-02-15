@@ -6,7 +6,7 @@ from gui import plant_list
 from PIL import Image, ImageTk
 from tkinter import ttk, messagebox, filedialog
 from utils.util import get_image, small_label, create_header, clear, bttn
-
+from cruds.crud import get_plants
 
 class RecordOfPlants(tk.Frame):
     def __init__(self, parent, controller):
@@ -16,6 +16,10 @@ class RecordOfPlants(tk.Frame):
         self.create_widgets()
         self.place_widgets()
         self.bind_widgets()
+
+    def set_plant_list_reference(self, plant_list):
+        self.plant_list = plant_list
+        
 
     def create_widgets(self):
         self.background = get_image("add_plant.jpg", self)
@@ -34,10 +38,9 @@ class RecordOfPlants(tk.Frame):
 
         self.conn = sqlite3.connect('PyFlora.db')
         self.c = self.conn.cursor() 
-        self.c.execute("SELECT Plant FROM RecordsOfPlants")
-        self.result = self.c.fetchall()
-        self.new_list = [item for i in self.result for item in i]
         
+        
+        self.new_list = get_plants()
         self.add_entry_var = tk.StringVar()
         self.add_entry = customtkinter.CTkEntry(self.tab1, textvariable=self.add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
         
@@ -130,6 +133,7 @@ class RecordOfPlants(tk.Frame):
                 self.c.execute("INSERT INTO RecordsOfPlants (Plant, Photo) VALUES (?,?)",
                         (self.add_entry.get().capitalize(), self.read_file))
                 self.updated_list()
+                
                 self.conn.commit()
                 messagebox.showinfo("Success", "Plant is successfully added!")
                 clear(self.add_entry)
@@ -137,7 +141,7 @@ class RecordOfPlants(tk.Frame):
 
         except sqlite3.Error as error:
             print("Failed to add data", error)
-        
+        self.plant_list.refresh()
 
     def changeFile(self):
         

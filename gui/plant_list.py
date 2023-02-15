@@ -14,6 +14,10 @@ class PlantList(tk.Frame):
         self.place_widgets()
         self.bind_widgets()
 
+    def refresh(self):
+        self.plants = get_plants()
+        self.listbox_var.set(self.plants)
+
     def create_list_widgets(self):
         self.background_image = get_image("gp.jpg", self)
         self.frame = create_frame(self, 300, 550, 120, 100)

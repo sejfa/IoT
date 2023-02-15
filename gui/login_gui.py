@@ -1,3 +1,4 @@
+from copyreg import constructor
 import sqlite3
 import tkinter as tk
 import customtkinter
@@ -90,12 +91,15 @@ class Application(tk.Tk):
         self.resizable(width=False, height=False)
 
         self.frames = {}
-        for i in (LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, recordofplant.RecordOfPlants, plant_list.PlantList):
-            frame = i(window, self)
-            self.frames[i] = frame
+        windows = [LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, recordofplant.RecordOfPlants, plant_list.PlantList]
+        for i,constructor in enumerate(windows):
+            frame = constructor(window, self)
+            self.frames[constructor] = frame
             frame.grid(row=0, column=0, sticky="nsew")
+        self.frames[recordofplant.RecordOfPlants].set_plant_list_reference(self.frames[plant_list.PlantList])
         self.show_frame(LoginMenu)
-
+        
     def show_frame(self, page):
         frame = self.frames[page]
         frame.tkraise()
+
