@@ -1,6 +1,6 @@
 import sqlite3
 import datetime as dt
-from random import randrange
+
 
 conn = sqlite3.connect("PyFlora.db")
 c = conn.cursor()
@@ -15,15 +15,15 @@ def create_sensor_table():
         c.execute(
             'CREATE TABLE IF NOT EXISTS  Temperature (Lines TEXT, Value INTEGER, Action TEXT, Date TEXT)')
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  pH (Lines TEXT, Value INTEGER, Date TEXT)')
+            'CREATE TABLE IF NOT EXISTS  pH (Lines TEXT, Value INTEGER, Action TEXT, Date TEXT)')
         c.execute(
             'CREATE TABLE IF NOT EXISTS  Brightness (Lines TEXT, Value INTEGER, Action TEXT, Date TEXT)')
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  Salinity (Lines TEXT, Value INTEGER, Date TEXT)')
+            'CREATE TABLE IF NOT EXISTS  Salinity (Lines TEXT, Value INTEGER, Action TEXT,  Date TEXT)')
         c.execute(
             'CREATE TABLE IF NOT EXISTS  UserData (Name TEXT, Surname TEXT, Username TEXT, Password TEXT, Date TEXT)')
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  Vessels (vessel_id INTEGER, Vessel TEXT)')
+            'CREATE TABLE IF NOT EXISTS  RecordsOfPots (pot_id INTEGER PRIMARY KEY, Pot TEXT, Plant TEXT)')
         conn.commit()
 
     except sqlite3.Error as e:
@@ -53,7 +53,7 @@ def insert_plant_data():
             conn.commit()
 
         except sqlite3.Error as error:
-            print("Failed to insert blob data into sqlite table", error)
+            print("Plant data is already inserted", error)
 
     insertdata(
         1, "Basil", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\Basil.jpg")
@@ -85,11 +85,11 @@ def insert_humidity_data():
 
     for value in range(20, 61):
         if value < 30:
-            action = "You need to water the plants daily"
+            action = "You need to water the plant daily"
         elif value < 40:
-            action = "You need to water the plants weekly"
+            action = "You need to water the plant weekly"
         elif value < 50:
-            action = "You need to water the plants monthly"
+            action = "You need to water the plant monthly"
         else:
             action = "No action needed"
 
@@ -109,7 +109,7 @@ def insert_temperature_data():
             action = "Lower the room temperature"
 
         else:
-            action = "No action needed"
+            action = "Soil temperature is optimal, no action needed"
 
         c.execute("INSERT INTO Temperature (Lines, Value, Action, Date) VALUES(?,?,?,?)",
                   (lines, value, action, date))
@@ -119,10 +119,16 @@ def insert_temperature_data():
 def insert_ph_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current pH is"
-    value = randrange(6, 9)
+    action = ""
+    for value in range(6, 9):
+        if value > 7:
+            action = "Reduce soil pH"
 
-    c.execute("INSERT INTO pH (Lines, Value,  Date) VALUES (?,?,?)",
-              (lines, value, date))
+        else:
+            action = "Soil pH is fine, no action needed"
+
+    c.execute("INSERT INTO pH (Lines, Value, Action, Date) VALUES (?,?,?,?)",
+              (lines, value, action, date))
     conn.commit()
 
 
@@ -134,9 +140,9 @@ def insert_brightness_data():
 
     for value in range(1, 11):
         if value <= 5:
-            action = "Increase the brightness"
+            action = "The plant needs more light, move to a brighter place"
         else:
-            action = "No action needed"
+            action = "The plant has enough light, no action needed"
 
         c.execute("INSERT INTO Brightness (Lines, Value, Action, Date) VALUES (?,?,?,?)",
                   (lines, value, action, date))
@@ -146,10 +152,15 @@ def insert_brightness_data():
 def insert_salinity_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current salinity is"
-    value = randrange(6, 13)
+    action = ""
 
-    c.execute("INSERT INTO Salinity (Lines, Value, Date) VALUES (?,?,?)",
-              (lines, value, date))
+    for value in range(1, 11):
+        if value > 6:
+            action = "Reduce soil salinity"
+        else:
+            action = "Soil salinity is fine, no action needed"
+    c.execute("INSERT INTO Salinity (Lines, Value, Action, Date) VALUES (?,?,?,?)",
+              (lines, value, action, date))
     conn.commit()
 
 

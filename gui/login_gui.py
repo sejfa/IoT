@@ -4,7 +4,7 @@ import tkinter as tk
 import customtkinter
 from tkinter import FLAT, ttk
 from tkinter import messagebox
-from gui import basil_gui, hosta_gui, main_menu, recordofplant, signin_gui, plant_list
+from gui import basil_gui, hosta_gui, main_menu, recordofplant, recordofpots, signin_gui, plant_list, pot_list
 from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
 
 
@@ -70,7 +70,7 @@ class LoginMenu(tk.Frame):
             self.clear_user_data()
     
     def log_in(self):
-        if self.username_entry.get() == "bruce" and self.password_entry.get() == '1234':
+        if self.username_entry.get() == "as" and self.password_entry.get() == 'as':
             self.controller.show_frame(main_menu.SecondPage)
         elif self.username_entry.get() == '' or self.password_entry.get() == '':
             messagebox.showerror("Error", "All fields are required !")
@@ -91,7 +91,7 @@ class Application(tk.Tk):
         self.resizable(width=False, height=False)
 
         self.frames = {}
-        windows = [LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, recordofplant.RecordOfPlants, plant_list.PlantList]
+        windows = [LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage, basil_gui.BasilPage, hosta_gui.HostaPage, recordofpots.RecordOfPots, plant_list.PlantList, pot_list.PotList, recordofplant.RecordOfPlants]
         for i,constructor in enumerate(windows):
             frame = constructor(window, self)
             self.frames[constructor] = frame

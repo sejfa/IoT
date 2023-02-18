@@ -19,8 +19,8 @@ class SecondPage(tk.Frame):
         def add_plant_list():
             controller.show_frame(plant_list.PlantList)
 
-        #def add_pot_list():    
-            #controller.show_frame(pot_list)
+        def add_pot_list():    
+            controller.show_frame(pot_list.PotList)
                 #buttons
         def bttn(self,x,y,text,bcolor,fcolor,cmd):
         
@@ -47,7 +47,7 @@ class SecondPage(tk.Frame):
 
             myButton1.place(x=x,y=y)
 
-        bttn(self,120,200,'    P O T    L I S T    ','#e6e6e6','white',None)
+        bttn(self,120,200,'    P O T    L I S T    ','#e6e6e6','white',add_pot_list)
         bttn(self,375,200,'  P L A N T    L I S T    ','#e6e6e6','white',add_plant_list)
         
 """"

@@ -6,7 +6,7 @@ from gui import plant_list
 from PIL import Image, ImageTk
 from tkinter import ttk, messagebox, filedialog
 from utils.util import get_image, small_label, create_header, clear, bttn
-from cruds.crud import get_plants
+from crud.crud_db import get_plants
 
 class RecordOfPlants(tk.Frame):
     def __init__(self, parent, controller):

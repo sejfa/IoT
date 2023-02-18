@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import LEFT, RIGHT, BOTH, END
 from gui import basil_gui, hosta_gui, main_menu, recordofplant
 from utils.util import get_image, create_header, create_frame, create_smaller_label,bttn
-from cruds.crud import get_plants
+from crud.crud_db import get_plants
 
 class PlantList(tk.Frame):
     def __init__(self, parent, controller):
