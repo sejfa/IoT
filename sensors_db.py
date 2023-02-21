@@ -23,7 +23,7 @@ def create_sensor_table():
         c.execute(
             'CREATE TABLE IF NOT EXISTS  UserData (Name TEXT, Surname TEXT, Username TEXT, Password TEXT, Date TEXT)')
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  RecordsOfPots (pot_id INTEGER PRIMARY KEY, Pot TEXT, Plant TEXT)')
+            'CREATE TABLE IF NOT EXISTS  RecordsOfPots (Pot_id INTEGER PRIMARY KEY, Pot TEXT, Plant TEXT)')
         conn.commit()
 
     except sqlite3.Error as e:

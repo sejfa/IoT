@@ -20,11 +20,11 @@ def get_pots():
     
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
-    c.execute("SELECT Plant FROM RecordsOfPots")
+    c.execute("SELECT Pot FROM RecordsOfPots")
     result = c.fetchall()
-    new_list = [item for i in result for item in i]
+    pot_list = [item for i in result for item in i]
     
-    return new_list
+    return pot_list
 
 # Fetching sensors data
 def convertTuple(tup):
