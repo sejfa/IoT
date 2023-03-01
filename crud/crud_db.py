@@ -1,6 +1,6 @@
 import sqlite3
 import tkinter as tk
-from gui import basil_gui, hosta_gui
+from gui import hosta_gui, basil_gui
 
 
 

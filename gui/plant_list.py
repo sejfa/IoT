@@ -1,8 +1,8 @@
 import sqlite3
 import tkinter as tk
 from tkinter import LEFT, RIGHT, BOTH, END
-from gui import basil_gui, hosta_gui, main_menu, recordofplant
-from utils.util import get_image, create_header, create_frame, create_smaller_label,bttn
+from gui import hosta_gui, basil_gui, main_menu, recordofplant
+from utils.util import get_image, create_header, create_frame, create_smaller_label, bttn
 from crud.crud_db import get_plants
 
 class PlantList(tk.Frame):
@@ -27,7 +27,7 @@ class PlantList(tk.Frame):
         self.listbox = tk.Listbox(self, listvariable=self.listbox_var)
         self.scrollbar = tk.Scrollbar(self, orient="vertical", command=self.listbox.yview)
         
-        bttn(self, 142, 350, '  A D D  P L A N T  ', '#e6e6e6','light grey', lambda: self.controller.show_frame(recordofplant.RecordOfPlants))
+        bttn(self, 142, 350, '  M A N A G E  P L A N T S ', '#e6e6e6','light grey', lambda: self.controller.show_frame(recordofplant.RecordOfPlants))
         bttn(self, 397, 350, 'H O M E', '#e6e6e6','light grey', lambda: self.controller.show_frame(main_menu.SecondPage))
 
     def place_widgets(self):

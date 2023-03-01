@@ -76,7 +76,25 @@ def insert_plant_data():
     insertdata(
         10, "Origano","C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\oregano.jpg")
 
+def insert_pot_data():
+    def insert_data1(potid, pot, plant):
+        
+        try:
+            insert_query = """ INSERT INTO RecordsOfPots
+                                        (Pot_id, Pot, Plant) VALUES (?, ?, ?)"""
+            data_tuple = (potid, pot, plant)
+            c.execute(insert_query, data_tuple)
 
+        except sqlite3.Error as error:
+                print("Pot data is already inserted", error)
+        
+    insert_data1(1, "Kitchen - shelf by the window", "Basil")
+    insert_data1(2, "Living room - small table near the couch","Hosta")
+    insert_data1(3, "Balcony - near the window","Rose")
+    insert_data1(4, "Bedroom - near the bed", "Lilies")
+    
+
+    
 def insert_humidity_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current soil humidity is"
@@ -166,6 +184,7 @@ def insert_salinity_data():
 
 create_sensor_table()
 insert_plant_data()
+insert_pot_data()
 insert_humidity_data()
 insert_temperature_data()
 insert_brightness_data()

@@ -18,8 +18,8 @@ class RecordOfPots(tk.Frame):
         self.place_widgets()
         self.bind_widgets()
 
-    #def set_plant_list_reference(self, plant_list):
-     #   self.plant_list = plant_list
+    def set_pot_list_reference(self, pot_list):
+        self.pot_list = pot_list
         
 
     def create_widgets(self):
@@ -28,21 +28,19 @@ class RecordOfPots(tk.Frame):
         self.tabview = customtkinter.CTkTabview(self.frame_info, fg_color="#f6f6f6", border_color="#f6f6f6", bg_color="#f6f6f6", height=300, width=330)
         self.header = create_header(self.frame_info, "Records of Pots", 165, 10)
         self.tab1 = self.tabview.add("Create pot and add plant")
-        self.tab2 = self.tabview.add("Update pot data")
-        self.tab3 = self.tabview.add("Delete pot")
+        self.tab2 = self.tabview.add("Delete pot")
         self.tabview.set("Create pot and add plant")
             
         small_label(self.tab1, "Add pot", 10, 35)
         small_label(self.tab1, "Select the plant you want to place in pot", 10, 100)
-        small_label(self.tab2, "Update pot", 10, 35)
-        small_label(self.tab2, "Change plant", 10, 100)
-        small_label(self.tab3, "Select pot", 10, 35)
+        small_label(self.tab2, "Select the pot you want to delete", 62, 35)
+        
 
         self.conn = sqlite3.connect('PyFlora.db')
         self.c = self.conn.cursor() 
         
         self.new_list = get_plants()
-        self.pot_list = get_pots()
+        self.new_pot_list = get_pots()
         self.add_entry_var = tk.StringVar()
         self.add_entry = customtkinter.CTkEntry(self.tab1, textvariable=self.add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
         self.select_plant_var = tk.StringVar()
@@ -50,16 +48,11 @@ class RecordOfPots(tk.Frame):
         self.save_image = customtkinter.CTkImage(Image.open("media\icons8-save-100.png").resize((20, 20), Image.ANTIALIAS))
         self.save_plant_to_pot_button = customtkinter.CTkButton(master=self.tab1, width=90, image=self.save_image, text="Save",compound="left") 
         
-        self.update_dropmenu_var = tk.StringVar()
-        self.update_dropmenu = ttk.OptionMenu(self.tab2, self.update_dropmenu_var, *self.pot_list)
-        self.update_img = customtkinter.CTkImage(Image.open("media\icons8-update-100.png").resize((20, 20), Image.ANTIALIAS))
-        self.update_pot_button = customtkinter.CTkButton(master=self.tab2, text="Update pot", image=self.update_img, width=100, height=10)
-        self.change_var = tk.StringVar()
-        self.change_plant = ttk.OptionMenu(self.tab2, self.change_var, *self.new_list)
+        
         self.del_pot_var = tk.StringVar()
-        self.delete_pot_menu = ttk.OptionMenu(self.tab3, self.del_pot_var, *self.pot_list)
+        self.delete_pot_menu = ttk.OptionMenu(self.tab2, self.del_pot_var, *self.new_pot_list)
         self.delete = customtkinter.CTkImage(Image.open("media\del.png").resize((20, 20), Image.ANTIALIAS))
-        self.delete_button = customtkinter.CTkButton(master=self.tab3, text="Delete", fg_color="red2", hover_color="red3", image=self.delete, width=100, height=10)
+        self.delete_button = customtkinter.CTkButton(master=self.tab2, text="Delete", fg_color="red2", hover_color="red3", image=self.delete, width=100, height=10)
 
         bttn(self, 265, 430, '  P O T   L I S T  ','#e6e6e6','white', lambda: self.controller.show_frame(pot_list.PotList))
         
@@ -67,42 +60,34 @@ class RecordOfPots(tk.Frame):
         self.frame_info.place(x=150, y=60, width=500, height=350)
         self.tabview.place(x=85, y=40)
         self.add_entry.place(x=130, y=30)
-        self.select_plant_dropmenu.place(x=270, y=96)
-        self.update_dropmenu.place(x=220 ,y=30)
-        self.change_plant.place(x=220, y=96)
-        self.update_pot_button.place(x=110,y=170)
-        self.delete_pot_menu.place(x=110 ,y=170)
+        self.select_plant_dropmenu.place(x=250, y=96)
+        self.delete_pot_menu.place(x=40 ,y=80)
         self.save_plant_to_pot_button.place(x=110, y=170)
         self.delete_button.place(x=110, y=170)
         #self.home_button.place(x=300, y=400)
 
     def bind_widgets(self):
         self.save_plant_to_pot_button.configure(command=self.insert_pot_data)
-        self.update_pot_button.configure(command=self.update_data)
         self.delete_button.configure(command=self.delete_data)
     
     def updated_pot_list(self):
-        self.pot_list.append(self.add_entry.get().capitalize())
+        self.new_pot_list.append(self.add_entry.get().capitalize())
         self.add_entry.delete(0, 'end')
-        menu = self.update_dropmenu["menu"]
-        menu.delete(0, "end")
-        for plant in self.pot_list:
-            menu.add_command(label=plant, 
-                command=lambda value=plant: self.update_dropmenu_var.set(value))
     
         menu = self.delete_pot_menu["menu"]
         menu.delete(0, "end")
-        for del_pot in self.pot_list:
+        for del_pot in self.new_pot_list:
             menu.add_command(label=del_pot, 
                 command=lambda value=del_pot: self.del_pot_var.set(value))
             
     def delete_selected_item(self):
+        
         selected = self.delete_pot_menu['menu'].index(self.del_pot_var.get())
         self.delete_pot_menu['menu'].delete(selected)
         self.del_pot_var.set(self.delete_pot_menu['menu'].entrycget(0,"label"))
         
-        self.delete_pot_menu['menu'].delete(selected)
-        self.del_pot_var.set(self.delete_pot_menu['menu'].entrycget(0,"label"))
+        
+        
 
     def insert_pot_data(self):
         
@@ -129,53 +114,8 @@ class RecordOfPots(tk.Frame):
 
         except sqlite3.Error as error:
             print("Failed to add data", error)
-        #self.pot_list.refresh()
+        self.pot_list.refresh()
                                 
-
-    def insert_updated_pot_data(self):
-        
-        try:
-            self.conn = sqlite3.connect('PyFlora.db')
-            self.c = self.conn.cursor()
-            self.c.execute("SELECT * FROM RecordsOfPots WHERE Pot=?",
-                [self.update_dropmenu_var.get()])
-
-            self.result = self.c.fetchone()
-            
-            if self.result:
-                self.c.execute("UPDATE RecordsOfPots set Pot=? WHERE Plant=?",
-                    [self.add_entry_var, self.change_var.get()])
-
-            self.conn.commit()
-        
-        except sqlite3.Error as error:
-                print("Failed to update data", error)
-
-
-    def check_if_pot_exists(self):
-        
-        self.c.execute("SELECT Pot FROM RecordsOfPots WHERE (Pot=?)",
-                [self.add_entry_var.get()])
-
-        self.result = self.c.fetchone()
-        
-        if self.result:
-            self.insert_updated_pot_data()
-            messagebox.showinfo("Success", "Successfully updated pot!")
-            
-        else:
-            messagebox.showerror(
-                "Error", "The entered pot is not in database or doesn't match the pot_id")
-            
-    def update_data(self):
-        
-        try:
-            self.check_if_pot_exists()
-            
-            messagebox.showerror("Error", "All fields are required !")
-        
-        except sqlite3.Error as error:
-            print("Failed to update data", error)
 
     def delete_data(self):
         
