@@ -59,9 +59,9 @@ class RecordOfPots(tk.Frame):
     def place_widgets(self):
         self.frame_info.place(x=150, y=60, width=500, height=350)
         self.tabview.place(x=85, y=40)
-        self.add_entry.place(x=130, y=30)
+        self.add_entry.place(x=160, y=30)
         self.select_plant_dropmenu.place(x=250, y=96)
-        self.delete_pot_menu.place(x=40 ,y=80)
+        self.delete_pot_menu.place(x=50 ,y=80)
         self.save_plant_to_pot_button.place(x=110, y=170)
         self.delete_button.place(x=110, y=170)
         #self.home_button.place(x=300, y=400)
@@ -85,7 +85,6 @@ class RecordOfPots(tk.Frame):
         selected = self.delete_pot_menu['menu'].index(self.del_pot_var.get())
         self.delete_pot_menu['menu'].delete(selected)
         self.del_pot_var.set(self.delete_pot_menu['menu'].entrycget(0,"label"))
-        
         
         
 

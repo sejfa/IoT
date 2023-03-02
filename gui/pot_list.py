@@ -1,7 +1,7 @@
 import sqlite3
 import tkinter as tk
 from tkinter import LEFT, RIGHT, BOTH, END
-from gui import hosta_gui, basil_gui, main_menu, recordofpots
+from gui import kitchen_basil_gui,hosta_gui, main_menu, recordofpots
 from utils.util import get_image, create_header, create_frame, create_smaller_label,bttn
 from crud.crud_db import get_pots
 
@@ -43,7 +43,7 @@ class PotList(tk.Frame):
         if selection:
             self.index = int(selection[0])
             if self.index == 0:
-                self.controller.show_frame(basil_gui.BasilPage)
+                self.controller.show_frame(kitchen_basil_gui.KitchenBasilPage)
             elif self.index == 1:
                 self.controller.show_frame(hosta_gui.HostaPage)
         else:

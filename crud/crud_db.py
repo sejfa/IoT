@@ -44,6 +44,9 @@ def plant_hum():
     convert = convertTuple(fetch)
     return convert
 
+
+
+
 def plant_temp():
     
     conn = sqlite3.connect('PyFlora.db')
@@ -55,6 +58,8 @@ def plant_temp():
     convert = convertTuple(fetch)
     return convert
 
+
+
 def plant_bright():
     
     conn = sqlite3.connect('PyFlora.db')
@@ -65,6 +70,8 @@ def plant_bright():
     conn.close()
     convert = convertTuple(fetch)
     return convert
+
+
 
 def plant_ph():
     
@@ -78,6 +85,8 @@ def plant_ph():
     return convert
 
 
+
+
 def plant_sal():
     
     conn = sqlite3.connect('PyFlora.db')
@@ -89,27 +98,33 @@ def plant_sal():
     convert = convertTuple(fetch)
     return convert
 
+
+
 ################################################### Sensor details #####################################################
 
 def sensor_hum():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value FROM Humidity")
+    c.execute("SELECT Lines, Value, Unit FROM Humidity")
     fetch = c.fetchall()
     conn.close()
     for row in fetch:
-        return f"{row[0]}  {row[1]}"
+        return f"{row[0]}  {row[1]} {row[2]}"
+    
+
 
 def sensor_temp():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value FROM Temperature")
+    c.execute("SELECT Lines, Value, Unit FROM Temperature")
     fetch = c.fetchall()
     conn.close()
     for row in fetch:
-        return f"{row[0]}  {row[1]}"
+        return f"{row[0]}  {row[1]} {row[2]}"
+
+
 
 
 def sensor_bright():
@@ -123,6 +138,7 @@ def sensor_bright():
         return f"{row[0]}  {row[1]}"
 
 
+
 def sensor_ph():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
@@ -134,15 +150,19 @@ def sensor_ph():
         return f"{row[0]}  {row[1]}"
 
 
+
+
 def sensor_sal():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value FROM Salinity")
+    c.execute("SELECT Lines, Value, Unit FROM Salinity")
     fetch = c.fetchall()
     conn.close()
     for row in fetch:
-        return f"{row[0]}  {row[1]}"
+        return f"{row[0]}  {row[1]} {row[2]}"
+
+
 
 
 def get_optimal_hum():
@@ -156,6 +176,8 @@ def get_optimal_hum():
     return f"{fetch[0]}  {fetch[1]}%\t\t {fetch[2]}"
 
 
+
+
 def get_temp():
     
     conn = sqlite3.connect('PyFlora.db')
@@ -166,6 +188,8 @@ def get_temp():
     conn.close()
     for row in fetch:
         return f"{row[0]}  {row[1]}°C\t {row[2]}"
+
+
 
 
 def get_optimal_temp():
@@ -192,6 +216,8 @@ def get_bright():
         return f"{row[0]}  {row[1]}\t\t\t {row[2]}"
 
 
+
+
 def get_optimal_bright():
 
     conn = sqlite3.connect('PyFlora.db')
@@ -201,6 +227,8 @@ def get_optimal_bright():
     fetch = c.fetchone()
     conn.close()
     return f"{fetch[0]}  {fetch[1]}\t\t\t {fetch[2]}"
+
+
 
 
 def get_ph():
@@ -215,6 +243,8 @@ def get_ph():
         return f"{row[0]}  {row[1]}"
 
 
+
+
 def get_optmal_ph():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
@@ -223,6 +253,8 @@ def get_optmal_ph():
     fetch = c.fetchone()
     conn.close()
     return f"{fetch[0]}  {fetch[1]}"
+
+
 
 
 def get_sal():
@@ -234,6 +266,8 @@ def get_sal():
     conn.close()
     for row in fetch:
         return f"{row[0]}  {row[1]}"
+
+
 
 
 def get_optimal_sal():

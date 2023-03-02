@@ -11,15 +11,15 @@ def create_sensor_table():
         c.execute(
             'CREATE TABLE IF NOT EXISTS  RecordsOfPlants (Plant_id INTEGER PRIMARY KEY, Plant TEXT, Photo BLOB)')
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  Humidity (Lines TEXT, Value INTEGER, Action TEXT, Date TEXT)')
+            'CREATE TABLE IF NOT EXISTS  Humidity (Lines TEXT, Value INTEGER, Unit Text, Action TEXT, Date TEXT)')
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  Temperature (Lines TEXT, Value INTEGER, Action TEXT, Date TEXT)')
+            'CREATE TABLE IF NOT EXISTS  Temperature (Lines TEXT, Value INTEGER, Unit Text, Action TEXT, Date TEXT)')
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  pH (Lines TEXT, Value INTEGER, Action TEXT, Date TEXT)')
+            'CREATE TABLE IF NOT EXISTS  pH (Lines TEXT, Value INTEGER, Unit Text, Action TEXT, Date TEXT)')
         c.execute(
             'CREATE TABLE IF NOT EXISTS  Brightness (Lines TEXT, Value INTEGER, Action TEXT, Date TEXT)')
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  Salinity (Lines TEXT, Value INTEGER, Action TEXT,  Date TEXT)')
+            'CREATE TABLE IF NOT EXISTS  Salinity (Lines TEXT, Value INTEGER, Unit Text, Action TEXT,  Date TEXT)')
         c.execute(
             'CREATE TABLE IF NOT EXISTS  UserData (Name TEXT, Surname TEXT, Username TEXT, Password TEXT, Date TEXT)')
         c.execute(
@@ -98,7 +98,7 @@ def insert_pot_data():
 def insert_humidity_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current soil humidity is"
-
+    unit = "%"
     action = ""
 
     for value in range(20, 61):
@@ -111,15 +111,15 @@ def insert_humidity_data():
         else:
             action = "No action needed"
 
-        c.execute("INSERT INTO Humidity (Lines, Value, Action, Date) VALUES(?,?,?,?)",
-                  (lines, value, action, date))
+        c.execute("INSERT INTO Humidity (Lines, Value, Unit, Action, Date) VALUES(?,?,?,?,?)",
+                  (lines, value, unit, action, date))
     conn.commit()
 
 
 def insert_temperature_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current room temperature is"
-
+    unit = "°C"
     action = ""
 
     for value in range(22, 27):
@@ -129,8 +129,8 @@ def insert_temperature_data():
         else:
             action = "Soil temperature is optimal, no action needed"
 
-        c.execute("INSERT INTO Temperature (Lines, Value, Action, Date) VALUES(?,?,?,?)",
-                  (lines, value, action, date))
+        c.execute("INSERT INTO Temperature (Lines, Value, Unit, Action, Date) VALUES(?,?,?,?,?)",
+                  (lines, value, unit, action, date))
     conn.commit()
 
 
@@ -170,6 +170,7 @@ def insert_brightness_data():
 def insert_salinity_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current salinity is"
+    unit = "ppt"
     action = ""
 
     for value in range(1, 11):
@@ -177,8 +178,8 @@ def insert_salinity_data():
             action = "Reduce soil salinity"
         else:
             action = "Soil salinity is fine, no action needed"
-    c.execute("INSERT INTO Salinity (Lines, Value, Action, Date) VALUES (?,?,?,?)",
-              (lines, value, action, date))
+    c.execute("INSERT INTO Salinity (Lines, Value, Unit, Action, Date) VALUES (?,?,?,?,?)",
+              (lines, value, unit, action, date))
     conn.commit()
 
 
