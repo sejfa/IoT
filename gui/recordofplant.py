@@ -168,7 +168,7 @@ class RecordOfPlants(tk.Frame):
                     [self.read_file2, self.dropmenu_var.get()])
 
             self.conn.commit()
-        
+            
         except sqlite3.Error as error:
                 print("Failed to update data", error)
 
@@ -197,6 +197,8 @@ class RecordOfPlants(tk.Frame):
         
         except sqlite3.Error as error:
             print("Failed to update data", error)
+        self.plant_list.refresh()
+
 
     def delete_data(self):
         
@@ -223,6 +225,6 @@ class RecordOfPlants(tk.Frame):
 
         except sqlite3.Error as error:
                 print("Failed to update data", error)
-    
+        self.plant_list.refresh()
 
     

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 
-class KitchenBasilPage(tk.Frame):
+class LivingRoomHosta(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, background="white")
 
@@ -19,11 +19,12 @@ class KitchenBasilPage(tk.Frame):
         self.place_widgets()
         self.bind_widgets()
 
+
     def create_widgets(self):
         self.basil_info = tk.LabelFrame(self, background=get_background())
-        self.header = create_label(self.basil_info, "Kitchen - shelf by the window", 15, 5)
+        self.header = create_label(self.basil_info, "Living room - small table near the couch", 15, 5)
         self.pic_frame = ttk.Frame(self)
-        self.pic_frame_image = get_image('basil.jpg', self.pic_frame)
+        self.pic_frame_image = get_image('hosta1.jpg', self.pic_frame)
         self.sync_button = ttk.Button(self, text="Sync", width=15)
         #self.optimal_button = ttk.Button(self, text="Set to optimal",width=20)
         self.back = customtkinter.CTkButton(master=self, width=100, height=15, border_width=0, corner_radius=13, text="Back", bg_color="white")
@@ -60,7 +61,7 @@ class KitchenBasilPage(tk.Frame):
             self.s = sensor_sal()
             self.sal = create_smaller_label(self.basil_info, self.s, 120, 185)
             self.displayed = True
-
+        
     """def display_optimal_data(self):
 
         self.hum.destroy()

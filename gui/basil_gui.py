@@ -16,24 +16,25 @@ class BasilPage(tk.Frame):
         self.place_widgets()
         self.bind_widgets()
 
+    
+
     def create_widgets(self):
         self.basil_info = tk.LabelFrame(self, background=get_background())
-        self.header = create_label(self.basil_info, "Basil sensors info", 15, 5)
+        self.header = create_label(self, "Basil care", 350, 35)
         self.pic_frame = ttk.Frame(self)
         self.pic_frame_image = get_image('basil.jpg', self.pic_frame)
         self.sync_button = ttk.Button(self, text="Sync", width=15)
-        self.optimal_button = ttk.Button(self, text="Set to optimal",width=20)
+        #self.optimal_button = ttk.Button(self, text="Set to optimal",width=20)
         self.back = customtkinter.CTkButton(master=self, width=100, height=15, border_width=0, corner_radius=13, text="Back", bg_color="white")
         #self.graphical_button = ttk.Button(self, text="Show graphical info")
         #bttn(self, 2, 230, ' S Y N C ', '#e6e6e6','light grey', self.display_data)
         #bttn(self, 257, 230, '  S E T   T O   O P T I M A L  ', '#e6e6e6','light grey', self.display_optimal_data)
 
     def place_widgets(self):
-        self.basil_info.place(x=2, y=2, width=480, height=215,)
-        self.pic_frame.place(x=485, y=2, width=313, height=215)
-        self.sync_button.place(x=80, y=230)
+        self.basil_info.place(x=80, y=120, width=313, height=215,)
+        self.pic_frame.place(x=410, y=120, width=313, height=215)
+        self.sync_button.place(x=350, y=400)
         #self.optimal_button.place(x=220, y=230)
-        #self.graphical_button.place(x=20, y=420)
         self.back.place(x=20, y=450)
 
     def bind_widgets(self):
@@ -46,15 +47,15 @@ class BasilPage(tk.Frame):
         
         if not self.displayed:
             self.h= plant_hum()
-            self.hum = create_smaller_label(self.basil_info, self.h, 120, 45)
+            self.hum = create_smaller_label(self.basil_info, self.h, 5, 15)
             self.t = plant_temp()
-            self.temp = create_smaller_label(self.basil_info, self.t, 120, 80)
+            self.temp = create_smaller_label(self.basil_info, self.t, 5, 55)
             self.b = plant_bright()
-            self.bright = create_smaller_label(self.basil_info, self.b, 120, 115)
+            self.bright = create_smaller_label(self.basil_info, self.b, 5, 95)
             self.p = plant_ph()
-            self.ph = create_smaller_label(self.basil_info, self.p, 120, 150)
+            self.ph = create_smaller_label(self.basil_info, self.p, 5, 135)
             self.s = plant_sal()
-            self.sal = create_smaller_label(self.basil_info, self.s, 120, 185)
+            self.sal = create_smaller_label(self.basil_info, self.s, 5, 175)
             self.displayed = True
 
     """ def display_optimal_data(self):

@@ -1,4 +1,4 @@
-import tkinter as tk
+"""import tkinter as tk
 from tkinter.ttk import Progressbar
 from tkinter import ttk, HORIZONTAL
 from utils.util import get_image
@@ -70,7 +70,7 @@ w.mainloop()
 
 
 
-
+"""
 
 
 

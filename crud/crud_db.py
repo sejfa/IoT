@@ -1,7 +1,6 @@
 import sqlite3
 import tkinter as tk
-from gui import hosta_gui, basil_gui
-
+import random
 
 
 
@@ -31,9 +30,75 @@ def convertTuple(tup):
     str = ''.join(tup)
     return str
 
+
+################################################### Sensor details #####################################################
+
+def sensor_hum():
+    
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value, Unit FROM Humidity ORDER BY RANDOM() LIMIT 1")
+    fetch = c.fetchone()
+    conn.close()
+    result = f"{fetch[0]}  {fetch[1]} {fetch[2]}"
+    return result
+    
+
+
+def sensor_temp():
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value, Unit FROM Temperature ORDER BY RANDOM() LIMIT 1")
+    fetch = c.fetchone()
+    conn.close()
+    result = f"{fetch[0]}  {fetch[1]} {fetch[2]}"
+    return result
+
+
+
+
+def sensor_bright():
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value FROM Brightness ORDER BY RANDOM() LIMIT 1")
+    fetch = c.fetchall()
+    conn.close()
+    for row in fetch:
+        return f"{row[0]}  {row[1]}"
+
+
+
+def sensor_ph():
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value FROM Ph ORDER BY RANDOM() LIMIT 1")
+    fetch = c.fetchall()
+    conn.close()
+    for row in fetch:
+        return f"{row[0]}  {row[1]}"
+
+
+
+
+def sensor_sal():
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Lines, Value, Unit FROM Salinity ORDER BY RANDOM() LIMIT 1")
+    fetch = c.fetchone()
+    conn.close()
+    result = f"{fetch[0]}  {fetch[1]} {fetch[2]}"
+    return result
+
+
 ################################################### Plant details #####################################################
 
 def plant_hum():
+    
     
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
@@ -42,8 +107,9 @@ def plant_hum():
     fetch = c.fetchone()
     conn.close()
     convert = convertTuple(fetch)
-    return convert
 
+    
+    return convert
 
 
 
@@ -78,12 +144,11 @@ def plant_ph():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Action FROM Ph")
+    c.execute("SELECT Action FROM pH")
     fetch = c.fetchone()
     conn.close()
     convert = convertTuple(fetch)
     return convert
-
 
 
 
@@ -97,71 +162,6 @@ def plant_sal():
     conn.close()
     convert = convertTuple(fetch)
     return convert
-
-
-
-################################################### Sensor details #####################################################
-
-def sensor_hum():
-    conn = sqlite3.connect('PyFlora.db')
-    c = conn.cursor()
-
-    c.execute("SELECT Lines, Value, Unit FROM Humidity")
-    fetch = c.fetchall()
-    conn.close()
-    for row in fetch:
-        return f"{row[0]}  {row[1]} {row[2]}"
-    
-
-
-def sensor_temp():
-    conn = sqlite3.connect('PyFlora.db')
-    c = conn.cursor()
-
-    c.execute("SELECT Lines, Value, Unit FROM Temperature")
-    fetch = c.fetchall()
-    conn.close()
-    for row in fetch:
-        return f"{row[0]}  {row[1]} {row[2]}"
-
-
-
-
-def sensor_bright():
-    conn = sqlite3.connect('PyFlora.db')
-    c = conn.cursor()
-
-    c.execute("SELECT Lines, Value FROM Brightness")
-    fetch = c.fetchall()
-    conn.close()
-    for row in fetch:
-        return f"{row[0]}  {row[1]}"
-
-
-
-def sensor_ph():
-    conn = sqlite3.connect('PyFlora.db')
-    c = conn.cursor()
-
-    c.execute("SELECT Lines, Value FROM Ph")
-    fetch = c.fetchall()
-    conn.close()
-    for row in fetch:
-        return f"{row[0]}  {row[1]}"
-
-
-
-
-def sensor_sal():
-    conn = sqlite3.connect('PyFlora.db')
-    c = conn.cursor()
-
-    c.execute("SELECT Lines, Value, Unit FROM Salinity")
-    fetch = c.fetchall()
-    conn.close()
-    for row in fetch:
-        return f"{row[0]}  {row[1]} {row[2]}"
-
 
 
 
@@ -279,3 +279,4 @@ def get_optimal_sal():
     fetch = c.fetchone()
     conn.close()
     return f"{fetch[0]}  {fetch[1]}"
+

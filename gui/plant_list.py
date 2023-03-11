@@ -1,7 +1,7 @@
 import sqlite3
 import tkinter as tk
 from tkinter import LEFT, RIGHT, BOTH, END
-from gui import hosta_gui, basil_gui, main_menu, recordofplant
+from gui import ginger_gui, basil_gui, hosta_gui, rose_gui,lilie_gui, main_menu, recordofplant
 from utils.util import get_image, create_header, create_frame, create_smaller_label, bttn
 from crud.crud_db import get_plants
 
@@ -45,8 +45,14 @@ class PlantList(tk.Frame):
             self.index = int(selection[0])
             if self.index == 0:
                 self.controller.show_frame(basil_gui.BasilPage)
-            elif self.index == 2:
+            elif self.index == 1:
+                self.controller.show_frame(ginger_gui.GingerPage)
+            elif self.index ==2:
                 self.controller.show_frame(hosta_gui.HostaPage)
+            elif self.index ==3:
+                self.controller.show_frame(rose_gui.RosePage)
+            elif self.index ==7:
+                self.controller.show_frame(lilie_gui.LiliePage)
         else:
             print("No item selected")
 

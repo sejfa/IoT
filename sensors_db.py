@@ -98,18 +98,18 @@ def insert_pot_data():
 def insert_humidity_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current soil humidity is"
-    unit = "%"
+    unit = "%."
     action = ""
 
     for value in range(20, 61):
         if value < 30:
-            action = "You need to water the plant daily"
+            action = "You need to water the plant daily!"
         elif value < 40:
-            action = "You need to water the plant weekly"
+            action = "You need to water the plant weekly."
         elif value < 50:
-            action = "You need to water the plant monthly"
+            action = "You need to water the plant monthly."
         else:
-            action = "No action needed"
+            action = "No action needed."
 
         c.execute("INSERT INTO Humidity (Lines, Value, Unit, Action, Date) VALUES(?,?,?,?,?)",
                   (lines, value, unit, action, date))
@@ -119,15 +119,15 @@ def insert_humidity_data():
 def insert_temperature_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current room temperature is"
-    unit = "°C"
+    unit = "°C."
     action = ""
 
     for value in range(22, 27):
         if value > 22:
-            action = "Lower the room temperature"
+            action = "Lower the room temperature."
 
         else:
-            action = "Soil temperature is optimal, no action needed"
+            action = "Soil temperature is optimal, no action needed."
 
         c.execute("INSERT INTO Temperature (Lines, Value, Unit, Action, Date) VALUES(?,?,?,?,?)",
                   (lines, value, unit, action, date))
@@ -140,10 +140,10 @@ def insert_ph_data():
     action = ""
     for value in range(6, 9):
         if value > 7:
-            action = "Reduce soil pH"
+            action = "Reduce soil pH."
 
         else:
-            action = "Soil pH is fine, no action needed"
+            action = "Soil pH is fine, no action needed."
 
     c.execute("INSERT INTO pH (Lines, Value, Action, Date) VALUES (?,?,?,?)",
               (lines, value, action, date))
@@ -158,9 +158,9 @@ def insert_brightness_data():
 
     for value in range(1, 11):
         if value <= 5:
-            action = "The plant needs more light, move to a brighter place"
+            action = "The plant needs more light, move to a brighter place."
         else:
-            action = "The plant has enough light, no action needed"
+            action = "The plant has enough light, no action needed."
 
         c.execute("INSERT INTO Brightness (Lines, Value, Action, Date) VALUES (?,?,?,?)",
                   (lines, value, action, date))
@@ -170,14 +170,14 @@ def insert_brightness_data():
 def insert_salinity_data():
     date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
     lines = "Current salinity is"
-    unit = "ppt"
+    unit = "ppt."
     action = ""
 
     for value in range(1, 11):
         if value > 6:
-            action = "Reduce soil salinity"
+            action = "Reduce soil salinity."
         else:
-            action = "Soil salinity is fine, no action needed"
+            action = "Soil salinity is fine, no action needed."
     c.execute("INSERT INTO Salinity (Lines, Value, Unit, Action, Date) VALUES (?,?,?,?,?)",
               (lines, value, unit, action, date))
     conn.commit()

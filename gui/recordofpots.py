@@ -22,6 +22,7 @@ class RecordOfPots(tk.Frame):
         self.pot_list = pot_list
         
 
+
     def create_widgets(self):
         self.background = get_image("pot.jpg", self)
         self.frame_info = tk.LabelFrame(self, background="#f6f6f6")
@@ -141,4 +142,4 @@ class RecordOfPots(tk.Frame):
 
         except sqlite3.Error as error:
                 print("Failed to update data", error)
-    
+        self.pot_list.refresh()
