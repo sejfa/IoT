@@ -107,16 +107,22 @@ class LivingRoomHosta(tk.Frame):
                 self.canvas1 = FigureCanvasTkAgg(self.fig1, master=self.line_tab)
                 self.canvas1.draw()
                 self.canvas1.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+                
+                # Chart data
+                self.hum_value = int(self.h.split()[4])
+                self.temp_value = int(self.t.split()[4])
+                self.bright_value = int(self.b.split()[3])
+                self.ph_value = int(self.p.split()[3])
+                self.sal_value = int(self.s.split()[3])
 
                 # Pie chart
-                self.labels = ["A", "B", "C", "D"]
-                self.sizes = np.random.randint(1, 10, size=len(self.labels))
-                self.fig2, self.ax2 = plt.subplots(figsize=(6, 4))
-                self.ax2.pie(self.sizes, labels=self.labels)
-                self.ax2.set_title("Pie chart")
-                self.canvas2 = FigureCanvasTkAgg(self.fig2, master=self.pie_tab)
-                self.canvas2.draw()
-                self.canvas2.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+                self.fig1, self.ax2 = plt.subplots(figsize=(5, 5))
+                self.ax2.pie([self.hum_value, self.temp_value, self.bright_value, self.ph_value, self.sal_value], labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'])
+                self.ax2.set_title('Pie Chart')
+                self.ax2.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'])
+                self.canvas1 = FigureCanvasTkAgg(self.fig1, self.pie_tab)
+                self.canvas1.draw()
+                self.canvas1.get_tk_widget().pack(fill='both', expand=True)
 
                 # Histogram
                 self.fig3, self.ax3 = plt.subplots(figsize=(6, 4))
@@ -129,7 +135,10 @@ class LivingRoomHosta(tk.Frame):
                 self.graphical_info.place(x=200,y=220, width=600, height=280)
                 self.notebook.pack(fill='both', expand=True)
 
-          
+                # Legends
+                self.ax1.legend(labels=['Value'], loc='best')
+                self.ax2.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'],bbox_to_anchor=(1.62, 0.46), loc='upper center')
+                self.ax3.legend(labels=['Value'], loc='best')
 
     def back_button(self):
         self.controller.show_frame(pot_list.PotList)

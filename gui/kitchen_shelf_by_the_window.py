@@ -81,55 +81,79 @@ class KitchenBasilPage(tk.Frame):
         self.optimal_ph = create_smaller_label(self.basil_info, self.opt_ph, 15, 150)
         self.opt_sal = get_optimal_sal()
         self.optimal_sal = create_smaller_label(self.basil_info, self.opt_sal, 15, 185)
-"""
+""" 
+
+
     def toggle_graphical_info(self):
-            if self.graphical_info_exists:
-                self.graphical_info.destroy()
-                self.graphical_info_exists = False
-            else:
-               
-                self.graphical_info_exists = True 
-                x = np.linspace(0, 10, 100)
-                y = np.sin(x)
-                data = np.random.normal(size=1000)
-                self.graphical_info = tk.LabelFrame(self)
-                self.notebook = ttk.Notebook(self.graphical_info)
-                self.line_tab = ttk.Frame(self.notebook)
-                self.pie_tab = ttk.Frame(self.notebook)
-                self.hist_tab = ttk.Frame(self.notebook)
-                self.notebook.add(self.line_tab, text='Line Chart')
-                self.notebook.add(self.pie_tab, text='Pie Chart')
-                self.notebook.add(self.hist_tab, text='Histogram')
+        if self.graphical_info_exists:
+            self.graphical_info.destroy()
+            self.graphical_info_exists = False
+        else:
+            self.graphical_info_exists = True 
+            x = np.linspace(0, 10, 100)
+            y = np.sin(x)
+            data = np.random.normal(size=1000)
+            self.graphical_info = tk.LabelFrame(self)
+            self.notebook = ttk.Notebook(self.graphical_info)
+            self.line_tab = ttk.Frame(self.notebook)
+            self.pie_tab = ttk.Frame(self.notebook)
+            self.hist_tab = ttk.Frame(self.notebook)
+            self.notebook.add(self.line_tab, text='Line Chart')
+            self.notebook.add(self.pie_tab, text='Pie Chart')
+            self.notebook.add(self.hist_tab, text='Histogram')
             
-                self.fig1, self.ax1 = plt.subplots(figsize=(6, 4))
-                self.ax1.plot(x, y)
-                self.ax1.set_title("Line chart")
-                self.canvas1 = FigureCanvasTkAgg(self.fig1, master=self.line_tab)
-                self.canvas1.draw()
-                self.canvas1.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+            #chart_data = self.get_chart_data()
+            self.hum_value = int(self.h.split()[4])
+            self.temp_value = int(self.t.split()[4])
+            self.bright_value = int(self.b.split()[3])
+            self.ph_value = int(self.p.split()[3])
+            self.sal_value = int(self.s.split()[3])
+            
+            
+            # Line chart
+            self.fig1, self.ax1 = plt.subplots(figsize=(6,4))
+            self.ax1.plot(x, y)
+            self.ax1.set_title("Line chart")
+            data = [self.hum_value, self.temp_value, self.bright_value, self.ph_value, self.sal_value]
+            labels = ['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity']
+            x = list(range(len(data)))
+            for i in range(len(data)):
+                self.ax1.plot(x[i], data[i], marker='o', label=labels[i])
+            self.ax1.set_xlim(-0.5, len(data)-0.5)  # set x-axis limit to show all labels
+            self.ax1.set_xticks(x)
+            self.ax1.set_xticklabels(labels)
+            self.ax1.legend()
+            self.canvas1 = FigureCanvasTkAgg(self.fig1, master=self.line_tab)
+            self.canvas1.draw()
+            self.canvas1.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-                # Pie chart
-                self.labels = ["A", "B", "C", "D"]
-                self.sizes = np.random.randint(1, 10, size=len(self.labels))
-                self.fig2, self.ax2 = plt.subplots(figsize=(6, 4))
-                self.ax2.pie(self.sizes, labels=self.labels)
-                self.ax2.set_title("Pie chart")
-                self.canvas2 = FigureCanvasTkAgg(self.fig2, master=self.pie_tab)
-                self.canvas2.draw()
-                self.canvas2.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+            # Pie chart
+            self.fig2, self.ax2 = plt.subplots(figsize=(5, 5))
+            self.ax2.pie(data, labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'])
+            self.ax2.set_title('Pie Chart')
+            self.canvas2 = FigureCanvasTkAgg(self.fig2, self.pie_tab)
+            self.canvas2.draw()
+            self.canvas2.get_tk_widget().pack(fill='both', expand=True)
 
-                # Histogram
-                self.fig3, self.ax3 = plt.subplots(figsize=(6, 4))
-                self.ax3.hist(data, bins=30)
-                self.ax3.set_title("Histogram")
-                self.canvas3 = FigureCanvasTkAgg(self.fig3, master=self.hist_tab)
-                self.canvas3.draw()
-                self.canvas3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+            # Histogram
+            self.fig3, self.ax3 = plt.subplots(figsize=(6, 4))
+            self.ax3.hist(data, bins=30)
+            self.ax3.set_title("Histogram")
+            for i in range(len(data)):
+                self.ax3.hist(data[i], bins=30, alpha=1, label=labels[i], histtype='bar' )
+            self.ax3.legend()
+            self.canvas3 = FigureCanvasTkAgg(self.fig3, master=self.hist_tab)
+            self.canvas3.draw()
+            self.canvas3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-                self.graphical_info.place(x=200,y=220, width=600, height=280)
-                self.notebook.pack(fill='both', expand=True)
 
-          
+            self.graphical_info.place(x=200,y=220, width=600, height=280)
+            self.notebook.pack(fill='both', expand=True)
+
+            # Legends
+            self.ax1.legend(labels=['Humidity','Temperature', 'Brightness', 'pH', 'Salinity'], loc='upper right')
+            self.ax2.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'],bbox_to_anchor=(1.62, 0.46), loc='upper center')
+            self.ax3.legend(labels=['Humidity','Temperature', 'Brightness', 'pH', 'Salinity'], loc='upper right')
 
     def back_button(self):
         self.controller.show_frame(pot_list.PotList)

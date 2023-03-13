@@ -42,6 +42,7 @@ def sensor_hum():
     fetch = c.fetchone()
     conn.close()
     result = f"{fetch[0]}  {fetch[1]} {fetch[2]}"
+
     return result
     
 

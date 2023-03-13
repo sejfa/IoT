@@ -98,6 +98,7 @@ class Application(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
         self.frames[recordofplant.RecordOfPlants].set_plant_list_reference(self.frames[plant_list.PlantList])
         self.frames[recordofpots.RecordOfPots].set_pot_list_reference(self.frames[pot_list.PotList])
+        
         self.show_frame(LoginMenu)
         
     def show_frame(self, page):
