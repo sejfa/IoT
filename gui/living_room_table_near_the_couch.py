@@ -1,12 +1,14 @@
+import numpy as np
 import customtkinter
 import tkinter as tk
 from tkinter import ttk
 from gui import pot_list
-from utils.util import get_image, create_label, create_smaller_label, get_background, create_button, bttn
-from crud.crud_db import sensor_hum, sensor_temp, sensor_bright, sensor_sal, sensor_ph
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import numpy as np
+from utils.util import get_image, create_label, create_smaller_label, get_background, create_button, bttn
+from crud.crud_db import sensor_hum, sensor_temp, sensor_bright, sensor_sal, sensor_ph
+
+
 
 class LivingRoomHosta(tk.Frame):
     def __init__(self, parent, controller):
@@ -83,63 +85,74 @@ class LivingRoomHosta(tk.Frame):
         self.optimal_sal = create_smaller_label(self.basil_info, self.opt_sal, 15, 185)
 """
     def toggle_graphical_info(self):
-            if self.graphical_info_exists:
-                self.graphical_info.destroy()
-                self.graphical_info_exists = False
-            else:
-               
-                self.graphical_info_exists = True 
-                x = np.linspace(0, 10, 100)
-                y = np.sin(x)
-                data = np.random.normal(size=1000)
-                self.graphical_info = tk.LabelFrame(self)
-                self.notebook = ttk.Notebook(self.graphical_info)
-                self.line_tab = ttk.Frame(self.notebook)
-                self.pie_tab = ttk.Frame(self.notebook)
-                self.hist_tab = ttk.Frame(self.notebook)
-                self.notebook.add(self.line_tab, text='Line Chart')
-                self.notebook.add(self.pie_tab, text='Pie Chart')
-                self.notebook.add(self.hist_tab, text='Histogram')
+        
+        if self.graphical_info_exists:
+            self.graphical_info.destroy()
+            self.graphical_info_exists = False
+        else:
+            self.graphical_info_exists = True 
+            self.graphical_info = tk.LabelFrame(self)
+            self.notebook = ttk.Notebook(self.graphical_info)
+            self.line_tab = ttk.Frame(self.notebook)
+            self.pie_tab = ttk.Frame(self.notebook)
+            self.hist_tab = ttk.Frame(self.notebook)
+            self.notebook.add(self.line_tab, text='Line Chart')
+            self.notebook.add(self.pie_tab, text='Pie Chart')
+            self.notebook.add(self.hist_tab, text='Histogram')
             
-                self.fig1, self.ax1 = plt.subplots(figsize=(6, 4))
-                self.ax1.plot(x, y)
-                self.ax1.set_title("Line chart")
-                self.canvas1 = FigureCanvasTkAgg(self.fig1, master=self.line_tab)
-                self.canvas1.draw()
-                self.canvas1.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-                
-                # Chart data
-                self.hum_value = int(self.h.split()[4])
-                self.temp_value = int(self.t.split()[4])
-                self.bright_value = int(self.b.split()[3])
-                self.ph_value = int(self.p.split()[3])
-                self.sal_value = int(self.s.split()[3])
+            #chart_data = self.get_chart_data()
+            self.hum_value = int(self.h.split()[4])
+            self.temp_value = int(self.t.split()[4])
+            self.bright_value = int(self.b.split()[3])
+            self.ph_value = int(self.p.split()[3])
+            self.sal_value = int(self.s.split()[3])
+            
+            
+            # Line chart
+            self.fig1, self.ax1 = plt.subplots(figsize=(8,5))
+            self.ax1.set_title("Line chart")
+            data = [self.hum_value, self.temp_value, self.bright_value, self.ph_value, self.sal_value]
+            labels = ['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity']
+            x = labels
+            for i in range(len(data)):
+                self.ax1.plot(x[i], data[i], marker='o')
+            self.ax1.set_xlabel("Parameter")
+            self.ax1.set_ylabel("Value")
+            self.canvas1 = FigureCanvasTkAgg(self.fig1, master=self.line_tab)
+            self.canvas1.draw()
+            self.canvas1.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-                # Pie chart
-                self.fig1, self.ax2 = plt.subplots(figsize=(5, 5))
-                self.ax2.pie([self.hum_value, self.temp_value, self.bright_value, self.ph_value, self.sal_value], labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'])
-                self.ax2.set_title('Pie Chart')
-                self.ax2.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'])
-                self.canvas1 = FigureCanvasTkAgg(self.fig1, self.pie_tab)
-                self.canvas1.draw()
-                self.canvas1.get_tk_widget().pack(fill='both', expand=True)
+            # Pie chart
+            self.fig2, self.ax2 = plt.subplots(figsize=(5, 5))
+            self.ax2.pie(data, labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'])
+            self.ax2.set_title('Pie Chart')
+            self.canvas2 = FigureCanvasTkAgg(self.fig2, self.pie_tab)
+            self.canvas2.draw()
+            self.canvas2.get_tk_widget().pack(fill='both', expand=True)
 
-                # Histogram
-                self.fig3, self.ax3 = plt.subplots(figsize=(6, 4))
-                self.ax3.hist(data, bins=30)
-                self.ax3.set_title("Histogram")
-                self.canvas3 = FigureCanvasTkAgg(self.fig3, master=self.hist_tab)
-                self.canvas3.draw()
-                self.canvas3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+            # Histogram
+            self.fig3, self.ax3 = plt.subplots(figsize=(7, 5))
+            labels = ['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity']
+            colors = ['Blue', 'Red', 'Orange', 'Yellow', 'Green']
+            bins = np.linspace(min(data), max(data), 30)
+            for i in range(len(data)):
+                self.ax3.hist(data[i], bins=bins, alpha=0.5, label=labels[i], color=colors[i], linewidth=4, histtype='bar')
+            self.ax3.set_title("Histogram")
+            self.ax3.legend()
+            self.canvas3 = FigureCanvasTkAgg(self.fig3, master=self.hist_tab)
+            self.canvas3.draw()
+            self.canvas3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-                self.graphical_info.place(x=200,y=220, width=600, height=280)
-                self.notebook.pack(fill='both', expand=True)
 
-                # Legends
-                self.ax1.legend(labels=['Value'], loc='best')
-                self.ax2.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'],bbox_to_anchor=(1.62, 0.46), loc='upper center')
-                self.ax3.legend(labels=['Value'], loc='best')
+            self.graphical_info.place(x=200,y=220, width=600, height=280)
+            self.notebook.pack(fill='both', expand=True)
 
+            # Legends
+            self.ax1.legend(labels=['Humidity','Temperature', 'Brightness', 'pH', 'Salinity'], loc='upper right',fontsize=8.5)
+            self.ax2.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'],bbox_to_anchor=(1.62, 0.46), loc='upper center',fontsize=9.5)
+            self.ax3.legend(labels=['Humidity','Temperature', 'Brightness', 'pH', 'Salinity'], loc='upper right',fontsize=8.6)
+    
+    
     def back_button(self):
         self.controller.show_frame(pot_list.PotList)
         

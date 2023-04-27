@@ -70,10 +70,13 @@ class LoginMenu(tk.Frame):
             self.clear_user_data()
     
     def log_in(self):
-        if self.username_entry.get() == "as" and self.password_entry.get() == 'as':
+        if self.username_entry.get() == "as" and self.password_entry.get() == 'helloworld':
             self.controller.show_frame(main_menu.SecondPage)
         elif self.username_entry.get() == '' or self.password_entry.get() == '':
             messagebox.showerror("Error", "All fields are required !")
+            self.clear_user_data()
+        elif len(self.password_entry.get()) <8:
+            messagebox.showerror("Error","The password must contain at least 8 characters! Please try again.")
             self.clear_user_data()
         else:
             self.use_userdata()

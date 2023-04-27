@@ -1,3 +1,4 @@
+
 import tkinter as tk
 from tkinter import ttk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -49,7 +50,7 @@ notebook.add(tab1, text='Pie Chart')
 
 # Create the pie chart
 fig1, axs1 = plt.subplots(figsize=(5, 5))
-axs1.pie([value1, value2, value3, value4, value5], labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'])
+axs1.pie([value1, value2, value3, value4, value5], labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'],autopct='%.1f%%')
 axs1.set_title('Pie Chart')
 axs1.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'])
 canvas1 = FigureCanvasTkAgg(fig1, tab1)
@@ -85,7 +86,7 @@ canvas3 = FigureCanvasTkAgg(fig3, tab3)
 canvas3.draw()
 canvas3.get_tk_widget().pack(fill='both', expand=True)
 
-axs1.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'],bbox_to_anchor=(1.62, 0.46), loc='upper center')
+axs1.legend(labels=['Humidity', 'Temperature', 'Brightness', 'pH', 'Salinity'],bbox_to_anchor=(1.62, 0.46), loc='upper center',fontsize=4)
 axs2.legend(labels=['Value'], loc='best')
 axs3.legend(labels=['Value'], loc='best')
 

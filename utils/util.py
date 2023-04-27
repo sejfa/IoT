@@ -168,7 +168,9 @@ def get_status_font():
 
 
 def get_image(image_name, root):
-
+    
+    global photo1
+    
     root_folder_path = 'media'
     load = Image.open(f"{root_folder_path}/{image_name}")
     photo1 = ImageTk.PhotoImage(load)

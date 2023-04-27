@@ -101,12 +101,12 @@ def insert_humidity_data():
     unit = "%."
     action = ""
 
-    for value in range(20, 61):
-        if value < 30:
+    for value in range(2, 6):
+        if value < 3:
             action = "You need to water the plant daily!"
-        elif value < 40:
+        elif value < 4:
             action = "You need to water the plant weekly."
-        elif value < 50:
+        elif value < 5:
             action = "You need to water the plant monthly."
         else:
             action = "No action needed."
@@ -156,7 +156,7 @@ def insert_brightness_data():
 
     action = ""
 
-    for value in range(1, 11):
+    for value in range(1, 6):
         if value <= 5:
             action = "The plant needs more light, move to a brighter place."
         else:
@@ -191,11 +191,11 @@ insert_temperature_data()
 insert_brightness_data()
 
 
-for i in range(20):
-    insert_ph_data()
+#for i in range(20):
+insert_ph_data()
 
-for i in range(20):
-    insert_salinity_data()
+#for i in range(20):
+insert_salinity_data()
 
 c.close()
 conn.close()
