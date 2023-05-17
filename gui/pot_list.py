@@ -21,19 +21,12 @@ class PotList(tk.Frame):
         self.pots = get_pots()
         self.treeview.delete(*self.treeview.get_children())
         for i, pot in enumerate(self.pots):
-            if i == len(self.pots) - 1:
-                self.treeview.insert('', 'end', values=(pot, "Empty"))
+            if  pot[1] != "None":
+                self.treeview.insert('', 'end', values=(pot[0], "Full"))
             else:
-                self.treeview.insert('', 'end', values=(pot, "Full"))
-
-    """def check_if_empty(self,pot):
-        empty = True
-        for item in pot:
-            if item  is not None:
-                empty = False
-                break
-        return empty
-    """
+                self.treeview.insert('', 'end', values=(pot[0], "Empty"))
+        
+    
     def create_list_widgets(self):
         
         self.background_image = get_image("gp.jpg", self)
@@ -44,7 +37,11 @@ class PotList(tk.Frame):
         self.treeview.heading('Pots', text='Pots')
         self.treeview.heading('Status', text='Status') 
         for pot in self.pot:
-            self.treeview.insert('', 'end', values=(pot, "Full"))
+            if  pot[1] != "None":
+                self.treeview.insert('', 'end', values=(pot[0], "Full"))
+            else:
+                self.treeview.insert('', 'end', values=(pot[0], "Empty"))
+        
             
         bttn(self, 142, 350, '  M A N A G E  P O T S ', '#e6e6e6','light grey', lambda: self.controller.show_frame(recordofpots.RecordOfPots))
         bttn(self, 397, 350, 'H O M E', '#e6e6e6','light grey', lambda: self.controller.show_frame(main_menu.SecondPage))

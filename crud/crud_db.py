@@ -19,11 +19,29 @@ def get_pots():
     
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
-    c.execute("SELECT Pot FROM RecordsOfPots")
+    c.execute("SELECT Pot, Plant FROM RecordsOfPots")
     result = c.fetchall()
-    pot_list = [item for i in result for item in i]
+    #hocemo listu  tuple (pot, plant)
+    pot_list=[]
+
+    for pot,plant in result:
+        par = (pot, plant)
+        pot_list.append(par)
     
     return pot_list
+
+
+def get_pot_only():
+    
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+    c.execute("SELECT Pot FROM RecordsOfPots")
+    result = c.fetchall()
+    new_list = [item for i in result for item in i]
+    
+    return new_list         
+
+
 
 # Fetching sensors data
 def convertTuple(tup):

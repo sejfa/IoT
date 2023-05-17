@@ -1,6 +1,7 @@
-"""import tkinter as tk
+import tkinter as tk
 from tkinter.ttk import Progressbar
 from tkinter import ttk, HORIZONTAL
+from gui.login_gui import LoginMenu
 from utils.util import get_image
 w=tk.Tk()
 
@@ -28,6 +29,8 @@ def new_win():
     l=('Calibri (Body)',24,'bold')
     l1.config(font=l)
     l1.place(x=80,y=100)
+
+    #mojloginscreen = LoginMenu(q, objekt_s_funkcijom_showframe)
     
     q.mainloop()
 
@@ -70,7 +73,6 @@ w.mainloop()
 
 
 
-"""
 
 
 

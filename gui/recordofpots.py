@@ -6,7 +6,7 @@ from gui import pot_list
 from PIL import Image, ImageTk
 from tkinter import ttk, messagebox
 from utils.util import get_image, small_label, create_header, clear, bttn
-from crud.crud_db import get_plants, get_pots
+from crud.crud_db import get_plants, get_pots, get_pot_only
 
 
 class RecordOfPots(tk.Frame):
@@ -41,7 +41,8 @@ class RecordOfPots(tk.Frame):
         self.c = self.conn.cursor() 
         
         self.new_list = get_plants()
-        self.new_pot_list = get_pots()
+        self.new_list.insert(0,"None")
+        self.new_pot_list = get_pot_only()
         self.add_entry_var = tk.StringVar()
         self.add_entry = customtkinter.CTkEntry(self.tab1, textvariable=self.add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
         self.select_plant_var = tk.StringVar()
