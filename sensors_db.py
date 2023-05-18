@@ -94,7 +94,7 @@ def insert_pot_data():
     insert_data1(1, "Kitchen - shelf by the window", "Basil")
     insert_data1(2, "Living room - small table near the couch","Hosta")
     insert_data1(3, "Balcony - near the window","Rose")
-    #insert_data1(4, "Bedroom - near the bed", "Lilies")
+    insert_data1(4, "Bedroom - near the bed", "Lilies")
     
 
     
@@ -104,12 +104,12 @@ def insert_humidity_data():
     unit = "%."
     action = ""
 
-    for value in range(2, 6):
-        if value < 3:
+    for value in range(20, 80):
+        if value < 30:
             action = "You need to water the plant daily!"
-        elif value < 4:
+        elif value < 60 and value > 40:
             action = "You need to water the plant weekly."
-        elif value < 5:
+        elif value < 80 and value > 60:
             action = "You need to water the plant monthly."
         else:
             action = "No action needed."
@@ -142,7 +142,7 @@ def insert_ph_data():
     lines = "Current pH is"
     action = ""
     for value in range(6, 9):
-        if value > 7:
+        if value > 8:
             action = "Reduce soil pH."
 
         else:
@@ -159,7 +159,7 @@ def insert_brightness_data():
 
     action = ""
 
-    for value in range(1, 6):
+    for value in range(1, 10):
         if value <= 5:
             action = "The plant needs more light, move to a brighter place."
         else:
