@@ -47,12 +47,12 @@ class PlantList(tk.Frame):
                 self.controller.show_frame(basil_gui.BasilPage)
             elif self.index == 1:
                 self.controller.show_frame(ginger_gui.GingerPage)
-            elif self.index ==2:
+            elif self.index == 2:
                 self.controller.show_frame(hosta_gui.HostaPage)
-            elif self.index ==3:
-                self.controller.show_frame(rose_gui.RosePage)
-            elif self.index ==7:
+            elif self.index == 3:
                 self.controller.show_frame(lilie_gui.LiliePage)
+            elif self.index == 4:
+                self.controller.show_frame(rose_gui.RosePage)
         else:
             print("No item selected")
 

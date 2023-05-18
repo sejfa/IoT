@@ -79,12 +79,12 @@ class SigninMenu(tk.Frame):
         conn = sqlite3.connect('Pyflora.db')
         c = conn.cursor()
 
-        c.execute("SELECT Username,Password FROM UserData WHERE (Username=? OR Password=?)",
-                    [self.username_entry.get(), self.password_entry.get()])
+        c.execute("SELECT Username,Password FROM UserData WHERE (Username=?)",
+                    [self.username_entry.get()])
         result = c.fetchone()
         if result:
             messagebox.showerror(
-                "Error", "Username or password already exists!")
+                "Error", "Username already exists!")
             self.controller.show_frame(SigninMenu)
             self.clear()
         else:
@@ -98,6 +98,9 @@ class SigninMenu(tk.Frame):
         if self.name_entry.get() == '' or self.surname_entry.get() == '' or self.username_entry.get() == '' or self.password_entry.get() == '':
                 messagebox.showerror("Error", "All fields are required !")
                 self.clear()
+        elif len(self.password_entry.get()) < 8:
+            messagebox.showerror("Error","The password must contain at least 8 characters! Please try again.")
+            self.clear_password()
         else:
             self.check_if_exist()
 
@@ -107,4 +110,5 @@ class SigninMenu(tk.Frame):
         self.username_entry.delete(0, 25)
         self.password_entry.delete(0, 25)
 
-    
+    def clear_password(self):
+        self.password_entry.delete(0,25)

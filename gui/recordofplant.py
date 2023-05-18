@@ -108,7 +108,7 @@ class RecordOfPlants(tk.Frame):
         self.dropmenu_var.set(self.dropmenu['menu'].entrycget(0,"label"))
 
     def openFile(self):
-        self.filepath = filedialog.askopenfilename(initialdir="C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
+        self.filepath = filedialog.askopenfilename(initialdir="C:", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
         self.base_filename = os.path.basename(self.filepath)
         self.file_label = ttk.Label(self.tab1, text=self.base_filename, background="#f6f6f6")
         self.file_label.place(x=105, y=90)
@@ -145,7 +145,7 @@ class RecordOfPlants(tk.Frame):
 
     def changeFile(self):
         
-        self.filepath = filedialog.askopenfilename(initialdir="C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
+        self.filepath = filedialog.askopenfilename(initialdir="C:", filetypes=(('jpg', '*.jpg'),('png','*.png'),('All files','*.*'))) 
         base_filename = os.path.basename(self.filepath)
         self.file_label = ttk.Label(self.tab2, text=base_filename, background="#f6f6f6")
         self.file_label.place(x=115, y=90)

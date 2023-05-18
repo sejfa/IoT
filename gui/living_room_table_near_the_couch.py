@@ -24,7 +24,7 @@ class LivingRoomHosta(tk.Frame):
 
     def create_widgets(self):
         self.basil_info = tk.LabelFrame(self, background=get_background())
-        self.header = create_label(self.basil_info, "Living room - small table near the couch", 15, 5)
+        self.header = create_label(self.basil_info, "Living room - small table near the couch - Hosta", 15, 5)
         self.pic_frame = ttk.Frame(self)
         self.pic_frame_image = get_image('hosta1.jpg', self.pic_frame)
         self.sync_button = ttk.Button(self, text="Sync", width=15)

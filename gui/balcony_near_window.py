@@ -23,7 +23,7 @@ class BalconyNearWindow(tk.Frame):
 
     def create_widgets(self):
         self.basil_info = tk.LabelFrame(self, background=get_background())
-        self.header = create_label(self.basil_info, "Balcony - near the window", 15, 5)
+        self.header = create_label(self.basil_info, "Balcony - near the window - Roses", 15, 5)
         self.pic_frame = ttk.Frame(self)
         self.pic_frame_image = get_image('roses.jpg', self.pic_frame)
         self.sync_button = ttk.Button(self, text="Sync", width=15)

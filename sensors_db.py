@@ -31,6 +31,19 @@ def create_sensor_table():
 
     return conn
 
+def insert_user():
+    def user(name,surname,username,password):
+
+        try:
+            date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
+            insert_query = """ INSERT OR IGNORE INTO UserData (Name, Surname, Username, Password, Date) VALUES (?, ?, ?, ?, ?)"""
+            data_tuple = (name, surname, username, password,date)
+            c.execute(insert_query, data_tuple)
+
+        except sqlite3.Error as error:
+                print("User is already inserted", error)
+
+    user("John","Wayne","johnwayne","helloworld")
 
 def insert_plant_data():
 
@@ -63,18 +76,8 @@ def insert_plant_data():
         3, "Hosta", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\hosta.jpg")
     insertdata(
         4, "Lilies", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lilie.jpg")
-    insertdata(
-        5, "Lavender","C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lavender.jpg")
-    insertdata(
-        6, "Lemon", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lemon.jpg")
-    insertdata(
-        7, "Mint", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\mint.jpg")
-    insertdata(
-        8, "Rose", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\Rose.jpg")
-    insertdata(
-        9, "Rosemary","C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\Rosemary.jpg")
-    insertdata(
-        10, "Origano","C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\oregano.jpg")
+    
+    
 
 def insert_pot_data():
     def insert_data1(potid, pot, plant):
@@ -91,7 +94,7 @@ def insert_pot_data():
     insert_data1(1, "Kitchen - shelf by the window", "Basil")
     insert_data1(2, "Living room - small table near the couch","Hosta")
     insert_data1(3, "Balcony - near the window","Rose")
-    insert_data1(4, "Bedroom - near the bed", "Lilies")
+    #insert_data1(4, "Bedroom - near the bed", "Lilies")
     
 
     
@@ -184,6 +187,7 @@ def insert_salinity_data():
 
 
 create_sensor_table()
+insert_user()
 insert_plant_data()
 insert_pot_data()
 insert_humidity_data()
