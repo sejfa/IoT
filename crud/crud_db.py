@@ -14,6 +14,16 @@ def get_plants():
     
     return new_list
 
+def get_plant_by_name(plantName):
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM RecordsOfPlants WHERE Plant = ?", (plantName,))
+    fetch = c.fetchone()
+
+    plant = ({fetch[1]}, {fetch[2]}, {fetch[3]}, {fetch[4]}, {fetch[5]})      
+
+    return plant 
+
 
 def get_pots():
     
@@ -21,7 +31,7 @@ def get_pots():
     c = conn.cursor()
     c.execute("SELECT Pot, Plant FROM RecordsOfPots")
     result = c.fetchall()
-    #hocemo listu  tuple (pot, plant)
+    
     pot_list=[]
 
     for pot,plant in result:
@@ -51,15 +61,26 @@ def convertTuple(tup):
 
 ################################################### Sensor details #####################################################
 
+class Senzor:
+    def __init__(self, vrijednost): #konstruktor - inicijalizira atribute objekta; konstruira objekt
+        self.v = vrijednost         #v je atribut objekta Senzor
+
+#napravi objekt tipa Senzor
+senzor = Senzor(5)
+print(senzor.v)
+
+senzor2 = Senzor(13)
+
+
 def sensor_hum():
     
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value, Unit FROM Humidity ORDER BY RANDOM() LIMIT 1")
+    c.execute("SELECT Lines, Value, Unit, Action FROM Humidity ORDER BY RANDOM() LIMIT 1")
     fetch = c.fetchone()
     conn.close()
-    result = f"{fetch[0]}  {fetch[1]} {fetch[2]}"
+    result = f"{fetch[0]}  {fetch[1]} {fetch[2]} {fetch[3]}"
 
     return result
     
@@ -69,10 +90,10 @@ def sensor_temp():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value, Unit FROM Temperature ORDER BY RANDOM() LIMIT 1")
+    c.execute("SELECT Lines, Value, Unit, Action FROM Temperature ORDER BY RANDOM() LIMIT 1")
     fetch = c.fetchone()
     conn.close()
-    result = f"{fetch[0]}  {fetch[1]} {fetch[2]}"
+    result = f"{fetch[0]}  {fetch[1]} {fetch[2]} {fetch[3]}"
     return result
 
 

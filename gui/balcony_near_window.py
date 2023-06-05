@@ -22,8 +22,8 @@ class BalconyNearWindow(tk.Frame):
 
 
     def create_widgets(self):
-        self.basil_info = tk.LabelFrame(self, background=get_background())
-        self.header = create_label(self.basil_info, "Balcony - near the window - Roses", 15, 5)
+        self.rose_info = tk.LabelFrame(self, background=get_background())
+        self.header = create_label(self.rose_info, "Balcony - near the window - Roses", 15, 5)
         self.pic_frame = ttk.Frame(self)
         self.pic_frame_image = get_image('roses.jpg', self.pic_frame)
         self.sync_button = ttk.Button(self, text="Sync", width=15)
@@ -35,7 +35,7 @@ class BalconyNearWindow(tk.Frame):
         #bttn(self, 257, 230, '  S E T   T O   O P T I M A L  ', '#e6e6e6','light grey', self.display_optimal_data)
 
     def place_widgets(self):
-        self.basil_info.place(x=2, y=2, width=483, height=215,)
+        self.rose_info.place(x=2, y=2, width=483, height=215,)
         self.pic_frame.place(x=485, y=2, width=313, height=215)
         self.sync_button.place(x=20, y=230)
         #self.optimal_button.place(x=20, y=280)
@@ -52,15 +52,15 @@ class BalconyNearWindow(tk.Frame):
         
         if not self.displayed:
             self.h= sensor_hum()
-            self.hum = create_smaller_label(self.basil_info, self.h, 120, 45)
+            self.hum = create_smaller_label(self.rose_info, self.h, 10, 45)
             self.t = sensor_temp()
-            self.temp = create_smaller_label(self.basil_info, self.t, 120, 80)
+            self.temp = create_smaller_label(self.rose_info, self.t, 10, 80)
             self.b = sensor_bright()
-            self.bright = create_smaller_label(self.basil_info, self.b, 120, 115)
+            self.bright = create_smaller_label(self.rose_info, self.b, 10, 115)
             self.p = sensor_ph()
-            self.ph = create_smaller_label(self.basil_info, self.p, 120, 150)
+            self.ph = create_smaller_label(self.rose_info, self.p, 10, 150)
             self.s = sensor_sal()
-            self.sal = create_smaller_label(self.basil_info, self.s, 120, 185)
+            self.sal = create_smaller_label(self.rose_info, self.s, 10, 185)
             self.displayed = True
         
     """def display_optimal_data(self):
@@ -70,18 +70,18 @@ class BalconyNearWindow(tk.Frame):
         self.bright.destroy()
         self.ph.destroy()
         self.sal.destroy()
-        self.basil_info.update()
+        self.rose_info.update()
 
         self.opt_hum = get_optimal_hum()
-        self.optimal_hum = create_smaller_label(self.basil_info, self.opt_hum, 15, 45)
+        self.optimal_hum = create_smaller_label(self.rose_info, self.opt_hum, 15, 45)
         self.opt_temp = get_optimal_temp()
-        self.optimal_temp = create_smaller_label(self.basil_info, self.opt_temp, 15, 80)
+        self.optimal_temp = create_smaller_label(self.rose_info, self.opt_temp, 15, 80)
         self.opt_bright = get_optimal_bright()
-        self.optimal_bright = create_smaller_label(self.basil_info, self.opt_bright, 15, 115)
+        self.optimal_bright = create_smaller_label(self.rose_info, self.opt_bright, 15, 115)
         self.opt_ph = get_optmal_ph()
-        self.optimal_ph = create_smaller_label(self.basil_info, self.opt_ph, 15, 150)
+        self.optimal_ph = create_smaller_label(self.rose_info, self.opt_ph, 15, 150)
         self.opt_sal = get_optimal_sal()
-        self.optimal_sal = create_smaller_label(self.basil_info, self.opt_sal, 15, 185)
+        self.optimal_sal = create_smaller_label(self.rose_info, self.opt_sal, 15, 185)
 """
     def toggle_graphical_info(self):
         

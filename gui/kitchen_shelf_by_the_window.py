@@ -52,15 +52,15 @@ class KitchenBasilPage(tk.Frame):
         
         if not self.displayed:
             self.h= sensor_hum()
-            self.hum = create_smaller_label(self.basil_info, self.h, 120, 45)
+            self.hum = create_smaller_label(self.basil_info, self.h, 10, 45)
             self.t = sensor_temp()
-            self.temp = create_smaller_label(self.basil_info, self.t, 120, 80)
+            self.temp = create_smaller_label(self.basil_info, self.t, 10, 80)
             self.b = sensor_bright()
-            self.bright = create_smaller_label(self.basil_info, self.b, 120, 115)
+            self.bright = create_smaller_label(self.basil_info, self.b, 10, 115)
             self.p = sensor_ph()
-            self.ph = create_smaller_label(self.basil_info, self.p, 120, 150)
+            self.ph = create_smaller_label(self.basil_info, self.p, 10, 150)
             self.s = sensor_sal()
-            self.sal = create_smaller_label(self.basil_info, self.s, 120, 185)
+            self.sal = create_smaller_label(self.basil_info, self.s, 10, 185)
             self.displayed = True
         
     """def display_optimal_data(self):

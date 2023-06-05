@@ -3,36 +3,39 @@ import tkinter as tk
 from tkinter import ttk
 from gui import plant_list
 from utils.util import get_image, create_label, create_smaller_label, get_background, create_button, bttn
-from crud.crud_db import plant_hum, plant_temp, plant_bright, plant_sal, plant_ph
+from crud.crud_db import plant_hum, plant_temp, plant_bright, plant_sal, plant_ph, get_plant_by_name
 
 
-class RosePage(tk.Frame):
-    
-    def __init__(self, parent, controller):
+class PlantPage(tk.Frame):
+    def __init__(self, parent, controller, plantName):
         tk.Frame.__init__(self, parent, background="white")
 
+        self.name = plantName
+        self.plant = get_plant_by_name(self.name)
         self.controller = controller
         self.displayed = False
         self.create_widgets()
         self.place_widgets()
         self.bind_widgets()
 
-    
 
     def create_widgets(self):
-        self.basil_info = tk.LabelFrame(self, background=get_background())
-        self.header = create_label(self, "Rose care", 350, 35)
+        self.plant_info = tk.LabelFrame(self, background=get_background())
+        self.header = create_label(self, self.name, 350, 35)
         self.pic_frame = ttk.Frame(self)
-        self.pic_frame_image = get_image('roses2.jpg', self.pic_frame)
+        self.pic_frame_image = get_image(self.plant[1], self.pic_frame)
+
+        #umetni ostale podatke o biljci na neke labele ili kaj vec
+        self.neka_labela =create_label(self.plant_info, text=" Plant info " + self.plant[0])
+
+
         self.sync_button = ttk.Button(self, text="Sync", width=15)
         #self.optimal_button = ttk.Button(self, text="Set to optimal",width=20)
         self.back = customtkinter.CTkButton(master=self, width=100, height=15, border_width=0, corner_radius=13, text="Back", bg_color="white")
-        #self.graphical_button = ttk.Button(self, text="Show graphical info")
-        #bttn(self, 2, 230, ' S Y N C ', '#e6e6e6','light grey', self.display_data)
-        #bttn(self, 257, 230, '  S E T   T O   O P T I M A L  ', '#e6e6e6','light grey', self.display_optimal_data)
+        
 
     def place_widgets(self):
-        self.basil_info.place(x=80, y=120, width=313, height=215,)
+        self.plant_info.place(x=80, y=120, width=313, height=215,)
         self.pic_frame.place(x=410, y=120, width=313, height=215)
         self.sync_button.place(x=350, y=400)
         #self.optimal_button.place(x=220, y=230)
@@ -48,15 +51,15 @@ class RosePage(tk.Frame):
         
         if not self.displayed:
             self.h= plant_hum()
-            self.hum = create_smaller_label(self.basil_info, self.h, 5, 15)
+            self.hum = create_smaller_label(self.plant_info, self.h, 5, 15)
             self.t = plant_temp()
-            self.temp = create_smaller_label(self.basil_info, self.t, 5, 55)
+            self.temp = create_smaller_label(self.plant_info, self.t, 5, 55)
             self.b = plant_bright()
-            self.bright = create_smaller_label(self.basil_info, self.b, 5, 95)
+            self.bright = create_smaller_label(self.plant_info, self.b, 5, 95)
             self.p = plant_ph()
-            self.ph = create_smaller_label(self.basil_info, self.p, 5, 135)
+            self.ph = create_smaller_label(self.plant_info, self.p, 5, 135)
             self.s = plant_sal()
-            self.sal = create_smaller_label(self.basil_info, self.s, 5, 175)
+            self.sal = create_smaller_label(self.plant_info, self.s, 5, 175)
             self.displayed = True
 
     """ def display_optimal_data(self):
@@ -81,3 +84,6 @@ class RosePage(tk.Frame):
         """
     def back_button(self):
         self.controller.show_frame(plant_list.PlantList)
+        
+        
+        

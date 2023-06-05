@@ -9,7 +9,7 @@ c = conn.cursor()
 def create_sensor_table():
     try:
         c.execute(
-            'CREATE TABLE IF NOT EXISTS  RecordsOfPlants (Plant_id INTEGER PRIMARY KEY, Plant TEXT, Photo BLOB)')
+            'CREATE TABLE IF NOT EXISTS  RecordsOfPlants (Plant_id INTEGER PRIMARY KEY, Plant TEXT, Photo BLOB, Humidity TEXT, Substrate TEXT, Place TEXT)')
         c.execute(
             'CREATE TABLE IF NOT EXISTS  Humidity (Lines TEXT, Value INTEGER, Unit Text, Action TEXT, Date TEXT)')
         c.execute(
@@ -36,7 +36,7 @@ def insert_user():
 
         try:
             date = dt.datetime.strftime(dt.datetime.now(), "%d.%m.%Y")
-            insert_query = """ INSERT OR IGNORE INTO UserData (Name, Surname, Username, Password, Date) VALUES (?, ?, ?, ?, ?)"""
+            insert_query = """ INSERT OR IGNORE INTO UserData (Name, Surname, Username, Password, Date) VALUES (?,?,?,?,?)"""
             data_tuple = (name, surname, username, password,date)
             c.execute(insert_query, data_tuple)
 
@@ -53,15 +53,14 @@ def insert_plant_data():
             photo = file.read()
         return photo
 
-    def insertdata(empId, name, photo):
+    def insertdata(empId, name, photo, hum, sub, place):
         try:
-            insert_query = """ INSERT INTO RecordsOfPlants
-                                    (Plant_id, Plant, Photo) VALUES (?, ?, ?)"""
+            insert_query = """ INSERT or IGNORE INTO RecordsOfPlants
+                                    (Plant_id, Plant, Photo, Humidity, Substrate, Place) VALUES (?,?,?,?,?,?)"""
 
             empPhoto = convertToBinaryData(photo)
-
             # Convert data into tuple format
-            data_tuple = (empId, name, empPhoto)
+            data_tuple = (empId, name, empPhoto, hum, sub, place)
             c.execute(insert_query, data_tuple)
             conn.commit()
 
@@ -69,22 +68,28 @@ def insert_plant_data():
             print("Plant data is already inserted", error)
 
     insertdata(
-        1, "Basil", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\Basil.jpg")
+        1, "Basil", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\Basil.jpg","""Since the root of the plant is shallow, basil requires a relatively large amount of moisture. 
+            During the growing season, it requires 600 to 650 mm2 of rainfall, and it especially needs moisture during the germination, sprouting, sprouting and budding stages.""","""The most recommended substrate for transplanted basil is substrate for outdoor plants or universal, mixed with normal soil. 
+            As far as pH is concerned, this aromatic plant likes slightly more acidic, more precisely between 5.7 and 6.2.""","""It is not necessary to have a garden or an orchard to grow these plants, with jars and a place with a lot of light, ordinary light is enough.""")
     insertdata(
-        2, "Ginger", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\ginger.jpg")
+        2, "Hosta", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\hosta.jpg","""Hosta requires climatic conditions typical of open ground, i.e. it can grow in the apartment, but not for long, due to the lack of suitable conditions it will quickly wither. You can plant it in large pots and take it outside, or, in extreme cases, on the balcony.""",
+            """In summer and spring, the plant needs to be fertilized with fertilizers, and already at the first planting, the hole needs to be fertilized with compost.""","""It has a highly developed root system, which does not allow excessive watering, it should be planted in places where the shade alternates with the sun.""")
     insertdata(
-        3, "Hosta", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\hosta.jpg")
+        3, "Lilies", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lilie.jpg","""Lily (lat. Lilium) is an ornamental perennial known also under the names lilijan and lijer. It is assumed that it originates from Asia, more precisely from the area of ​​China, Japan and Korea. The lily prefers a moderate climate with moist soils and good drainage, with the fact that the soil should not be too wet. 
+            The annual amount of precipitation that the plant needs depends on the type and place of planting, while the optimal amount ranges from 700 to 1,000 mm.""","""The lily prefers soil that is well-drained, moist, and rich in nutrients, and the best types of soil for growing lilies are deep, humus-rich, and permeable soils that retain moisture but don't stay too wet. 
+            These soils are usually sandy and loamy soils with the addition of organic material such as compost, manure or leaf humus.""","""The lily thrives best in sunny or semi-shady places with a minimum of 6 hours of daily sunlight, and requires sufficient moisture and nutrients. Excessive sun can be harmful to lilies, especially if they are planted on the south side of a house or wall. Some lilies prefer lower growing areas while others can be found at significantly higher altitudes.""")
     insertdata(
-        4, "Lilies", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\lilie.jpg")
-    
+        4, "Rose", "C:\Alem\Programiranje\python_vsc\Zavrsni_AS\media\Rose.jpg","""Rose (lat. Rosa) is a herbaceous plant from the family of the same name (Rosaceae). It is one of 115 genera in the family, among which there are many edible species, when growing a young plant, care must be taken about watering. It has the greatest need for water in the summer, and it needs to be watered twice a week with stagnant water or rainwater. 
+            It may be watered under the roots, and it is especially important to avoid watering the leaves during hot weather. For irrigation, it is best to use a drip system.""","""Manure or organic manure, nitrogen-based mineral fertilizers such as NPK or foliar fertilizers applied over the leaves can be used. In addition to this fertilizer, mineral or organic fertilizers are distributed in the ground 10 cm from the plant.""",
+            """It is optimal to keep it in a semi-shady place protected from gusts of wind.""")
     
 
 def insert_pot_data():
     def insert_data1(potid, pot, plant):
         
         try:
-            insert_query = """ INSERT INTO RecordsOfPots
-                                        (Pot_id, Pot, Plant) VALUES (?, ?, ?)"""
+            insert_query = """ INSERT OR IGNORE INTO RecordsOfPots
+                                        (Pot_id, Pot, Plant) VALUES (?,?,?)"""
             data_tuple = (potid, pot, plant)
             c.execute(insert_query, data_tuple)
 
@@ -104,17 +109,17 @@ def insert_humidity_data():
     unit = "%."
     action = ""
 
-    for value in range(20, 80):
+    for value in range(20, 81 ):        
         if value < 30:
             action = "You need to water the plant daily!"
-        elif value < 60 and value > 40:
+        elif value > 40 and value < 60:
             action = "You need to water the plant weekly."
-        elif value < 80 and value > 60:
+        elif value > 60 and value < 80:
             action = "You need to water the plant monthly."
         else:
             action = "No action needed."
 
-        c.execute("INSERT INTO Humidity (Lines, Value, Unit, Action, Date) VALUES(?,?,?,?,?)",
+        c.execute("INSERT OR IGNORE INTO Humidity (Lines, Value, Unit, Action, Date) VALUES(?,?,?,?,?)",
                   (lines, value, unit, action, date))
     conn.commit()
 
@@ -132,7 +137,7 @@ def insert_temperature_data():
         else:
             action = "Soil temperature is optimal, no action needed."
 
-        c.execute("INSERT INTO Temperature (Lines, Value, Unit, Action, Date) VALUES(?,?,?,?,?)",
+        c.execute("INSERT OR IGNORE INTO Temperature (Lines, Value, Unit, Action, Date) VALUES(?,?,?,?,?)",
                   (lines, value, unit, action, date))
     conn.commit()
 
@@ -148,7 +153,7 @@ def insert_ph_data():
         else:
             action = "Soil pH is fine, no action needed."
 
-    c.execute("INSERT INTO pH (Lines, Value, Action, Date) VALUES (?,?,?,?)",
+    c.execute("INSERT OR IGNORE INTO pH (Lines, Value, Action, Date) VALUES (?,?,?,?)",
               (lines, value, action, date))
     conn.commit()
 
@@ -165,7 +170,7 @@ def insert_brightness_data():
         else:
             action = "The plant has enough light, no action needed."
 
-        c.execute("INSERT INTO Brightness (Lines, Value, Action, Date) VALUES (?,?,?,?)",
+        c.execute("INSERT OR IGNORE INTO Brightness (Lines, Value, Action, Date) VALUES (?,?,?,?)",
                   (lines, value, action, date))
     conn.commit()
 
@@ -181,7 +186,7 @@ def insert_salinity_data():
             action = "Reduce soil salinity."
         else:
             action = "Soil salinity is fine, no action needed."
-    c.execute("INSERT INTO Salinity (Lines, Value, Unit, Action, Date) VALUES (?,?,?,?,?)",
+    c.execute("INSERT OR IGNORE INTO Salinity (Lines, Value, Unit, Action, Date) VALUES (?,?,?,?,?)",
               (lines, value, unit, action, date))
     conn.commit()
 

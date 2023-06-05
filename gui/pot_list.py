@@ -2,7 +2,7 @@ import sqlite3
 import tkinter as tk
 from tkinter import ttk
 from tkinter import LEFT, RIGHT, BOTH, END
-from gui import kitchen_shelf_by_the_window, living_room_table_near_the_couch, balcony_near_window,bedroom_near_the_bed, main_menu, recordofpots
+from gui import kitchen_shelf_by_the_window, living_room_table_near_the_couch, balcony_near_window,bedroom_near_the_bed, main_menu, recordofpots, new_page
 from utils.util import get_image, create_header, create_frame, create_smaller_label,bttn
 from crud.crud_db import get_pots
 
@@ -56,16 +56,18 @@ class PotList(tk.Frame):
     def on_item_click(self, event):
         selection = self.treeview.selection()
         if selection:
-            item = self.treeview.focus()
-            index = self.treeview.index(item)
-            if index == 0:
+            self.item = self.treeview.focus()
+            self.index = self.treeview.index(self.item)
+            if self.index == 0:
                 self.controller.show_frame(kitchen_shelf_by_the_window.KitchenBasilPage)
-            elif index == 1:
+            elif self.index == 1:
                 self.controller.show_frame(living_room_table_near_the_couch.LivingRoomHosta)
-            elif index == 2:
-                self.controller.show_frame(balcony_near_window.BalconyNearWindow)
-            elif index == 3:
+            elif self.index == 2:
                 self.controller.show_frame(bedroom_near_the_bed.BedroomNearBed)
+            elif self.index == 3:
+                self.controller.show_frame(balcony_near_window.BalconyNearWindow)
+            else:
+                self.controller.show_frame(new_page.NewBlankPage)
         else:
             print("No item selected")
 

@@ -4,7 +4,7 @@ import tkinter as tk
 import customtkinter
 from tkinter import FLAT, ttk
 from tkinter import messagebox
-from gui import kitchen_shelf_by_the_window, basil_gui,ginger_gui, hosta_gui,lilie_gui, rose_gui, living_room_table_near_the_couch,balcony_near_window,bedroom_near_the_bed, main_menu, recordofplant, recordofpots, signin_gui, plant_list, pot_list
+from gui import kitchen_shelf_by_the_window, basil_gui,ginger_gui, hosta_gui,lilie_gui, rose_gui, living_room_table_near_the_couch,balcony_near_window,bedroom_near_the_bed, main_menu, recordofplant, recordofpots, signin_gui, plant_list, pot_list, new_page
 from utils.util import create_label, create_smaller_label, get_image, get_foreground, create_frame, forgot_password
 
 
@@ -92,7 +92,7 @@ class Application(tk.Tk):
         self.resizable(width=False, height=False)
 
         self.frames = {}
-        windows = [LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage,basil_gui.BasilPage,ginger_gui.GingerPage,lilie_gui.LiliePage, rose_gui.RosePage, kitchen_shelf_by_the_window.KitchenBasilPage, hosta_gui.HostaPage, living_room_table_near_the_couch.LivingRoomHosta, recordofpots.RecordOfPots, plant_list.PlantList, pot_list.PotList, recordofplant.RecordOfPlants,balcony_near_window.BalconyNearWindow, bedroom_near_the_bed.BedroomNearBed]
+        windows = [LoginMenu, signin_gui.SigninMenu, main_menu.SecondPage,basil_gui.BasilPage,ginger_gui.GingerPage,lilie_gui.LiliePage, rose_gui.RosePage, kitchen_shelf_by_the_window.KitchenBasilPage, hosta_gui.HostaPage, living_room_table_near_the_couch.LivingRoomHosta, recordofpots.RecordOfPots, plant_list.PlantList, pot_list.PotList, recordofplant.RecordOfPlants,balcony_near_window.BalconyNearWindow, bedroom_near_the_bed.BedroomNearBed, new_page.NewBlankPage]
         for i,constructor in enumerate(windows):
             frame = constructor(window, self)
             self.frames[constructor] = frame
