@@ -59,6 +59,46 @@ def convertTuple(tup):
     return str
 
 
+def get_basil():
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Humidity, Substrate, Place FROM RecordsOfPlants WHERE Plant ='Basil'")
+    fetch = c.fetchone()
+    conn.close()
+    result = f"{fetch[0]} {fetch[1]} {fetch[2]}"
+    return result
+
+
+def get_hosta():
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Humidity, Substrate, Place FROM RecordsOfPlants WHERE Plant ='Hosta'")
+    fetch = c.fetchone()
+    conn.close()
+    result = f"{fetch[0]} {fetch[1]} {fetch[2]}"
+    return result
+
+def get_lilie():
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Humidity, Substrate, Place FROM RecordsOfPlants WHERE Plant ='Lilies'")
+    fetch = c.fetchone()
+    conn.close()
+    result = f"{fetch[0]} {fetch[1]} {fetch[2]}"
+    return result
+
+def get_rose():
+    conn = sqlite3.connect('PyFlora.db')
+    c = conn.cursor()
+
+    c.execute("SELECT Humidity, Substrate, Place FROM RecordsOfPlants WHERE Plant ='Rose'")
+    fetch = c.fetchone()
+    conn.close()
+    result = f"{fetch[0]} {fetch[1]} {fetch[2]}"
+    return result
 ################################################### Sensor details #####################################################
 
 class Senzor:
@@ -67,7 +107,7 @@ class Senzor:
 
 #napravi objekt tipa Senzor
 senzor = Senzor(5)
-print(senzor.v)
+
 
 senzor2 = Senzor(13)
 
@@ -103,11 +143,11 @@ def sensor_bright():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value FROM Brightness ORDER BY RANDOM() LIMIT 1")
+    c.execute("SELECT Lines, Value, Action FROM Brightness ORDER BY RANDOM() LIMIT 1")
     fetch = c.fetchall()
     conn.close()
     for row in fetch:
-        return f"{row[0]}  {row[1]}"
+        return f"{row[0]}  {row[1]}   {row[2]}"
 
 
 
@@ -115,11 +155,11 @@ def sensor_ph():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value FROM Ph ORDER BY RANDOM() LIMIT 1")
+    c.execute("SELECT Lines, Value, Action FROM Ph ORDER BY RANDOM() LIMIT 1")
     fetch = c.fetchall()
     conn.close()
     for row in fetch:
-        return f"{row[0]}  {row[1]}"
+        return f"{row[0]}  {row[1]}  {row[2]}"
 
 
 
@@ -128,10 +168,10 @@ def sensor_sal():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value, Unit FROM Salinity ORDER BY RANDOM() LIMIT 1")
+    c.execute("SELECT Lines, Value, Unit, Action FROM Salinity ORDER BY RANDOM() LIMIT 1")
     fetch = c.fetchone()
     conn.close()
-    result = f"{fetch[0]}  {fetch[1]} {fetch[2]}"
+    result = f"{fetch[0]}  {fetch[1]} {fetch[2]}  {fetch[3]}"
     return result
 
 
@@ -276,11 +316,11 @@ def get_ph():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value FROM pH")
+    c.execute("SELECT Lines, Value, Action FROM pH")
     fetch = c.fetchall()
     conn.close()
     for row in fetch:
-        return f"{row[0]}  {row[1]}"
+        return f"{row[0]}  {row[1]}\t\t {row[2]}"
 
 
 
@@ -301,11 +341,11 @@ def get_sal():
     conn = sqlite3.connect('PyFlora.db')
     c = conn.cursor()
 
-    c.execute("SELECT Lines, Value FROM Salinity")
+    c.execute("SELECT Lines, Value, Action FROM Salinity")
     fetch = c.fetchall()
     conn.close()
     for row in fetch:
-        return f"{row[0]}  {row[1]}"
+        return f"{row[0]}  {row[1]}\t\t {row[2]}"
 
 
 

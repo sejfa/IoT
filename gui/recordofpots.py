@@ -135,8 +135,8 @@ class RecordOfPots(tk.Frame):
                     [self.del_pot_var.get()])
                     self.delete_selected_item()
                         
-                self.conn.commit()
-                messagebox.showinfo("Success", "Successfully deleted pot!")
+                    self.conn.commit()
+                    messagebox.showinfo("Success", "Successfully deleted pot!")
             else:
                 messagebox.showerror("Error","The entered pot is not in database!")
                 clear(self.delete_pot_menu)

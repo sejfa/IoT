@@ -113,7 +113,11 @@ def small_label(root, text, x, y):
     label.place(x=x, y=y)
     return label
 
-
+def info_label(root, text, x, y):
+    label = ttk.Label(root, text=text, background='white',
+                      foreground=get_foreground(), font=["Times New Roman","10","italic"])
+    label.place(x=x, y=y)
+    return label
 
 def formatted_date():
     """Function that uses strftime format for dates.

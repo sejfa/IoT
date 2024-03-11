@@ -217,8 +217,8 @@ class RecordOfPlants(tk.Frame):
                     [self.del_plant_var.get()])
                     self.delete_selected_item()
                         
-                self.conn.commit()
-                messagebox.showinfo("Success", "Successfully deleted plant!")
+                    self.conn.commit()
+                    messagebox.showinfo("Success", "Successfully deleted plant!")
             else:
                 messagebox.showerror("Error","The entered plant is not in database!")
                 clear(self.delete_plant_menu)
