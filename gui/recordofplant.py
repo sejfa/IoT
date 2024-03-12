@@ -45,7 +45,7 @@ class RecordOfPlants(tk.Frame):
         self.add_entry = customtkinter.CTkEntry(self.tab1, textvariable=self.add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
         
         self.open_button = customtkinter.CTkButton(master=self.tab1, width=90, text="Choose Image", height=10, compound="left")
-        self.save_image = customtkinter.CTkImage(Image.open("media\icons8-save-100.png").resize((20, 20), Image.ANTIALIAS))
+        self.save_image = customtkinter.CTkImage(Image.open("media\icons8-save-100.png").resize((20, 20), Image.LANCZOS))
         self.save_button = customtkinter.CTkButton(master=self.tab1, width=90, image=self.save_image, text="Save",compound="left")
         
         self.dropmenu_var = tk.StringVar()
@@ -54,12 +54,12 @@ class RecordOfPlants(tk.Frame):
         self.update_var = tk.StringVar()
         self.update_image_entry = customtkinter.CTkEntry(self.tab2, textvariable=self.update_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
         self.change_button = customtkinter.CTkButton(master=self.tab2, width=90, text="Choose Image", height=10, compound="left")     
-        self.update_image = customtkinter.CTkImage(Image.open("media\icons8-update-100.png").resize((20, 20), Image.ANTIALIAS))
+        self.update_image = customtkinter.CTkImage(Image.open("media\icons8-update-100.png").resize((20, 20), Image.LANCZOS))
         self.update_button = customtkinter.CTkButton(master=self.tab2, text="Update", image=self.update_image, width=100, height=10)
         
         self.del_plant_var = tk.StringVar()
         self.delete_plant_menu = ttk.OptionMenu(self.tab3, self.del_plant_var, *self.new_list)
-        self.delete = customtkinter.CTkImage(Image.open("media\del.png").resize((20, 20), Image.ANTIALIAS))
+        self.delete = customtkinter.CTkImage(Image.open("media\del.png").resize((20, 20), Image.LANCZOS))
         self.delete_button = customtkinter.CTkButton(master=self.tab3, text="Delete", fg_color="red2", hover_color="red3", image=self.delete, width=100, height=10)
 
         bttn(self, 300, 400, '  P L A N T   L I S T  ','#e6e6e6','white', lambda: self.controller.show_frame(plant_list.PlantList))

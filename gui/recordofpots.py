@@ -47,13 +47,13 @@ class RecordOfPots(tk.Frame):
         self.add_entry = customtkinter.CTkEntry(self.tab1, textvariable=self.add_entry_var, corner_radius=8, fg_color="#f6f6f6",text_color="black")
         self.select_plant_var = tk.StringVar()
         self.select_plant_dropmenu = ttk.OptionMenu(self.tab1, self.select_plant_var, *self.new_list)
-        self.save_image = customtkinter.CTkImage(Image.open("media\icons8-save-100.png").resize((20, 20), Image.ANTIALIAS))
+        self.save_image = customtkinter.CTkImage(Image.open("media\icons8-save-100.png").resize((20, 20), Image.LANCZOS))
         self.save_plant_to_pot_button = customtkinter.CTkButton(master=self.tab1, width=90, image=self.save_image, text="Save",compound="left") 
         
         
         self.del_pot_var = tk.StringVar()
         self.delete_pot_menu = ttk.OptionMenu(self.tab2, self.del_pot_var, *self.new_pot_list)
-        self.delete = customtkinter.CTkImage(Image.open("media\del.png").resize((20, 20), Image.ANTIALIAS))
+        self.delete = customtkinter.CTkImage(Image.open("media\del.png").resize((20, 20), Image.LANCZOS))
         self.delete_button = customtkinter.CTkButton(master=self.tab2, text="Delete", fg_color="red2", hover_color="red3", image=self.delete, width=100, height=10)
 
         bttn(self, 265, 430, '  P O T   L I S T  ','#e6e6e6','white', lambda: self.controller.show_frame(pot_list.PotList))
